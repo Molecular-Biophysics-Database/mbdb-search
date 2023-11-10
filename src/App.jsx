@@ -70,8 +70,8 @@ function App() {
                             />
                         </div>
                     ))}
-                    <button onClick={addSearchCriteria}>Add Field</button>
-                    <button onClick={handleSearch}>Search</button>
+                    <button className="add-field" onClick={addSearchCriteria}>Add Field</button>
+                    <button className="search" onClick={handleSearch}>Search</button>
                 </div>
             )}
         </>
