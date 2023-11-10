@@ -40,7 +40,8 @@ function App() {
             }
         }
 
-        const url = `https://localhost:3000/search?q=${queryString}`;
+        // const url = `https://localhost:3000/search?q=${queryString}`; // testing to see the query string in url
+        const url = `https://mbdb.test.du.cesnet.cz/mst/?q=${queryString}`; // mbdb API endpoint
         window.open(url, '_blank');
     };
 
