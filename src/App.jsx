@@ -26,16 +26,21 @@ function App() {
       setSearchCriteria(newCriteria);
     };
     const handleSearch = () => {
-    // Assemble of the search query
-    const queryString = searchCriteria.map(
-      sc => `${encodeURIComponent(sc.field)}=${encodeURIComponent(sc.value)}`
-    ).join('+');
+  // Assemble the search query
+  let queryString = '';
+  for (let i = 0; i < searchCriteria.length; i++) {
+    const sc = searchCriteria[i];
+    if (i !== 0) { // Do not add the expression for the first item
+      queryString += encodeURIComponent(sc.expression) + '+';
+    }
+    queryString += `${encodeURIComponent(sc.field)}=${encodeURIComponent(sc.value)}`;
+    if (i < searchCriteria.length - 1) {
+      queryString += '+';
+    }
+  }
 
-    // Example to add expression in between if needed
-    // .join(`+${encodeURIComponent('AND')}+`);
-
-    const url = `https://localhost:3000/search?q=${queryString}`;
-    window.open(url, '_blank');
+  const url = `https://localhost:3000/search?q=${queryString}`;
+  window.open(url, '_blank');
   };
 
 
@@ -51,16 +56,18 @@ function App() {
       </div>
         <div className="search-section">
       {searchCriteria.map((criteria, index) => (
-        <SearchCriteria
-          key={index}
-          criteria={criteria}
-          onChange={(e, field) => handleCriteriaChange(index, field, e.target.value)}
-          onRemove={() => removeSearchCriteria(index)}
-        />
+        <div key={index}>
+          <SearchCriteria
+            criteria={criteria}
+            onChange={(e, field) => handleCriteriaChange(index, field, e.target.value)}
+            onRemove={() => removeSearchCriteria(index)}
+            showRemoveButton={index > 0}
+          />
+        </div>
       ))}
       <button onClick={addSearchCriteria}>Add Field</button>
     </div>
-      <button onClick={handleSearch}>Search</button>
+    <button onClick={handleSearch}>Search</button>
     </>
   )
 }
