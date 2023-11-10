@@ -5,6 +5,7 @@ function SearchCriteria({ criteria, onChange, onRemove, showRemoveButton }) {
     <div className="search-criteria">
         {showRemoveButton && (
         <select value={criteria.expression} onChange={e => onChange(e, 'expression')}>
+            <option value=""></option>
             <option value="AND">AND</option>
             <option value="OR">OR</option>
             <option value="NOT">NOT</option>
@@ -12,8 +13,10 @@ function SearchCriteria({ criteria, onChange, onRemove, showRemoveButton }) {
             )}
       <select value={criteria.field} onChange={e => onChange(e, 'field')}>
           <option value=""></option>
-          <option value="Karel">Karel</option>
-          <option value="Tonda">Tonda</option>
+          <option value="Protein">Protein</option>
+          <option value="Molecule">Molecule</option>
+          <option value="Protein">Weight</option>
+          <option value="Molecule">Height</option>
           {/* Options for fields */}
         </select>
       <input

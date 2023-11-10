@@ -6,6 +6,7 @@ import SearchCriteria from './SearchCriteria';
 
 function App() {
   // Start with one search criteria
+  const [showAdvancedSearch, setShowAdvancedSearch] = useState(false); 
   const [searchCriteria, setSearchCriteria] = useState([
     { field: '', expression: '', value: '' }
   ]);
@@ -45,31 +46,37 @@ function App() {
 
 
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-        <div className="search-section">
-      {searchCriteria.map((criteria, index) => (
-        <div key={index}>
-          <SearchCriteria
-            criteria={criteria}
-            onChange={(e, field) => handleCriteriaChange(index, field, e.target.value)}
-            onRemove={() => removeSearchCriteria(index)}
-            showRemoveButton={index > 0}
-          />
-        </div>
-      ))}
-      <button onClick={addSearchCriteria}>Add Field</button>
+  <>
+    <div>
+      <a href="https://vitejs.dev" target="_blank">
+        <img src={viteLogo} className="logo" alt="Vite logo" />
+      </a>
+      <a href="https://react.dev" target="_blank">
+        <img src={reactLogo} className="logo react" alt="React logo" />
+      </a>
     </div>
-    <button onClick={handleSearch}>Search</button>
-    </>
-  )
+    {!showAdvancedSearch && (
+      <button onClick={() => setShowAdvancedSearch(true)}>Advanced Search</button>
+    )}
+    {showAdvancedSearch && (
+      <div className="search-section">
+        {searchCriteria.map((criteria, index) => (
+          <div key={index}>
+            <SearchCriteria
+              criteria={criteria}
+              onChange={(e, field) => handleCriteriaChange(index, field, e.target.value)}
+              onRemove={() => removeSearchCriteria(index)}
+              showRemoveButton={index > 0}
+            />
+          </div>
+        ))}
+        <button onClick={addSearchCriteria}>Add Field</button>
+        <button onClick={handleSearch}>Search</button>
+      </div>
+    )}
+  </>
+);
+
 }
 
 export default App
