@@ -1,0 +1,62 @@
+[
+  {
+    "pretty_name": "title",
+    "field_path": "metadata.general_parameters.record_information.title",
+    "type": "string",
+    "description": "Short descriptive title of the record"
+  },
+  {
+    "pretty_name": "keywords[]",
+    "field_path": "metadata.general_parameters.record_information.keywords[]",
+    "type": "string",
+    "description": ""
+  },
+  {
+    "pretty_name": "deposition_date",
+    "field_path": "metadata.general_parameters.record_information.deposition_date",
+    "type": "date",
+    "description": "The date when the data was deposited; automatically generated"
+  },
+  {
+    "pretty_name": "given_name",
+    "field_path": "metadata.general_parameters.depositors.depositor.given_name",
+    "type": "string",
+    "description": "The given name(s), including middlename(s), of the person"
+  },
+  {
+    "pretty_name": "family_name",
+    "field_path": "metadata.general_parameters.depositors.depositor.family_name",
+    "type": "string",
+    "description": "The family name(s) the person"
+  },
+  {
+    "pretty_name": "given_name",
+    "field_path": "metadata.general_parameters.depositors.principal_contact.given_name",
+    "type": "string",
+    "description": "The given name(s), including middlename(s), of the person"
+  },
+  {
+    "pretty_name": "family_name",
+    "field_path": "metadata.general_parameters.depositors.principal_contact.family_name",
+    "type": "string",
+    "description": "The family name(s) the person"
+  },
+  {
+    "pretty_name": "latitude",
+    "field_path": "metadata.general_parameters.latitude",
+    "type": "double",
+    "description": "The latitude, from south to north, in degrees (decimal notation)"
+  },
+  {
+    "pretty_name": "longitude",
+    "field_path": "metadata.general_parameters.longitude",
+    "type": "double",
+    "description": "The longitude, from west to east, in degrees (decimal notation)"
+  },
+  {
+    "pretty_name": "collected_default_search_fields",
+    "field_path": "metadata.collected_default_search_fields",
+    "type": "fulltext",
+    "description": ""
+  }
+]
