@@ -32,11 +32,11 @@ function App() {
         for (let i = 0; i < searchCriteria.length; i++) {
             const sc = searchCriteria[i];
             if (i !== 0) { // Do not add the expression for the first item
-                queryString += encodeURIComponent(sc.expression) + '+';
+                queryString += encodeURIComponent(sc.expression) + '%20';
             }
             queryString += `${encodeURIComponent(sc.field)}%3A"${encodeURIComponent(sc.value)}"`;
             if (i < searchCriteria.length - 1) {
-                queryString += '+';
+                queryString += '%20';
             }
         }
 
