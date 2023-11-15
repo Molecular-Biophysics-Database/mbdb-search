@@ -59,7 +59,7 @@
   },
   {
     "pretty_name": "collected_default_search_fields",
-    "field_path": "metadata.collected_default_search_fields",
+    "field_path": "collected_default_search_fields",
     "type": "fulltext",
     "description": ""
   }
