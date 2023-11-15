@@ -1,6 +1,6 @@
 import React from 'react';
 
-function SearchCriteria({criteria, onChange, onRemove, showRemoveButton}) {
+function SearchCriteria({ criteria, fieldsData, onChange, onRemove, showRemoveButton }) {
     return (
         <div className="search-criteria">
             {showRemoveButton && (
@@ -13,11 +13,9 @@ function SearchCriteria({criteria, onChange, onRemove, showRemoveButton}) {
             )}
             <select value={criteria.field} onChange={e => onChange(e, 'field')}>
                 <option value="" disabled>Field</option>
-                <option value="Protein">Protein</option>
-                <option value="Molecule">Molecule</option>
-                <option value="Weight">Weight</option>
-                <option value="Height">Height</option>
-                {/* Options for fields */}
+                {fieldsData.map((field, index) => (
+                    <option key={index} value={field.field_path}>{field.pretty_name}</option>
+                ))}
             </select>
             <input
                 type="text"

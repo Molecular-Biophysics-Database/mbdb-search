@@ -36,6 +36,5 @@ def update_duplicate_pretty_names(input_file):
         json.dump(data, file, indent=2)
 
 
-# Usage example:
 input_file = "output.json"
 update_duplicate_pretty_names(input_file)

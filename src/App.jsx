@@ -1,8 +1,11 @@
-import {useState} from 'react'
+// import {useState} from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
 import SearchCriteria from './SearchCriteria';
+import {useState, useEffect} from 'react';
+
+import jsonData from '/src/output.json';
 
 function App() {
     // Start with one search criteria
@@ -44,6 +47,12 @@ function App() {
         const url = `https://mbdb.test.du.cesnet.cz/mst/?q=${queryString}`; // mbdb API endpoint
         window.open(url, '_blank');
     };
+    const [fieldsData, setFieldsData] = useState([]);
+
+    useEffect(() => {
+        // Parse the JSON data and set it in state
+        setFieldsData(jsonData);
+    }, []);
 
 
     return (
@@ -65,6 +74,7 @@ function App() {
                         <div key={index}>
                             <SearchCriteria
                                 criteria={criteria}
+                                fieldsData={fieldsData} // Pass the JSON data as a prop
                                 onChange={(e, field) => handleCriteriaChange(index, field, e.target.value)}
                                 onRemove={() => removeSearchCriteria(index)}
                                 showRemoveButton={index > 0}
