@@ -45,13 +45,17 @@
     "pretty_name": "latitude",
     "field_path": "metadata.general_parameters.latitude",
     "type": "double",
-    "description": "The latitude, from south to north, in degrees (decimal notation)"
+    "description": "The latitude, from south to north, in degrees (decimal notation)",
+    "minimum": -90.0,
+    "maximum": 90.0
   },
   {
     "pretty_name": "longitude",
     "field_path": "metadata.general_parameters.longitude",
     "type": "double",
-    "description": "The longitude, from west to east, in degrees (decimal notation)"
+    "description": "The longitude, from west to east, in degrees (decimal notation)",
+    "minimum": -180.0,
+    "maximum": 180.0
   },
   {
     "pretty_name": "collected_default_search_fields",

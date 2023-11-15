@@ -28,12 +28,19 @@ def build_json_output(schema, base_path, defs, json_output):
                 # We have a field definition; add it to the output
                 field_type = 'string' if value['type'] == 'keyword' else value['type']
                 field_description = value.get('help.en', '')
-                json_output.append({
+                field_item = {
                     "pretty_name": key,
                     "field_path": new_base_path,
                     "type": field_type,
                     "description": field_description
-                })
+                }
+                # Check for 'minimum' and 'maximum' and add them if present
+                if 'minimum' in value:
+                    field_item['minimum'] = value['minimum']
+                if 'maximum' in value:
+                    field_item['maximum'] = value['maximum']
+
+                json_output.append(field_item)
             else:
                 # If there is no 'use' or 'type', it might be a nested object without its own type
                 # Continue without appending to the path
