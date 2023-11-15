@@ -1,5 +1,6 @@
 import json
 
+
 def update_duplicate_pretty_names(input_file):
     # Read the JSON data from the input file
     with open(input_file, 'r') as file:
@@ -33,6 +34,7 @@ def update_duplicate_pretty_names(input_file):
     # Write the updated data back to the input file
     with open(input_file, 'w') as file:
         json.dump(data, file, indent=2)
+
 
 # Usage example:
 input_file = "output.json"

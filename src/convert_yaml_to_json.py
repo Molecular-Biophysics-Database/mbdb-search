@@ -1,6 +1,7 @@
 import yaml
 import json
 
+
 def resolve_ref(ref, defs):
     ref_key = ref.split('/')[-1]
     return defs.get(ref_key, {})
@@ -43,6 +44,7 @@ def build_json_output(schema, base_path, defs, json_output):
                     # If there is no 'use' or 'type', it might be a nested object without its own type
                     # Continue without appending to the path
                     build_json_output(value, base_path, defs, json_output)
+
 
 # Read YAML content from a file
 with open('simplified_model.yaml', 'r') as file:
