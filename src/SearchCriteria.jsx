@@ -1,6 +1,21 @@
 import React from 'react';
 
 function SearchCriteria({ criteria, fieldsData, onChange, onRemove, showRemoveButton }) {
+    // Helper function to determine the input type
+    const getInputType = (fieldType) => {
+        switch (fieldType) {
+            case 'string':
+                return 'text';
+            case 'double':
+                return 'number';
+            case 'date':
+                return 'date';
+            default:
+                return 'text';
+        }
+    };
+    const fieldDetails = fieldsData.find(field => field.field_path === criteria.field) || {};
+
     return (
         <div className="search-criteria">
             {showRemoveButton && (
@@ -18,9 +33,11 @@ function SearchCriteria({ criteria, fieldsData, onChange, onRemove, showRemoveBu
                 ))}
             </select>
             <input
-                type="text"
+                type={getInputType(fieldDetails.type)}
                 value={criteria.value}
                 placeholder="Value"
+                min={fieldDetails.minimum}
+                max={fieldDetails.maximum} 
                 onChange={e => onChange(e, 'value')}
             />
             {showRemoveButton && (

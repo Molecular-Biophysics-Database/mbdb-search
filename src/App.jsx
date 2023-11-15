@@ -34,10 +34,19 @@ function App() {
         let queryString = '';
         for (let i = 0; i < searchCriteria.length; i++) {
             const sc = searchCriteria[i];
-            if (i !== 0) { // Do not add the expression for the first item
+            const fieldDetails = fieldsData.find(field => field.field_path === sc.field) || {};
+
+            if (i !== 0) {
                 queryString += encodeURIComponent(sc.expression) + '%20';
             }
-            queryString += `${encodeURIComponent(sc.field)}%3A"${encodeURIComponent(sc.value)}"`;
+
+            // Format the value based on the field type
+            let formattedValue = sc.value;
+            if (fieldDetails.type === 'string') {
+                formattedValue = `"${encodeURIComponent(sc.value)}"`;
+            }
+
+            queryString += `${encodeURIComponent(sc.field)}%3A${formattedValue}`;
             if (i < searchCriteria.length - 1) {
                 queryString += '%20';
             }
