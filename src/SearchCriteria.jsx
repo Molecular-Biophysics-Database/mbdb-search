@@ -44,8 +44,28 @@ function SearchCriteria({ criteria, fieldsData, onChange, onRemove, showRemoveBu
     };
     const fieldDetails = fieldsData.find(field => field.field_path === criteria.field) || {};
 
+    const [filterText, setFilterText] = useState('');
+    const [showFilterInput, setShowFilterInput] = useState(false);
+
+    // Function to handle filter text changes
+    const handleFilterChange = (e) => {
+        setFilterText(e.target.value);
+    };
+
+    // Function to toggle the filter input visibility
+    const toggleFilterInput = () => {
+        setShowFilterInput(!showFilterInput);
+    };
+
+    // Filter fieldsData based on the filter text
+    const filteredFields = fieldsData.filter(field =>
+        field.pretty_name.toLowerCase().includes(filterText.toLowerCase())
+    );
+
+
     return (
         <div className="search-criteria">
+            {/*Expresion part on the input*/}
             {showRemoveButton && (
                 <select value={criteria.expression} onChange={e => onChange(e, 'expression')}>
                     <option value="" disabled>Exp</option>
@@ -54,12 +74,32 @@ function SearchCriteria({ criteria, fieldsData, onChange, onRemove, showRemoveBu
                     <option value="NOT">NOT</option>
                 </select>
             )}
+
+            {/*Field part of the input*/}
+            <button onClick={toggleFilterInput} aria-label="Toggle filter input">
+                🔎
+            </button>
+
+            {/* Conditional rendering of the input field based on showFilterInput */}
+            {showFilterInput && (
+                <input
+                    type="text"
+                    value={filterText}
+                    onChange={handleFilterChange}
+                    placeholder="Type to filter..."
+                    autoFocus
+                />
+            )}
+
+            {/* Dropdown list showing filtered options */}
             <select value={criteria.field} onChange={e => onChange(e, 'field')}>
-                <option value="" disabled>Field</option>
-                {fieldsData.map((field, index) => (
+                <option value="" disabled>Select Field</option>
+                {filteredFields.map((field, index) => (
                     <option key={index} value={field.field_path}>{field.pretty_name}</option>
                 ))}
             </select>
+
+            {/*Value part of the input*/}
             <input
                 type={getInputType(fieldDetails.type)}
                 value={criteria.value}
