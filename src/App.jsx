@@ -10,15 +10,21 @@ import jsonData from '/src/output.json';
 function App() {
     // Start with one search criteria
     const [showAdvancedSearch, setShowAdvancedSearch] = useState(false);
+     // Update initial state to include validationError
     const [searchCriteria, setSearchCriteria] = useState([
-        {field: '', expression: '', value: ''}
+        { field: '', expression: '', value: '', validationError: '' }
     ]);
 
-    const handleCriteriaChange = (index, field, value) => {
+    // Update handleCriteriaChange to handle validation errors
+    const handleCriteriaChange = (index, field, value, validationError = '') => {
         const newCriteria = [...searchCriteria];
         newCriteria[index][field] = value;
+        newCriteria[index].validationError = validationError;
         setSearchCriteria(newCriteria);
     };
+
+    // Function to check if there are validation errors
+    const hasValidationErrors = searchCriteria.some(criteria => criteria.validationError);
 
     const addSearchCriteria = () => {
         setSearchCriteria([...searchCriteria, {field: '', expression: '', value: ''}]);
@@ -84,14 +90,14 @@ function App() {
                             <SearchCriteria
                                 criteria={criteria}
                                 fieldsData={fieldsData} // Pass the JSON data as a prop
-                                onChange={(e, field) => handleCriteriaChange(index, field, e.target.value)}
+                                onChange={(e, field, validationError) => handleCriteriaChange(index, field, e.target.value, validationError)}
                                 onRemove={() => removeSearchCriteria(index)}
                                 showRemoveButton={index > 0}
                             />
                         </div>
                     ))}
                     <button className="add-field" onClick={addSearchCriteria}>Add Field</button>
-                    <button className="search" onClick={handleSearch}>Search</button>
+                    <button className="search" onClick={handleSearch} disabled={hasValidationErrors}>Search</button>
                 </div>
             )}
         </>

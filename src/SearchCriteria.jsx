@@ -1,6 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 function SearchCriteria({ criteria, fieldsData, onChange, onRemove, showRemoveButton }) {
+    // State for validation error
+    const [validationError, setValidationError] = useState('');
     // Helper function to determine the input type
     const getInputType = (fieldType) => {
         switch (fieldType) {
@@ -13,6 +15,32 @@ function SearchCriteria({ criteria, fieldsData, onChange, onRemove, showRemoveBu
             default:
                 return 'text';
         }
+    };
+    const handleValueChange = (e) => {
+        const value = e.target.value;
+        const fieldDetails = fieldsData.find(field => field.field_path === criteria.field) || {};
+
+        // Reset validation error
+        setValidationError('');
+
+        // Validate for double type
+        if (fieldDetails.type === 'double') {
+            if ((fieldDetails.minimum && value < fieldDetails.minimum) ||
+                (fieldDetails.maximum && value > fieldDetails.maximum)) {
+                setValidationError(`Value must be between ${fieldDetails.minimum} and ${fieldDetails.maximum}`);
+                return;
+            }
+        }
+        if (validationError) {
+            // Call onChange with validation error
+            onChange(e, 'value', validationError);
+        } else {
+            // Call onChange without validation error
+            onChange(e, 'value', '');
+        }
+
+        // Call the original onChange handler
+        onChange(e, 'value');
     };
     const fieldDetails = fieldsData.find(field => field.field_path === criteria.field) || {};
 
@@ -37,9 +65,10 @@ function SearchCriteria({ criteria, fieldsData, onChange, onRemove, showRemoveBu
                 value={criteria.value}
                 placeholder="Value"
                 min={fieldDetails.minimum}
-                max={fieldDetails.maximum} 
-                onChange={e => onChange(e, 'value')}
+                max={fieldDetails.maximum}
+                onChange={handleValueChange}
             />
+            {validationError && <div className="validation-error">{validationError}</div>}
             {showRemoveButton && (
                 <button onClick={onRemove}>Remove</button>
             )}
