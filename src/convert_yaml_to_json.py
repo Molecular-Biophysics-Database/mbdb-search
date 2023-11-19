@@ -14,8 +14,8 @@ def resolve_ref(ref, defs):
 def build_json_output(schema, base_path, defs, json_output):
     if 'properties' in schema:
         for key, value in schema['properties'].items():
-            # TODO I had a problem with appending root, the collected_default_search_fields shouldnt be there
-            new_base_path = f"metadata.{key}" if not base_path else f"{base_path}.{key}"
+            # TODO I had a problem with appending root, the collected_default_search_fields shouldn't be there
+            # new_base_path = f"metadata.{key}" if not base_path else f"{base_path}.{key}"
 
             if 'use' in value:
                 # Resolve the '$ref' and pass down the current path

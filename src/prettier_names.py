@@ -22,7 +22,6 @@ def update_duplicate_pretty_names(input_file):
     # Iterate through the data again to update the pretty names
     for item in data:
         pretty_name = item["pretty_name"]
-        pretty_name = pretty_name
         field_path = item["field_path"]
 
         # Check if the pretty_name is in the set of names to update
