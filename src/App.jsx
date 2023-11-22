@@ -1,10 +1,8 @@
-// import {useState} from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
 import SearchCriteria from './SearchCriteria';
 import {useState, useEffect} from 'react';
-
 import jsonData from '/src/output.json';
 
 function App() {
@@ -16,8 +14,9 @@ function App() {
     ]);
 
     // Update handleCriteriaChange to handle validation errors
-    const handleCriteriaChange = (index, field, value, validationError = '') => {
+        const handleCriteriaChange = (index, field, eventOrValue, validationError = '') => {
         const newCriteria = [...searchCriteria];
+        const value = eventOrValue.target ? eventOrValue.target.value : eventOrValue;
         newCriteria[index][field] = value;
         newCriteria[index].validationError = validationError;
         setSearchCriteria(newCriteria);
@@ -26,8 +25,16 @@ function App() {
     // Function to check if there are validation errors
     const hasValidationErrors = searchCriteria.some(criteria => criteria.validationError);
 
+    // Initialize your search criteria with brackets
     const addSearchCriteria = () => {
-        setSearchCriteria([...searchCriteria, {field: '', expression: '', value: ''}]);
+        setSearchCriteria([...searchCriteria, {
+            field: '',
+            expression: '',
+            value: '',
+            validationError: '',
+            leftBracket: false,
+            rightBracket: false
+        }]);
     };
 
     const removeSearchCriteria = index => {
@@ -42,17 +49,27 @@ function App() {
             const sc = searchCriteria[i];
             const fieldDetails = fieldsData.find(field => field.field_path === sc.field) || {};
 
+            // Include EXP if not first line
             if (i !== 0) {
                 queryString += encodeURIComponent(sc.expression) + '%20';
+            }
+            // Left bracket
+            if (sc.leftBracket) {
+                queryString += "(";
             }
 
             // Format the value based on the field type
             let formattedValue = sc.value;
+            // If it is a string put quotes around
             if (fieldDetails.type === 'string') {
                 formattedValue = `"${encodeURIComponent(sc.value)}"`;
             }
 
             queryString += `${encodeURIComponent(sc.field)}%3A${formattedValue}`;
+            // Right bracket
+            if (sc.rightBracket) {
+                queryString += ")";
+            }
             if (i < searchCriteria.length - 1) {
                 queryString += '%20';
             }

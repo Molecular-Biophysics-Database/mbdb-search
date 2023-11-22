@@ -16,6 +16,8 @@ function SearchCriteria({ criteria, fieldsData, onChange, onRemove, showRemoveBu
                 return 'text';
         }
     };
+
+    // VALUE VALIDATION AND ERROR
     const handleValueChange = (e) => {
         const value = e.target.value;
         const fieldDetails = fieldsData.find(field => field.field_path === criteria.field) || {};
@@ -44,6 +46,7 @@ function SearchCriteria({ criteria, fieldsData, onChange, onRemove, showRemoveBu
     };
     const fieldDetails = fieldsData.find(field => field.field_path === criteria.field) || {};
 
+    // FILTER SELECTOR FIELD
     const [filterText, setFilterText] = useState('');
     const [showFilterInput, setShowFilterInput] = useState(false);
 
@@ -62,10 +65,30 @@ function SearchCriteria({ criteria, fieldsData, onChange, onRemove, showRemoveBu
         field.pretty_name.toLowerCase().includes(filterText.toLowerCase())
     );
 
+    // BRACKETS
+    // States for bracket toggling
+    const [leftBracketActive, setLeftBracketActive] = useState(false);
+    const [rightBracketActive, setRightBracketActive] = useState(false);
+
+    // Function to toggle left bracket
+    const toggleLeftBracket = () => {
+        const newLeftBracketState = !leftBracketActive;
+        setLeftBracketActive(newLeftBracketState);
+        // Call onChange with an object that mimics the event structure
+        onChange({ target: { value: newLeftBracketState } }, 'leftBracket');
+    };
+
+    // Function to toggle right bracket
+    const toggleRightBracket = () => {
+        const newRightBracketState = !rightBracketActive;
+        setRightBracketActive(newRightBracketState);
+        // Call onChange with an object that mimics the event structure
+        onChange({ target: { value: newRightBracketState } }, 'rightBracket');
+    };
 
     return (
         <div className="search-criteria">
-            {/*Expresion part on the input*/}
+            {/*Expression part on the input*/}
             {showRemoveButton && (
                 <select value={criteria.expression} onChange={e => onChange(e, 'expression')}>
                     <option value="" disabled>Exp</option>
@@ -74,6 +97,10 @@ function SearchCriteria({ criteria, fieldsData, onChange, onRemove, showRemoveBu
                     <option value="NOT">NOT</option>
                 </select>
             )}
+            {/*Left bracket button*/}
+            <button onClick={toggleLeftBracket} className={leftBracketActive ? 'active' : 'deactive'}>
+                (
+            </button>
 
             {/*Field part of the input*/}
             <button onClick={toggleFilterInput} aria-label="Toggle filter input">
@@ -108,6 +135,11 @@ function SearchCriteria({ criteria, fieldsData, onChange, onRemove, showRemoveBu
                 max={fieldDetails.maximum}
                 onChange={handleValueChange}
             />
+            {/*Right bracket button*/}
+            <button onClick={toggleRightBracket} className={rightBracketActive ? 'active' : 'deactive'}>
+                )
+            </button>
+            {/*Field that shows that validation error message*/}
             {validationError && <div className="validation-error">{validationError}</div>}
             {showRemoveButton && (
                 <button onClick={onRemove}>Remove</button>

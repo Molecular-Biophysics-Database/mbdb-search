@@ -120,3 +120,11 @@ button:focus {
     outline: none;
     border-color: #646cff;
 }
+/*bracket color*/
+button.deactive {
+    background-color: red !important;
+}
+
+button.active {
+    background-color: green !important;
+}
