@@ -10,15 +10,21 @@ function App() {
     const [showAdvancedSearch, setShowAdvancedSearch] = useState(false);
      // Update initial state to include validationError
     const [searchCriteria, setSearchCriteria] = useState([
-        { field: '', expression: '', value: '', validationError: '' }
+        { field: '', expression: '', value: '', validationError: '', rangeValue: '' }
     ]);
 
     // Update handleCriteriaChange to handle validation errors
-        const handleCriteriaChange = (index, field, eventOrValue, validationError = '') => {
+    const handleCriteriaChange = (index, field, eventOrValue, validationError = '') => {
         const newCriteria = [...searchCriteria];
         const value = eventOrValue.target ? eventOrValue.target.value : eventOrValue;
-        newCriteria[index][field] = value;
-        newCriteria[index].validationError = validationError;
+        if (field === 'rangeValue') {
+            // Update the range value directly
+            newCriteria[index][field] = value;
+        } else {
+            // Handle all other fields
+            newCriteria[index][field] = value;
+            newCriteria[index].validationError = validationError;
+        }
         setSearchCriteria(newCriteria);
     };
 
@@ -60,8 +66,11 @@ function App() {
 
             // Format the value based on the field type
             let formattedValue = sc.value;
-            // If it is a string put quotes around
-            if (fieldDetails.type === 'string') {
+            if (sc.rangeValue) {
+                // Format as a range if rangeValue is present
+                formattedValue = `[${encodeURIComponent(sc.value)} TO ${encodeURIComponent(sc.rangeValue)}]`;
+            } else if (fieldDetails.type === 'string') {
+                // Put quotes around string values
                 formattedValue = `"${encodeURIComponent(sc.value)}"`;
             }
 

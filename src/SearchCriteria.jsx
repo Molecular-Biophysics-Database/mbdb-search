@@ -16,6 +16,22 @@ function SearchCriteria({ criteria, fieldsData, onChange, onRemove, showRemoveBu
                 return 'text';
         }
     };
+    // RANGE
+    // State to manage the second value for range inputs
+    const [rangeValue, setRangeValue] = useState('');
+    const [showRangeInput, setShowRangeInput] = useState(false);
+
+    // Add this function to toggle the range input visibility
+    const toggleRangeInput = () => {
+        setShowRangeInput(!showRangeInput);
+    };
+
+    // Update this function to handle changes to the range value
+    const handleRangeValueChange = (e) => {
+        const value = e.target.value;
+        setRangeValue(value);
+        onChange({ target: { value: value } }, 'rangeValue');
+    };
 
     // VALUE VALIDATION AND ERROR
     const handleValueChange = (e) => {
@@ -135,6 +151,22 @@ function SearchCriteria({ criteria, fieldsData, onChange, onRemove, showRemoveBu
                 max={fieldDetails.maximum}
                 onChange={handleValueChange}
             />
+            {/* Add button to enable range input for number and date fields */}
+            {['double', 'date'].includes(fieldDetails.type) && !showRangeInput && (
+                <button onClick={toggleRangeInput}>+</button>
+            )}
+
+            {/* Show the second value input if showRangeInput is true */}
+            {showRangeInput && (
+                <input
+                    type={getInputType(fieldDetails.type)}
+                    value={rangeValue}
+                    placeholder="To Value"
+                    min={fieldDetails.minimum}
+                    max={fieldDetails.maximum}
+                    onChange={handleRangeValueChange}
+                />
+            )}
             {/*Right bracket button*/}
             <button onClick={toggleRightBracket} className={rightBracketActive ? 'active' : 'deactive'}>
                 )
