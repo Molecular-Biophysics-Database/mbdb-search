@@ -21,12 +21,12 @@ function SearchCriteria({ criteria, fieldsData, onChange, onRemove, showRemoveBu
     const [rangeValue, setRangeValue] = useState('');
     const [showRangeInput, setShowRangeInput] = useState(false);
 
-    // Add this function to toggle the range input visibility
+    // Function to toggle the range input visibility
     const toggleRangeInput = () => {
         setShowRangeInput(!showRangeInput);
     };
 
-    // Update this function to handle changes to the range value
+    // Function to handle changes to the range value
     const handleRangeValueChange = (e) => {
         const value = e.target.value;
         setRangeValue(value);

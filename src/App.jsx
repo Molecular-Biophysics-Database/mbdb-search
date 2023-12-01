@@ -14,16 +14,18 @@ function App() {
     ]);
 
     // Update handleCriteriaChange to handle validation errors
-    const handleCriteriaChange = (index, field, eventOrValue, validationError = '') => {
+    const handleCriteriaChange = (index, field, value, validationError = '') => {
         const newCriteria = [...searchCriteria];
-        const value = eventOrValue.target ? eventOrValue.target.value : eventOrValue;
         if (field === 'rangeValue') {
             // Update the range value directly
             newCriteria[index][field] = value;
-        } else {
-            // Handle all other fields
-            newCriteria[index][field] = value;
+        } else if (typeof value === 'object' && value.target) {
+            // Handle changes from event targets
+            newCriteria[index][field] = value.target.value;
             newCriteria[index].validationError = validationError;
+        } else {
+            // Handle direct value changes (for non-event values like rangeValue)
+            newCriteria[index][field] = value;
         }
         setSearchCriteria(newCriteria);
     };
