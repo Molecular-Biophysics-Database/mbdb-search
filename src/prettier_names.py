@@ -1,11 +1,34 @@
 import json
 
-def update_duplicate_pretty_names(input_file):
-    # Read the JSON data from the input file
-    with open(input_file, 'r') as file:
-        data = json.load(file)
 
+# Read from a file
+def read_from_file(file_name):
+    with open(file_name, 'r') as file:
+        return json.load(file)
+
+
+# Write to a file
+def write_to_file(file_name, data):
+    with open(file_name, 'w') as file:
+        json.dump(data, file, indent=2)
+
+
+def update_pretty_name(item, pretty_names_to_update):
     # Create a dictionary to store pretty names and their counts
+    pretty_name = item["pretty_name"]
+    field_path = item["field_path"]
+
+    # Check if the pretty_name is in the set of names to update
+    if pretty_name in pretty_names_to_update:
+        parent_name = field_path.split('.')[-2]
+        new_pretty_name = f"{pretty_name.replace('_', ' ').capitalize()} ({parent_name.replace('_', ' ').capitalize()})"
+    else:
+        new_pretty_name = f"{pretty_name.replace('_', ' ').capitalize()}"
+
+    item["pretty_name"] = new_pretty_name
+
+
+def update_duplicate_pretty_names(data):
     pretty_name_counts = {}
     pretty_names_to_update = set()
 
@@ -21,22 +44,21 @@ def update_duplicate_pretty_names(input_file):
 
     # Iterate through the data again to update the pretty names
     for item in data:
-        pretty_name = item["pretty_name"]
-        field_path = item["field_path"]
-
-        # Check if the pretty_name is in the set of names to update
-        if pretty_name in pretty_names_to_update:
-            parent_name = field_path.split('.')[-2]
-            new_pretty_name = f"{pretty_name.replace('_', ' ').capitalize()} ({parent_name.replace('_', ' ').capitalize()})"
-            item["pretty_name"] = new_pretty_name
-        else:
-            new_pretty_name = f"{pretty_name.replace('_', ' ').capitalize()}"
-            item["pretty_name"] = new_pretty_name
+        update_pretty_name(item, pretty_names_to_update)
 
 
-    # Write the updated data back to the input file
-    with open(input_file, 'w') as file:
-        json.dump(data, file, indent=2)
+def main():
+    input_file = "output.json"
 
-input_file = "output.json"
-update_duplicate_pretty_names(input_file)
+    # Read the JSON data from the input file
+    data = read_from_file(input_file)
+
+    # Update duplicate pretty names
+    update_duplicate_pretty_names(data)
+
+    # Write the updated data back to the file
+    write_to_file(input_file, data)
+
+
+if __name__ == "__main__":
+    main()
