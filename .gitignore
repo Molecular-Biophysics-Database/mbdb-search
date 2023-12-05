@@ -22,3 +22,10 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+*.idea
+
+# python virutal env
+.venv/
+
+# npm lock file
+package-lock.json
