@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 function SearchCriteria({ criteria, fieldsData, onChange, onRemove, showRemoveButton }) {
     // State for validation error
     const [validationError, setValidationError] = useState('');
+    const [rangeValidationError, setRangeValidationError] = useState('');
     // Helper function to determine the input type
     const getInputType = (fieldType) => {
         switch (fieldType) {
@@ -28,9 +29,28 @@ function SearchCriteria({ criteria, fieldsData, onChange, onRemove, showRemoveBu
 
     // Function to handle changes to the range value
     const handleRangeValueChange = (e) => {
-        const value = e.target.value;
-        setRangeValue(value);
-        onChange({ target: { value: value } }, 'rangeValue');
+        let value = e.target.value;
+        const fieldDetails = fieldsData.find(field => field.field_path === criteria.field) || {};
+
+        // Reset range validation error
+        setRangeValidationError('');
+
+        // Validate for double type
+        if (fieldDetails.type === 'double') {
+            if ((fieldDetails.minimum && value < fieldDetails.minimum) ||
+                (fieldDetails.maximum && value > fieldDetails.maximum)) {
+                setRangeValidationError(`Value must be between ${fieldDetails.minimum} and ${fieldDetails.maximum}`);
+                value = (value < fieldDetails.minimum) ? fieldDetails.minimum : fieldDetails.maximum;
+                setRangeValue(value); // Correct the value if it's out of bounds
+                return;
+            }
+        }
+
+        // If there are no validation errors, update the state and parent component
+        if (!rangeValidationError) {
+            setRangeValue(value);
+            onChange({ target: { value: value } }, 'rangeValue');
+        }
     };
 
     // VALUE VALIDATION AND ERROR
@@ -158,14 +178,17 @@ function SearchCriteria({ criteria, fieldsData, onChange, onRemove, showRemoveBu
 
             {/* Show the second value input if showRangeInput is true */}
             {showRangeInput && (
-                <input
-                    type={getInputType(fieldDetails.type)}
-                    value={rangeValue}
-                    placeholder="To Value"
-                    min={fieldDetails.minimum}
-                    max={fieldDetails.maximum}
-                    onChange={handleRangeValueChange}
-                />
+                <>
+                    <input
+                        type={getInputType(fieldDetails.type)}
+                        value={rangeValue}
+                        placeholder="To Value"
+                        min={fieldDetails.minimum}
+                        max={fieldDetails.maximum}
+                        onChange={handleRangeValueChange}
+                    />
+                    {rangeValidationError && <div className="validation-error">{rangeValidationError}</div>}
+                </>
             )}
             {/*Right bracket button*/}
             <button onClick={toggleRightBracket} className={rightBracketActive ? 'active' : 'deactive'}>
