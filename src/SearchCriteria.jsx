@@ -27,6 +27,7 @@ function SearchCriteria({ criteria, fieldsData, onChange, onRemove, showRemoveBu
         setShowRangeInput(!showRangeInput);
     };
 
+    // TODO: functions handleRangeValueChange and handleValueChange could be converted into one function
     // Function to handle changes to the range value
     const handleRangeValueChange = (e) => {
         let value = parseFloat(e.target.value); // Convert the value to a float for comparison
