@@ -24,12 +24,6 @@
     "description": "Unique and persistent identifier which can be generated upon deposition of the first if a group of data is deposited at the same time. These can be used to specified records are closely connected e.g. one sample measured with multiple techniques. For more loosely connected results the project field should be used as sole link"
   },
   {
-    "pretty_name": "id",
-    "field_path": "metadata.general_parameters.record_information.project.id",
-    "type": "string",
-    "description": "Unique and persistent identifier which can be generated upon deposition of the first member of the project, which can be used to show a relation to other data within the MBDB"
-  },
-  {
     "pretty_name": "title",
     "field_path": "metadata.general_parameters.record_information.project.title",
     "type": "string",
@@ -405,31 +399,6 @@
     "description": "The numeric value of the temperature"
   },
   {
-    "pretty_name": "upper_error",
-    "field_path": "metadata.general_parameters.physical_conditions_at_sample_handling.temperature.value_error.upper_error",
-    "type": "double",
-    "description": "The upper error, i.e. the number that should be added the value to get the upper bound"
-  },
-  {
-    "pretty_name": "lower_error",
-    "field_path": "metadata.general_parameters.physical_conditions_at_sample_handling.temperature.value_error.lower_error",
-    "type": "double",
-    "description": "The lower error, i.e. the number that should be subtracted from the value to get the lower bound"
-  },
-  {
-    "pretty_name": "errors_are_relative",
-    "field_path": "metadata.general_parameters.physical_conditions_at_sample_handling.temperature.value_error.errors_are_relative",
-    "type": "boolean",
-    "description": "Whether the errors should be interpreted as relative errors in percent"
-  },
-  {
-    "pretty_name": "error_level",
-    "field_path": "metadata.general_parameters.physical_conditions_at_sample_handling.temperature.value_error.error_level",
-    "type": "double",
-    "description": "How many standard deviations the error corresponds to",
-    "minimum": 0.0
-  },
-  {
     "pretty_name": "operational_value",
     "field_path": "metadata.general_parameters.physical_conditions_at_sample_handling.temperature.operational_value",
     "type": "string",
@@ -448,31 +417,6 @@
     "description": "The numeric value of the pressure"
   },
   {
-    "pretty_name": "upper_error",
-    "field_path": "metadata.general_parameters.physical_conditions_at_sample_handling.pressure.value_error.upper_error",
-    "type": "double",
-    "description": "The upper error, i.e. the number that should be added the value to get the upper bound"
-  },
-  {
-    "pretty_name": "lower_error",
-    "field_path": "metadata.general_parameters.physical_conditions_at_sample_handling.pressure.value_error.lower_error",
-    "type": "double",
-    "description": "The lower error, i.e. the number that should be subtracted from the value to get the lower bound"
-  },
-  {
-    "pretty_name": "errors_are_relative",
-    "field_path": "metadata.general_parameters.physical_conditions_at_sample_handling.pressure.value_error.errors_are_relative",
-    "type": "boolean",
-    "description": "Whether the errors should be interpreted as relative errors in percent"
-  },
-  {
-    "pretty_name": "error_level",
-    "field_path": "metadata.general_parameters.physical_conditions_at_sample_handling.pressure.value_error.error_level",
-    "type": "double",
-    "description": "How many standard deviations the error corresponds to",
-    "minimum": 0.0
-  },
-  {
     "pretty_name": "controlled",
     "field_path": "metadata.general_parameters.physical_conditions_at_sample_handling.pressure.controlled",
     "type": "boolean",
@@ -485,41 +429,10 @@
     "description": "The numeric value of the humidity"
   },
   {
-    "pretty_name": "upper_error",
-    "field_path": "metadata.general_parameters.physical_conditions_at_sample_handling.humidity.value_error.upper_error",
-    "type": "double",
-    "description": "The upper error, i.e. the number that should be added the value to get the upper bound"
-  },
-  {
-    "pretty_name": "lower_error",
-    "field_path": "metadata.general_parameters.physical_conditions_at_sample_handling.humidity.value_error.lower_error",
-    "type": "double",
-    "description": "The lower error, i.e. the number that should be subtracted from the value to get the lower bound"
-  },
-  {
-    "pretty_name": "errors_are_relative",
-    "field_path": "metadata.general_parameters.physical_conditions_at_sample_handling.humidity.value_error.errors_are_relative",
-    "type": "boolean",
-    "description": "Whether the errors should be interpreted as relative errors in percent"
-  },
-  {
-    "pretty_name": "error_level",
-    "field_path": "metadata.general_parameters.physical_conditions_at_sample_handling.humidity.value_error.error_level",
-    "type": "double",
-    "description": "How many standard deviations the error corresponds to",
-    "minimum": 0.0
-  },
-  {
     "pretty_name": "controlled",
     "field_path": "metadata.general_parameters.physical_conditions_at_sample_handling.humidity.controlled",
     "type": "boolean",
     "description": "Whether the humidity was actively controlled"
-  },
-  {
-    "pretty_name": "id",
-    "field_path": "metadata.general_parameters.chemical_information.chemical_environments[].id",
-    "type": "string",
-    "description": ""
   },
   {
     "pretty_name": "name",
@@ -534,31 +447,6 @@
     "description": "The pH value of the solution"
   },
   {
-    "pretty_name": "upper_error",
-    "field_path": "metadata.general_parameters.chemical_information.chemical_environments[].ph.value_error.upper_error",
-    "type": "double",
-    "description": "The upper error, i.e. the number that should be added the value to get the upper bound"
-  },
-  {
-    "pretty_name": "lower_error",
-    "field_path": "metadata.general_parameters.chemical_information.chemical_environments[].ph.value_error.lower_error",
-    "type": "double",
-    "description": "The lower error, i.e. the number that should be subtracted from the value to get the lower bound"
-  },
-  {
-    "pretty_name": "errors_are_relative",
-    "field_path": "metadata.general_parameters.chemical_information.chemical_environments[].ph.value_error.errors_are_relative",
-    "type": "boolean",
-    "description": "Whether the errors should be interpreted as relative errors in percent"
-  },
-  {
-    "pretty_name": "error_level",
-    "field_path": "metadata.general_parameters.chemical_information.chemical_environments[].ph.value_error.error_level",
-    "type": "double",
-    "description": "How many standard deviations the error corresponds to",
-    "minimum": 0.0
-  },
-  {
     "pretty_name": "value",
     "field_path": "metadata.general_parameters.chemical_information.chemical_environments[].ionic_strength.value",
     "type": "double",
@@ -571,37 +459,6 @@
     "type": "double",
     "description": "Numerical value of the dynamic viscosity",
     "minimum": 0.0
-  },
-  {
-    "pretty_name": "upper_error",
-    "field_path": "metadata.general_parameters.chemical_information.chemical_environments[].dynamic_viscosity.value_error.upper_error",
-    "type": "double",
-    "description": "The upper error, i.e. the number that should be added the value to get the upper bound"
-  },
-  {
-    "pretty_name": "lower_error",
-    "field_path": "metadata.general_parameters.chemical_information.chemical_environments[].dynamic_viscosity.value_error.lower_error",
-    "type": "double",
-    "description": "The lower error, i.e. the number that should be subtracted from the value to get the lower bound"
-  },
-  {
-    "pretty_name": "errors_are_relative",
-    "field_path": "metadata.general_parameters.chemical_information.chemical_environments[].dynamic_viscosity.value_error.errors_are_relative",
-    "type": "boolean",
-    "description": "Whether the errors should be interpreted as relative errors in percent"
-  },
-  {
-    "pretty_name": "error_level",
-    "field_path": "metadata.general_parameters.chemical_information.chemical_environments[].dynamic_viscosity.value_error.error_level",
-    "type": "double",
-    "description": "How many standard deviations the error corresponds to",
-    "minimum": 0.0
-  },
-  {
-    "pretty_name": "unit",
-    "field_path": "metadata.general_parameters.chemical_information.chemical_environments[].dynamic_viscosity.unit",
-    "type": "string",
-    "description": "The unit of the dynamic viscosity"
   },
   {
     "pretty_name": "degassing_method",
@@ -624,12 +481,6 @@
   {
     "pretty_name": "additional_specifications[]",
     "field_path": "metadata.general_parameters.chemical_information.chemical_environments[].additional_specifications[]",
-    "type": "string",
-    "description": ""
-  },
-  {
-    "pretty_name": "id",
-    "field_path": "metadata.general_parameters.derived_parameters[].id",
     "type": "string",
     "description": ""
   },
@@ -663,37 +514,6 @@
     "field_path": "metadata.general_parameters.derived_parameters[].value",
     "type": "double",
     "description": "Numerical value of the derived parameter"
-  },
-  {
-    "pretty_name": "upper_error",
-    "field_path": "metadata.general_parameters.derived_parameters[].value_error.upper_error",
-    "type": "double",
-    "description": "The upper error, i.e. the number that should be added the value to get the upper bound"
-  },
-  {
-    "pretty_name": "lower_error",
-    "field_path": "metadata.general_parameters.derived_parameters[].value_error.lower_error",
-    "type": "double",
-    "description": "The lower error, i.e. the number that should be subtracted from the value to get the lower bound"
-  },
-  {
-    "pretty_name": "errors_are_relative",
-    "field_path": "metadata.general_parameters.derived_parameters[].value_error.errors_are_relative",
-    "type": "boolean",
-    "description": "Whether the errors should be interpreted as relative errors in percent"
-  },
-  {
-    "pretty_name": "error_level",
-    "field_path": "metadata.general_parameters.derived_parameters[].value_error.error_level",
-    "type": "double",
-    "description": "How many standard deviations the error corresponds to",
-    "minimum": 0.0
-  },
-  {
-    "pretty_name": "unit",
-    "field_path": "metadata.general_parameters.derived_parameters[].unit",
-    "type": "string",
-    "description": "Unit of the derived parameter"
   },
   {
     "pretty_name": "raw_measurements[]",
@@ -742,12 +562,6 @@
     "maximum": 100.0
   },
   {
-    "pretty_name": "id",
-    "field_path": "metadata.method_specific_parameters.measurements[].id",
-    "type": "string",
-    "description": ""
-  },
-  {
     "pretty_name": "name",
     "field_path": "metadata.method_specific_parameters.measurements[].name",
     "type": "string",
@@ -773,31 +587,6 @@
     "minimum": -1.0
   },
   {
-    "pretty_name": "upper_error",
-    "field_path": "metadata.method_specific_parameters.measurements[].sample.targets[].concentration.value_error.upper_error",
-    "type": "double",
-    "description": "The upper error, i.e. the number that should be added the value to get the upper bound"
-  },
-  {
-    "pretty_name": "lower_error",
-    "field_path": "metadata.method_specific_parameters.measurements[].sample.targets[].concentration.value_error.lower_error",
-    "type": "double",
-    "description": "The lower error, i.e. the number that should be subtracted from the value to get the lower bound"
-  },
-  {
-    "pretty_name": "errors_are_relative",
-    "field_path": "metadata.method_specific_parameters.measurements[].sample.targets[].concentration.value_error.errors_are_relative",
-    "type": "boolean",
-    "description": "Whether the errors should be interpreted as relative errors in percent"
-  },
-  {
-    "pretty_name": "error_level",
-    "field_path": "metadata.method_specific_parameters.measurements[].sample.targets[].concentration.value_error.error_level",
-    "type": "double",
-    "description": "How many standard deviations the error corresponds to",
-    "minimum": 0.0
-  },
-  {
     "pretty_name": "name",
     "field_path": "metadata.method_specific_parameters.measurements[].sample.targets[].concentration.obtained_protocol[].name",
     "type": "string",
@@ -821,31 +610,6 @@
     "type": "double",
     "description": "The numerical value of the concentration, -1 if unknown",
     "minimum": -1.0
-  },
-  {
-    "pretty_name": "upper_error",
-    "field_path": "metadata.method_specific_parameters.measurements[].sample.ligands[].concentration.value_error.upper_error",
-    "type": "double",
-    "description": "The upper error, i.e. the number that should be added the value to get the upper bound"
-  },
-  {
-    "pretty_name": "lower_error",
-    "field_path": "metadata.method_specific_parameters.measurements[].sample.ligands[].concentration.value_error.lower_error",
-    "type": "double",
-    "description": "The lower error, i.e. the number that should be subtracted from the value to get the lower bound"
-  },
-  {
-    "pretty_name": "errors_are_relative",
-    "field_path": "metadata.method_specific_parameters.measurements[].sample.ligands[].concentration.value_error.errors_are_relative",
-    "type": "boolean",
-    "description": "Whether the errors should be interpreted as relative errors in percent"
-  },
-  {
-    "pretty_name": "error_level",
-    "field_path": "metadata.method_specific_parameters.measurements[].sample.ligands[].concentration.value_error.error_level",
-    "type": "double",
-    "description": "How many standard deviations the error corresponds to",
-    "minimum": 0.0
   },
   {
     "pretty_name": "name",
@@ -884,12 +648,6 @@
     "description": "Short description of the step"
   },
   {
-    "pretty_name": "id",
-    "field_path": "metadata.method_specific_parameters.measurements[].measured_data.x_data.id",
-    "type": "uuid",
-    "description": "Unique ID for the measured data to be used as a link"
-  },
-  {
     "pretty_name": "name",
     "field_path": "metadata.method_specific_parameters.measurements[].measured_data.x_data.name",
     "type": "string",
@@ -902,18 +660,6 @@
     "description": ""
   },
   {
-    "pretty_name": "unit",
-    "field_path": "metadata.method_specific_parameters.measurements[].measured_data.x_data.unit",
-    "type": "string",
-    "description": "The numerical values of the data series"
-  },
-  {
-    "pretty_name": "id",
-    "field_path": "metadata.method_specific_parameters.measurements[].measured_data.y_data.id",
-    "type": "uuid",
-    "description": "Unique ID for the measured data to be used as a link"
-  },
-  {
     "pretty_name": "name",
     "field_path": "metadata.method_specific_parameters.measurements[].measured_data.y_data.name",
     "type": "string",
@@ -924,12 +670,6 @@
     "field_path": "metadata.method_specific_parameters.measurements[].measured_data.y_data.values[]",
     "type": "double",
     "description": ""
-  },
-  {
-    "pretty_name": "unit",
-    "field_path": "metadata.method_specific_parameters.measurements[].measured_data.y_data.unit",
-    "type": "string",
-    "description": "The numerical values of the data series"
   },
   {
     "pretty_name": "derived_parameter",

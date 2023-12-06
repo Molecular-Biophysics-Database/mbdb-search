@@ -42,8 +42,14 @@ def create_field_item(key, value, current_path):
 
 
 def build_json_output(schema, base_path, defs, json_output):
+    ignore_keys = ['value_error', 'unit', 'id']  # List of keys to ignore
+
     if 'properties' in schema:
         for key, value in schema['properties'].items():
+            # TODO: Currently ignoring 'value_error', 'unit', and 'id'. Revisit if needed.
+            if key in ignore_keys:
+                continue  # Skip the current key
+
             # TODO I had a problem with appending root, the collected_default_search_fields shouldn't be there
             # new_base_path = f"metadata.{key}" if not base_path else f"{base_path}.{key}"
 
