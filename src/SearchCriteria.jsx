@@ -29,56 +29,54 @@ function SearchCriteria({ criteria, fieldsData, onChange, onRemove, showRemoveBu
 
     // Function to handle changes to the range value
     const handleRangeValueChange = (e) => {
-        let value = e.target.value;
+        let value = parseFloat(e.target.value); // Convert the value to a float for comparison
         const fieldDetails = fieldsData.find(field => field.field_path === criteria.field) || {};
 
-        // Reset range validation error
-        setRangeValidationError('');
+        // Assume no error initially
+        let error = '';
 
         // Validate for double type
         if (fieldDetails.type === 'double') {
-            if ((fieldDetails.minimum && value < fieldDetails.minimum) ||
-                (fieldDetails.maximum && value > fieldDetails.maximum)) {
-                setRangeValidationError(`Value must be between ${fieldDetails.minimum} and ${fieldDetails.maximum}`);
-                value = (value < fieldDetails.minimum) ? fieldDetails.minimum : fieldDetails.maximum;
-                setRangeValue(value); // Correct the value if it's out of bounds
-                return;
+            if (value < fieldDetails.minimum) {
+                value = fieldDetails.minimum; // Set to minimum if below range
+                error = `Value must be at least ${fieldDetails.minimum}`;
+            } else if (value > fieldDetails.maximum) {
+                value = fieldDetails.maximum; // Set to maximum if above range
+                error = `Value must be no more than ${fieldDetails.maximum}`;
             }
         }
 
-        // If there are no validation errors, update the state and parent component
-        if (!rangeValidationError) {
-            setRangeValue(value);
-            onChange({ target: { value: value } }, 'rangeValue');
-        }
+        // Update local state and parent state immediately with the corrected value
+        setRangeValue(value.toString()); // Convert back to string for the input field
+        onChange({ target: { value: value.toString() } }, 'rangeValue'); // Update parent component
+
+        // Set the validation error message if there is an error
+        setRangeValidationError(error);
     };
+
 
     // VALUE VALIDATION AND ERROR
     const handleValueChange = (e) => {
-        const value = e.target.value;
+        let value = parseFloat(e.target.value); // Convert the value to a float for comparison
         const fieldDetails = fieldsData.find(field => field.field_path === criteria.field) || {};
 
-        // Reset validation error
-        setValidationError('');
+        // Assume no error initially
+        let error = '';
 
         // Validate for double type
         if (fieldDetails.type === 'double') {
-            if ((fieldDetails.minimum && value < fieldDetails.minimum) ||
-                (fieldDetails.maximum && value > fieldDetails.maximum)) {
-                setValidationError(`Value must be between ${fieldDetails.minimum} and ${fieldDetails.maximum}`);
-                return;
+            if (value < fieldDetails.minimum) {
+                value = fieldDetails.minimum;
+                error = `Value must be at least ${fieldDetails.minimum}`;
+            } else if (value > fieldDetails.maximum) {
+                value = fieldDetails.maximum;
+                error = `Value must be no more than ${fieldDetails.maximum}`;
             }
         }
-        if (validationError) {
-            // Call onChange with validation error
-            onChange(e, 'value', validationError);
-        } else {
-            // Call onChange without validation error
-            onChange(e, 'value', '');
-        }
 
-        // Call the original onChange handler
-        onChange(e, 'value');
+        // Update local state and parent state immediately with the corrected value
+        setValidationError(error); // Update validation error if any
+        onChange({ target: { value: value.toString() } }, 'value'); // Update parent component
     };
     const fieldDetails = fieldsData.find(field => field.field_path === criteria.field) || {};
 
@@ -165,12 +163,15 @@ function SearchCriteria({ criteria, fieldsData, onChange, onRemove, showRemoveBu
             {/*Value part of the input*/}
             <input
                 type={getInputType(fieldDetails.type)}
-                value={criteria.value}
+                value={criteria.value} // This should be the state value that is updated on change
                 placeholder="Value"
                 min={fieldDetails.minimum}
                 max={fieldDetails.maximum}
                 onChange={handleValueChange}
             />
+            {/* Display validation error if any */}
+            {validationError && <div className="validation-error">{validationError}</div>}
+
             {/* Add button to enable range input for number and date fields */}
             {['double', 'date'].includes(fieldDetails.type) && !showRangeInput && (
                 <button onClick={toggleRangeInput}>+</button>
@@ -195,7 +196,7 @@ function SearchCriteria({ criteria, fieldsData, onChange, onRemove, showRemoveBu
                 )
             </button>
             {/*Field that shows that validation error message*/}
-            {validationError && <div className="validation-error">{validationError}</div>}
+            {/*{validationError && <div className="validation-error">{validationError}</div>}*/}
             {showRemoveButton && (
                 <button onClick={onRemove}>Remove</button>
             )}
