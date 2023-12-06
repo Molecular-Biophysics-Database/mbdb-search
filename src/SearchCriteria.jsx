@@ -27,6 +27,22 @@ function SearchCriteria({ criteria, fieldsData, onChange, onRemove, showRemoveBu
         setShowRangeInput(!showRangeInput);
     };
 
+    const swapValuesIfNeeded = () => {
+        // Ensure both values are numbers before comparing
+        const fromValue = parseFloat(criteria.value);
+        const toValue = parseFloat(rangeValue);
+
+        // Check if 'from' value is greater than 'to' value and swap if necessary
+        if (fromValue > toValue) {
+            // Swap the values
+            setRangeValue(fromValue.toString());
+            onChange({ target: { value: toValue.toString() } }, 'value');
+            // Update the criteria.value as well since we're changing it
+            criteria.value = toValue.toString();
+        }
+    };
+
+
     // TODO: functions handleRangeValueChange and handleValueChange could be converted into one function
     // Function to handle changes to the range value
     const handleRangeValueChange = (e) => {
@@ -53,6 +69,9 @@ function SearchCriteria({ criteria, fieldsData, onChange, onRemove, showRemoveBu
 
         // Set the validation error message if there is an error
         setRangeValidationError(error);
+
+        // After updating, check if we need to swap
+        swapValuesIfNeeded();
     };
 
 
@@ -78,6 +97,10 @@ function SearchCriteria({ criteria, fieldsData, onChange, onRemove, showRemoveBu
         // Update local state and parent state immediately with the corrected value
         setValidationError(error); // Update validation error if any
         onChange({ target: { value: value.toString() } }, 'value'); // Update parent component
+
+        // After updating, check if we need to swap
+        swapValuesIfNeeded();
+
     };
     const fieldDetails = fieldsData.find(field => field.field_path === criteria.field) || {};
 
