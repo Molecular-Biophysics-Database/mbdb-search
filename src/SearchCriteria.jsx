@@ -52,6 +52,11 @@ function SearchCriteria({ criteria, fieldsData, onChange, onRemove, showRemoveBu
             }
         }
     };
+    // Trigger the swap logic only on blur instead of on change
+        const handleValueRangeBlur = () => {
+            const fieldDetails = fieldsData.find(field => field.field_path === criteria.field) || {};
+            swapValuesIfNeeded(fieldDetails.type, criteria.value, rangeValue);
+        };
 
 
     // TODO: functions handleRangeValueChange and handleValueChange could be converted into one function
@@ -80,9 +85,6 @@ function SearchCriteria({ criteria, fieldsData, onChange, onRemove, showRemoveBu
 
         // Set the validation error message if there is an error
         setRangeValidationError(error);
-
-        // After updating, check if we need to swap
-        swapValuesIfNeeded(fieldDetails.type, criteria.value, value);
     };
 
 
@@ -109,10 +111,6 @@ function SearchCriteria({ criteria, fieldsData, onChange, onRemove, showRemoveBu
         criteria.value = value;
         setValidationError(error); // Update validation error if any
         onChange({ target: { value: value } }, 'value'); // Update parent component
-
-        // After updating, check if we need to swap
-        swapValuesIfNeeded(fieldDetails.type, value, rangeValue);
-
     };
     const fieldDetails = fieldsData.find(field => field.field_path === criteria.field) || {};
 
@@ -204,6 +202,7 @@ function SearchCriteria({ criteria, fieldsData, onChange, onRemove, showRemoveBu
                 min={fieldDetails.minimum}
                 max={fieldDetails.maximum}
                 onChange={handleValueChange}
+                onBlur={handleValueRangeBlur}
             />
             {/* Display validation error if any */}
             {validationError && <div className="validation-error">{validationError}</div>}
@@ -223,6 +222,7 @@ function SearchCriteria({ criteria, fieldsData, onChange, onRemove, showRemoveBu
                         min={fieldDetails.minimum}
                         max={fieldDetails.maximum}
                         onChange={handleRangeValueChange}
+                        onBlur={handleValueRangeBlur}
                     />
                     {rangeValidationError && <div className="validation-error">{rangeValidationError}</div>}
                 </>
