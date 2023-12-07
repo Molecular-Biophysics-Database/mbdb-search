@@ -27,31 +27,28 @@ function SearchCriteria({ criteria, fieldsData, onChange, onRemove, showRemoveBu
         setShowRangeInput(!showRangeInput);
     };
 
-    const swapValuesIfNeeded = () => {
-        // Ensure both values are numbers before comparing
-        const fromValue = parseFloat(criteria.value);
-        const toValue = parseFloat(rangeValue);
-
+    const swapValuesIfNeeded = (fieldType, fromValue, toValue) => {
         // Check if 'from' value is greater than 'to' value and swap if necessary
-        if (fieldDetails.type === 'double') {
-            if (fromValue > toValue) {
-                // Swap the values
+        if (fieldType === 'double') {
+            const fromNumber = parseFloat(fromValue);
+            const toNumber = parseFloat(toValue);
+            if (fromNumber > toNumber) {
+                // Swap the values for double
                 setRangeValue(fromValue.toString());
+                setValidationError('');
                 onChange({ target: { value: toValue.toString() } }, 'value');
-                // Update the criteria.value as well since we're changing it
                 criteria.value = toValue.toString();
             }
         }
-        else if (fieldDetails.type === 'date') {
-            const fromDate = new Date(criteria.value);
-            const toDate = new Date(rangeValue);
-
-            // Check if 'from' date is after 'to' date and swap if necessary
+        else if (fieldType === 'date') {
+            const fromDate = new Date(fromValue);
+            const toDate = new Date(toValue);
             if (fromDate > toDate) {
-                setRangeValue(criteria.value);
-                onChange({ target: { value: rangeValue } }, 'value');
-                // Update the criteria.value as well since we're changing it
-                criteria.value = rangeValue;
+                // Swap the values for date
+                setRangeValue(fromValue);
+                setValidationError('');
+                onChange({ target: { value: toValue } }, 'value');
+                criteria.value = toValue;
             }
         }
     };
@@ -85,7 +82,7 @@ function SearchCriteria({ criteria, fieldsData, onChange, onRemove, showRemoveBu
         setRangeValidationError(error);
 
         // After updating, check if we need to swap
-        swapValuesIfNeeded(fieldDetails);
+        swapValuesIfNeeded(fieldDetails.type, criteria.value, value);
     };
 
 
@@ -114,7 +111,7 @@ function SearchCriteria({ criteria, fieldsData, onChange, onRemove, showRemoveBu
         onChange({ target: { value: value } }, 'value'); // Update parent component
 
         // After updating, check if we need to swap
-        swapValuesIfNeeded(fieldDetails);
+        swapValuesIfNeeded(fieldDetails.type, value, rangeValue);
 
     };
     const fieldDetails = fieldsData.find(field => field.field_path === criteria.field) || {};
