@@ -17,6 +17,29 @@ function SearchCriteria({ criteria, fieldsData, onChange, onRemove, showRemoveBu
                 return 'text';
         }
     };
+
+
+    // RESET AFTER CHANGE OF SELECTOR
+    // Function to reset and hide range input
+    const resetAndHideRangeInput = () => {
+        setRangeValue('');
+        setShowRangeInput(false);
+        setRangeValidationError('');
+    };
+
+    // Extended onChange handler for the field selector
+    const handleFieldSelectorChange = (e) => {
+        // Call the existing onChange provided by the parent
+        onChange(e, 'field');
+
+        // Additional logic to reset the main value and range value
+        resetAndHideRangeInput();
+
+        // Reset the main value
+        onChange({ target: { value: '' } }, 'value');
+    };
+
+
     // RANGE
     // State to manage the second value for range inputs
     const [rangeValue, setRangeValue] = useState('');
@@ -187,7 +210,7 @@ function SearchCriteria({ criteria, fieldsData, onChange, onRemove, showRemoveBu
             )}
 
             {/* Dropdown list showing filtered options */}
-            <select value={criteria.field} onChange={e => onChange(e, 'field')}>
+            <select value={criteria.field} onChange={handleFieldSelectorChange}>
                 <option value="" disabled>Select Field</option>
                 {filteredFields.map((field, index) => (
                     <option key={index} value={field.field_path}>{field.pretty_name}</option>
