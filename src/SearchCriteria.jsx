@@ -50,36 +50,49 @@ function SearchCriteria({ criteria, fieldsData, onChange, onRemove, showRemoveBu
         setShowRangeInput(!showRangeInput);
     };
 
+    const updateValues = (newValue, newRangeValue) => {
+      // Update local component state
+      setValidationError('');
+      setRangeValidationError('');
+      setRangeValue(newRangeValue.toString());
+
+      // Update parent component state for criteria.value
+      onChange({ target: { value: newValue.toString() } }, 'value');
+
+      // If needed, update the parent component state for rangeValue as well
+      onChange({ target: { value: newRangeValue.toString() } }, 'rangeValue');
+    };
+
     const swapValuesIfNeeded = (fieldType, fromValue, toValue) => {
         // Check if 'from' value is greater than 'to' value and swap if necessary
         if (fieldType === 'double') {
             const fromNumber = parseFloat(fromValue);
             const toNumber = parseFloat(toValue);
             if (fromNumber > toNumber) {
-                // Swap the values for double
-                setRangeValue(fromValue.toString());
-                setValidationError('');
-                onChange({ target: { value: toValue.toString() } }, 'value');
-                criteria.value = toValue.toString();
+              // Swap the values for double
+              updateValues(toValue.toString(), fromValue.toString());
             }
-        }
-        else if (fieldType === 'date') {
+          } else if (fieldType === 'date') {
             const fromDate = new Date(fromValue);
             const toDate = new Date(toValue);
             if (fromDate > toDate) {
-                // Swap the values for date
-                setRangeValue(fromValue);
-                setValidationError('');
-                onChange({ target: { value: toValue } }, 'value');
-                criteria.value = toValue;
+              // Swap the values for date
+              updateValues(toValue, fromValue);
             }
-        }
-    };
-    // Trigger the swap logic only on blur instead of on change
-        const handleValueRangeBlur = () => {
-            const fieldDetails = fieldsData.find(field => field.field_path === criteria.field) || {};
-            swapValuesIfNeeded(fieldDetails.type, criteria.value, rangeValue);
+          }
         };
+
+        // Trigger the swap logic only on blur instead of on change
+        const handleValueBlur = () => {
+          const fieldDetails = fieldsData.find(field => field.field_path === criteria.field) || {};
+          swapValuesIfNeeded(fieldDetails.type, criteria.value, rangeValue);
+        };
+
+        const handleRangeValueBlur = () => {
+          const fieldDetails = fieldsData.find(field => field.field_path === criteria.field) || {};
+          swapValuesIfNeeded(fieldDetails.type, criteria.value, rangeValue);
+        };
+
 
 
     // TODO: functions handleRangeValueChange and handleValueChange could be converted into one function
@@ -225,7 +238,7 @@ function SearchCriteria({ criteria, fieldsData, onChange, onRemove, showRemoveBu
                 min={fieldDetails.minimum}
                 max={fieldDetails.maximum}
                 onChange={handleValueChange}
-                onBlur={handleValueRangeBlur}
+                onBlur={handleValueBlur}
             />
             {/* Display validation error if any */}
             {validationError && <div className="validation-error">{validationError}</div>}
@@ -245,7 +258,7 @@ function SearchCriteria({ criteria, fieldsData, onChange, onRemove, showRemoveBu
                         min={fieldDetails.minimum}
                         max={fieldDetails.maximum}
                         onChange={handleRangeValueChange}
-                        onBlur={handleValueRangeBlur}
+                        onBlur={handleRangeValueBlur}
                     />
                     {rangeValidationError && <div className="validation-error">{rangeValidationError}</div>}
                 </>
