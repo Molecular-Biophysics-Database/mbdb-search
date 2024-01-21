@@ -3,7 +3,7 @@ name: Python Tests on 'tests' Branch
 on:
   push:
     branches:
-      - tests # This is the branch name as seen in your screenshot
+      - tests
 
 jobs:
   build:
@@ -16,7 +16,7 @@ jobs:
     - name: Set up Python
       uses: actions/setup-python@v2
       with:
-        python-version: '3.x' # Choose the version you need
+        python-version: '3.x'
 
     - name: Install dependencies
       run: |
