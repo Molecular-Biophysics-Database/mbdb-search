@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - tests
+      - main
 
 jobs:
   build:
