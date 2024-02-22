@@ -97,6 +97,48 @@ function App() {
         setFieldsData(jsonData);
     }, []);
 
+    const handleCopyJson = () => {
+      let jsonOutput = [];
+
+      searchCriteria.forEach((criteria, index) => {
+        // Check for the presence of an operator and add it if it's explicitly provided and it's not the first criterion
+        if (criteria.expression && index !== 0) {
+          jsonOutput.push({ "operator": criteria.expression.toLowerCase() });
+        }
+
+        // Add the start bracket object if it's active
+        if (criteria.leftBracket) {
+          jsonOutput.push({ "bracket": "start" });
+        }
+
+        /*
+        // Find the name associated with the field
+        let fieldData = fieldsData.find(field => field.field_path === criteria.field) || {};
+        let fieldName = fieldData.pretty_name || "Unknown Field";
+        */
+
+        // Construct the criterion object
+        let criterion = {
+          field: criteria.field,
+          value: criteria.rangeValue ? { from: criteria.value, to: criteria.rangeValue } : criteria.value,
+          // type: fieldData.type || 'string', // DATA_TYPE
+          // name: fieldName
+        };
+
+        // Add the criterion object to the output
+        jsonOutput.push(criterion);
+
+        // Add the end bracket object if it's active
+        if (criteria.rightBracket) {
+          jsonOutput.push({ "bracket": "end" });
+        }
+      });
+
+      // Output the final JSON structure
+      console.log(JSON.stringify(jsonOutput, null, 2));
+    };
+
+    const handleLoadJson = index => {}
 
     return (
         <>
@@ -124,8 +166,12 @@ function App() {
                             />
                         </div>
                     ))}
-                    <button className="add-field" onClick={addSearchCriteria}>Add Field</button>
-                    <button className="search" onClick={handleSearch} disabled={hasValidationErrors}>Search</button>
+                    <div className="search-buttons">
+                        <button className="add-field" onClick={addSearchCriteria}>Add Field</button>
+                        <button className="search" onClick={handleSearch} disabled={hasValidationErrors}>Search</button>
+                        <button className="copy-load" onClick={handleCopyJson} disabled={hasValidationErrors}>C</button>
+                        <button className="copy-load" onClick={handleLoadJson}>L</button>
+                    </div>
                 </div>
             )}
         </>

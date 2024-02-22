@@ -88,6 +88,7 @@
     background-color: #565cff;
 }
 
+button.copy-load,
 button.add-field,
 button.search {
     padding: 0.5rem 1rem;
@@ -102,6 +103,7 @@ button.search {
     transition: background-color 300ms;
 }
 
+button.copy-load:hover,
 button.add-field:hover,
 button.search:hover {
     background-color: #565cff;
@@ -109,9 +111,16 @@ button.search:hover {
 
 button.add-field,
 button.search {
-    width: calc(45% - 0.5rem);
+    width: calc(38% - 0.5rem);
     margin-left: 10px;
     margin-right: 10px;
+}
+
+button.copy-load{
+    width: calc(7% - 0.5rem);
+    margin-left: 5px;
+    margin-right: 5px;
+    padding: 0.5rem 0.5rem;
 }
 
 .search-criteria select:focus,
