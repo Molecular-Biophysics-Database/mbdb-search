@@ -136,6 +136,14 @@ function App() {
 
         // Output the final JSON structure
         console.log(JSON.stringify(jsonOutput, null, 2));
+
+        // Copy the JSON to the clipboard
+        const jsonString = JSON.stringify(jsonOutput, null, 2);
+        navigator.clipboard.writeText(jsonString).then(() => {
+          console.log('JSON copied to clipboard');
+        }).catch(err => {
+          console.error('Failed to copy JSON to clipboard', err);
+        });
     };
 
     const handleLoadJson = index => {
