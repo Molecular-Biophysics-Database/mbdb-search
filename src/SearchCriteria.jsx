@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 
-function SearchCriteria({ criteria, fieldsData, onChange, onRemove, showRemoveButton }) {
+function SearchCriteria({criteria, fieldsData, onChange, onRemove, showRemoveButton}) {
     // State for validation error
     const [validationError, setValidationError] = useState('');
     const [rangeValidationError, setRangeValidationError] = useState('');
@@ -36,7 +36,7 @@ function SearchCriteria({ criteria, fieldsData, onChange, onRemove, showRemoveBu
         resetAndHideRangeInput();
 
         // Reset the main value
-        onChange({ target: { value: '' } }, 'value');
+        onChange({target: {value: ''}}, 'value');
     };
 
 
@@ -51,16 +51,16 @@ function SearchCriteria({ criteria, fieldsData, onChange, onRemove, showRemoveBu
     };
 
     const updateValues = (newValue, newRangeValue) => {
-      // Update local component state
-      setValidationError('');
-      setRangeValidationError('');
-      setRangeValue(newRangeValue.toString());
+        // Update local component state
+        setValidationError('');
+        setRangeValidationError('');
+        setRangeValue(newRangeValue.toString());
 
-      // Update parent component state for criteria.value
-      onChange({ target: { value: newValue.toString() } }, 'value');
+        // Update parent component state for criteria.value
+        onChange({target: {value: newValue.toString()}}, 'value');
 
-      // If needed, update the parent component state for rangeValue as well
-      onChange({ target: { value: newRangeValue.toString() } }, 'rangeValue');
+        // If needed, update the parent component state for rangeValue as well
+        onChange({target: {value: newRangeValue.toString()}}, 'rangeValue');
     };
 
     const swapValuesIfNeeded = (fieldType, fromValue, toValue) => {
@@ -69,30 +69,29 @@ function SearchCriteria({ criteria, fieldsData, onChange, onRemove, showRemoveBu
             const fromNumber = parseFloat(fromValue);
             const toNumber = parseFloat(toValue);
             if (fromNumber > toNumber) {
-              // Swap the values for double
-              updateValues(toValue.toString(), fromValue.toString());
+                // Swap the values for double
+                updateValues(toValue.toString(), fromValue.toString());
             }
-          } else if (fieldType === 'date') {
+        } else if (fieldType === 'date') {
             const fromDate = new Date(fromValue);
             const toDate = new Date(toValue);
             if (fromDate > toDate) {
-              // Swap the values for date
-              updateValues(toValue, fromValue);
+                // Swap the values for date
+                updateValues(toValue, fromValue);
             }
-          }
-        };
+        }
+    };
 
-        // Trigger the swap logic only on blur instead of on change
-        const handleValueBlur = () => {
-          const fieldDetails = fieldsData.find(field => field.field_path === criteria.field) || {};
-          swapValuesIfNeeded(fieldDetails.type, criteria.value, rangeValue);
-        };
+    // Trigger the swap logic only on blur instead of on change
+    const handleValueBlur = () => {
+        const fieldDetails = fieldsData.find(field => field.field_path === criteria.field) || {};
+        swapValuesIfNeeded(fieldDetails.type, criteria.value, rangeValue);
+    };
 
-        const handleRangeValueBlur = () => {
-          const fieldDetails = fieldsData.find(field => field.field_path === criteria.field) || {};
-          swapValuesIfNeeded(fieldDetails.type, criteria.value, rangeValue);
-        };
-
+    const handleRangeValueBlur = () => {
+        const fieldDetails = fieldsData.find(field => field.field_path === criteria.field) || {};
+        swapValuesIfNeeded(fieldDetails.type, criteria.value, rangeValue);
+    };
 
 
     // TODO: functions handleRangeValueChange and handleValueChange could be converted into one function
@@ -117,7 +116,7 @@ function SearchCriteria({ criteria, fieldsData, onChange, onRemove, showRemoveBu
 
         // Update local state and parent state immediately with the corrected value
         setRangeValue(value); // Convert back to string for the input field
-        onChange({ target: { value: value } }, 'rangeValue'); // Update parent component
+        onChange({target: {value: value}}, 'rangeValue'); // Update parent component
 
         // Set the validation error message if there is an error
         setRangeValidationError(error);
@@ -146,7 +145,7 @@ function SearchCriteria({ criteria, fieldsData, onChange, onRemove, showRemoveBu
         // Update local state and parent state immediately with the corrected value
         criteria.value = value;
         setValidationError(error); // Update validation error if any
-        onChange({ target: { value: value } }, 'value'); // Update parent component
+        onChange({target: {value: value}}, 'value'); // Update parent component
     };
     const fieldDetails = fieldsData.find(field => field.field_path === criteria.field) || {};
 
@@ -179,7 +178,7 @@ function SearchCriteria({ criteria, fieldsData, onChange, onRemove, showRemoveBu
         const newLeftBracketState = !leftBracketActive;
         setLeftBracketActive(newLeftBracketState);
         // Call onChange with an object that mimics the event structure
-        onChange({ target: { value: newLeftBracketState } }, 'leftBracket');
+        onChange({target: {value: newLeftBracketState}}, 'leftBracket');
     };
 
     // Function to toggle right bracket
@@ -187,7 +186,7 @@ function SearchCriteria({ criteria, fieldsData, onChange, onRemove, showRemoveBu
         const newRightBracketState = !rightBracketActive;
         setRightBracketActive(newRightBracketState);
         // Call onChange with an object that mimics the event structure
-        onChange({ target: { value: newRightBracketState } }, 'rightBracket');
+        onChange({target: {value: newRightBracketState}}, 'rightBracket');
     };
 
     return (

@@ -8,9 +8,9 @@ import jsonData from '/src/output.json';
 function App() {
     // Start with one search criteria
     const [showAdvancedSearch, setShowAdvancedSearch] = useState(false);
-     // Update initial state to include validationError
+    // Update initial state to include validationError
     const [searchCriteria, setSearchCriteria] = useState([
-        { field: '', expression: '', value: '', validationError: '', rangeValue: '' }
+        {field: '', expression: '', value: '', validationError: '', rangeValue: ''}
     ]);
 
     // Update handleCriteriaChange to handle validation errors
@@ -98,47 +98,48 @@ function App() {
     }, []);
 
     const handleCopyJson = () => {
-      let jsonOutput = [];
+        let jsonOutput = [];
 
-      searchCriteria.forEach((criteria, index) => {
-        // Check for the presence of an operator and add it if it's explicitly provided and it's not the first criterion
-        if (criteria.expression && index !== 0) {
-          jsonOutput.push({ "operator": criteria.expression.toLowerCase() });
-        }
+        searchCriteria.forEach((criteria, index) => {
+            // Check for the presence of an operator and add it if it's explicitly provided and it's not the first criterion
+            if (criteria.expression && index !== 0) {
+                jsonOutput.push({"operator": criteria.expression.toLowerCase()});
+            }
 
-        // Add the start bracket object if it's active
-        if (criteria.leftBracket) {
-          jsonOutput.push({ "bracket": "start" });
-        }
+            // Add the start bracket object if it's active
+            if (criteria.leftBracket) {
+                jsonOutput.push({"bracket": "start"});
+            }
 
-        /*
-        // Find the name associated with the field
-        let fieldData = fieldsData.find(field => field.field_path === criteria.field) || {};
-        let fieldName = fieldData.pretty_name || "Unknown Field";
-        */
+            /*
+            // Find the name associated with the field
+            let fieldData = fieldsData.find(field => field.field_path === criteria.field) || {};
+            let fieldName = fieldData.pretty_name || "Unknown Field";
+            */
 
-        // Construct the criterion object
-        let criterion = {
-          field: criteria.field,
-          value: criteria.rangeValue ? { from: criteria.value, to: criteria.rangeValue } : criteria.value,
-          // type: fieldData.type || 'string', // DATA_TYPE
-          // name: fieldName
-        };
+            // Construct the criterion object
+            let criterion = {
+                field: criteria.field,
+                value: criteria.rangeValue ? {from: criteria.value, to: criteria.rangeValue} : criteria.value,
+                // type: fieldData.type || 'string', // DATA_TYPE
+                // name: fieldName
+            };
 
-        // Add the criterion object to the output
-        jsonOutput.push(criterion);
+            // Add the criterion object to the output
+            jsonOutput.push(criterion);
 
-        // Add the end bracket object if it's active
-        if (criteria.rightBracket) {
-          jsonOutput.push({ "bracket": "end" });
-        }
-      });
+            // Add the end bracket object if it's active
+            if (criteria.rightBracket) {
+                jsonOutput.push({"bracket": "end"});
+            }
+        });
 
-      // Output the final JSON structure
-      console.log(JSON.stringify(jsonOutput, null, 2));
+        // Output the final JSON structure
+        console.log(JSON.stringify(jsonOutput, null, 2));
     };
 
-    const handleLoadJson = index => {}
+    const handleLoadJson = index => {
+    }
 
     return (
         <>
