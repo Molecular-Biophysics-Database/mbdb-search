@@ -1,48 +1,48 @@
 [
   {
-    "pretty_name": "title",
+    "pretty_name": "Title",
     "field_path": "metadata.general_parameters.record_information.title",
     "type": "string",
     "description": "Short descriptive title of the record"
   },
   {
-    "pretty_name": "keywords[]",
+    "pretty_name": "Keywords[]",
     "field_path": "metadata.general_parameters.record_information.keywords[]",
     "type": "string",
     "description": ""
   },
   {
-    "pretty_name": "deposition_date",
+    "pretty_name": "Deposition date",
     "field_path": "metadata.general_parameters.record_information.deposition_date",
     "type": "date",
     "description": "The date when the data was deposited; automatically generated"
   },
   {
-    "pretty_name": "given_name",
+    "pretty_name": "Given name (Depositor)",
     "field_path": "metadata.general_parameters.depositors.depositor.given_name",
     "type": "string",
     "description": "The given name(s), including middlename(s), of the person"
   },
   {
-    "pretty_name": "family_name",
+    "pretty_name": "Family name (Depositor)",
     "field_path": "metadata.general_parameters.depositors.depositor.family_name",
     "type": "string",
     "description": "The family name(s) the person"
   },
   {
-    "pretty_name": "given_name",
+    "pretty_name": "Given name (Principal contact)",
     "field_path": "metadata.general_parameters.depositors.principal_contact.given_name",
     "type": "string",
     "description": "The given name(s), including middlename(s), of the person"
   },
   {
-    "pretty_name": "family_name",
+    "pretty_name": "Family name (Principal contact)",
     "field_path": "metadata.general_parameters.depositors.principal_contact.family_name",
     "type": "string",
     "description": "The family name(s) the person"
   },
   {
-    "pretty_name": "latitude",
+    "pretty_name": "Latitude",
     "field_path": "metadata.general_parameters.latitude",
     "type": "double",
     "description": "The latitude, from south to north, in degrees (decimal notation)",
@@ -50,7 +50,7 @@
     "maximum": 90.0
   },
   {
-    "pretty_name": "longitude",
+    "pretty_name": "Longitude",
     "field_path": "metadata.general_parameters.longitude",
     "type": "double",
     "description": "The longitude, from west to east, in degrees (decimal notation)",
