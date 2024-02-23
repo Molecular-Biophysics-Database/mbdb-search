@@ -193,26 +193,26 @@ function SearchCriteria({criteria, fieldsData, onChange, onRemove, showRemoveBut
         <div className="search-criteria">
             {/*Expression part on the input*/}
             {showRemoveButton && (
-                <select value={criteria.expression} onChange={e => onChange(e, 'expression')}>
-                    <option value="" disabled>Exp</option>
-                    <option value="AND">AND</option>
-                    <option value="OR">OR</option>
-                    <option value="NOT">NOT</option>
+                <select name="operationSelector" value={criteria.expression} onChange={e => onChange(e, 'expression')}>
+                    <option name="empty" value="" disabled>Exp</option>
+                    <option name="and" value="AND">AND</option>
+                    <option name="or" value="OR">OR</option>
+                    <option name="not" value="NOT">NOT</option>
                 </select>
             )}
             {/*Left bracket button*/}
-            <button onClick={toggleLeftBracket} className={leftBracketActive ? 'active' : 'deactive'}>
+            <button name="leftBracket" onClick={toggleLeftBracket} className={leftBracketActive ? 'active' : 'deactive'}>
                 (
             </button>
 
             {/*Field part of the input*/}
-            <button onClick={toggleFilterInput} aria-label="Toggle filter input">
+            <button name="toggleFilter" onClick={toggleFilterInput} aria-label="Toggle filter input">
                 🔎
             </button>
 
             {/* Conditional rendering of the input field based on showFilterInput */}
             {showFilterInput && (
-                <input
+                <input name="selectorFilter"
                     type="text"
                     value={filterText}
                     onChange={handleFilterChange}
@@ -222,15 +222,15 @@ function SearchCriteria({criteria, fieldsData, onChange, onRemove, showRemoveBut
             )}
 
             {/* Dropdown list showing filtered options */}
-            <select value={criteria.field} onChange={handleFieldSelectorChange}>
-                <option value="" disabled>Select Field</option>
+            <select name="fieldSelector" value={criteria.field} onChange={handleFieldSelectorChange}>
+                <option name="fieldOption" value="" disabled>Select Field</option>
                 {filteredFields.map((field, index) => (
-                    <option key={index} value={field.field_path}>{field.pretty_name}</option>
+                    <option name="fieldOption" key={index} value={field.field_path}>{field.pretty_name}</option>
                 ))}
             </select>
 
             {/*Value part of the input*/}
-            <input
+            <input name="inputValue"
                 type={getInputType(fieldDetails.type)}
                 value={criteria.value} // This should be the state value that is updated on change
                 placeholder="Value"
@@ -244,13 +244,13 @@ function SearchCriteria({criteria, fieldsData, onChange, onRemove, showRemoveBut
 
             {/* Add button to enable range input for number and date fields */}
             {['double', 'date'].includes(fieldDetails.type) && !showRangeInput && (
-                <button onClick={toggleRangeInput}>+</button>
+                <button name="toggleRangeInput" onClick={toggleRangeInput}>+</button>
             )}
 
             {/* Show the second value input if showRangeInput is true */}
             {showRangeInput && (
                 <>
-                    <input
+                    <input name="rangeInputValue"
                         type={getInputType(fieldDetails.type)}
                         value={rangeValue}
                         placeholder="To Value"
@@ -263,13 +263,13 @@ function SearchCriteria({criteria, fieldsData, onChange, onRemove, showRemoveBut
                 </>
             )}
             {/*Right bracket button*/}
-            <button onClick={toggleRightBracket} className={rightBracketActive ? 'active' : 'deactive'}>
+            <button name="rightBracket" onClick={toggleRightBracket} className={rightBracketActive ? 'active' : 'deactive'}>
                 )
             </button>
             {/*Field that shows that validation error message*/}
             {/*{validationError && <div className="validation-error">{validationError}</div>}*/}
             {showRemoveButton && (
-                <button onClick={onRemove}>Remove</button>
+                <button name="removeLine" onClick={onRemove}>Remove</button>
             )}
         </div>
 
