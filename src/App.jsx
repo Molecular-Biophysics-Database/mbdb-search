@@ -98,6 +98,9 @@ function App() {
     }, []);
 
     const handleCopyJson = () => {
+        // Parse the JSON data and set it in state Change button color to green
+        document.getElementById("myButton").style.backgroundColor = "green";
+
         let jsonOutput = [];
 
         searchCriteria.forEach((criteria, index) => {
@@ -140,14 +143,21 @@ function App() {
         // Copy the JSON to the clipboard
         const jsonString = JSON.stringify(jsonOutput, null, 2);
         navigator.clipboard.writeText(jsonString).then(() => {
-          console.log('JSON copied to clipboard');
+            console.log('JSON copied to clipboard');
+
+            // Change button color back to original color after 1,5 seconds
+            setTimeout(() => {
+                document.getElementById("myButton").style.backgroundColor = "#646cff";
+            }, 1500);
         }).catch(err => {
-          console.error('Failed to copy JSON to clipboard', err);
+            console.error('Failed to copy JSON to clipboard', err);
+            // Change button color back to original color
+            document.getElementById("myButton").style.backgroundColor = "#646cff";
         });
     };
 
     const handleLoadJson = index => {
-    }
+    }de
 
     return (
         <>
@@ -178,7 +188,12 @@ function App() {
                     <div className="search-buttons">
                         <button className="add-field" onClick={addSearchCriteria}>Add Field</button>
                         <button className="search" onClick={handleSearch} disabled={hasValidationErrors}>Search</button>
-                        <button className="copy-load" onClick={handleCopyJson} disabled={hasValidationErrors}>C</button>
+
+                        <button id="myButton" className="copy-load" onClick={handleCopyJson} disabled={hasValidationErrors}><img src="src/assets/clipboard.png" alt="C" style={{
+        width: '40%',
+        height: 'auto',
+        filter: 'invert(80%)'
+    }}/></button>
                         <button className="copy-load" onClick={handleLoadJson}>L</button>
                     </div>
                 </div>
