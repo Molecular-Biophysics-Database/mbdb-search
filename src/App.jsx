@@ -156,8 +156,29 @@ function App() {
         });
     };
 
-    const handleLoadJson = index => {
-    }de
+    const handleLoadJson = () => {
+        // Create a file input dynamically
+        const fileInput = document.createElement('input');
+        fileInput.type = 'file';
+        fileInput.accept = '.json,.txt'; // Accept only JSON and text files
+        fileInput.style.display = 'none'; // Hide the file input
+
+        // Listen for file selection
+        fileInput.onchange = (e) => {
+          const file = e.target.files[0];
+          if (file) {
+            // Read the file
+            const reader = new FileReader();
+            reader.onload = (event) => {
+              console.log(event.target.result); // Log the file content to the console
+            };
+            reader.readAsText(file); // Read the file as text
+          }
+        };
+
+    // Trigger the file input click event to open the file picker dialog
+    fileInput.click();
+    }
 
     return (
         <>
