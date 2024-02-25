@@ -156,6 +156,11 @@ function App() {
         });
     };
 
+    const handleJsonData = (jsonDataString) => {
+        try {
+
+
+
     const handleLoadJson = () => {
         // Create a file input dynamically
         const fileInput = document.createElement('input');
@@ -165,19 +170,20 @@ function App() {
 
         // Listen for file selection
         fileInput.onchange = (e) => {
-          const file = e.target.files[0];
-          if (file) {
-            // Read the file
-            const reader = new FileReader();
-            reader.onload = (event) => {
-              console.log(event.target.result); // Log the file content to the console
-            };
-            reader.readAsText(file); // Read the file as text
-          }
+            const file = e.target.files[0];
+            if (file) {
+                // Read the file
+                const reader = new FileReader();
+                reader.onload = (event) => {
+                    console.log(event.target.result); // Log the file content to the console
+                    handleJsonData(event.target.result); // Call function to process JSON data
+                };
+                reader.readAsText(file); // Read the file as text
+            }
         };
 
-    // Trigger the file input click event to open the file picker dialog
-    fileInput.click();
+        // Trigger the file input click event to open the file picker dialog
+        fileInput.click();
     }
 
     return (
@@ -210,11 +216,12 @@ function App() {
                         <button className="add-field" onClick={addSearchCriteria}>Add Field</button>
                         <button className="search" onClick={handleSearch} disabled={hasValidationErrors}>Search</button>
 
-                        <button id="myButton" className="copy-load" onClick={handleCopyJson} disabled={hasValidationErrors}><img src="src/assets/clipboard.png" alt="C" style={{
-        width: '40%',
-        height: 'auto',
-        filter: 'invert(80%)'
-    }}/></button>
+                        <button id="myButton" className="copy-load" onClick={handleCopyJson}
+                                disabled={hasValidationErrors}><img src="src/assets/clipboard.png" alt="C" style={{
+                            width: '40%',
+                            height: 'auto',
+                            filter: 'invert(80%)'
+                        }}/></button>
                         <button className="copy-load" onClick={handleLoadJson}>L</button>
                     </div>
                 </div>
