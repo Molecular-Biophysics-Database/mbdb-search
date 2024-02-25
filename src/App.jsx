@@ -158,6 +158,56 @@ function App() {
 
     const handleJsonData = (jsonDataString) => {
         try {
+            const jsonData = JSON.parse(jsonDataString);
+            let newSearchCriteria = [];
+
+            let currentOperator = ''; // Keep track of the current operator
+            let bracketStack = []; // A stack to keep track of brackets' depth
+
+            jsonData.forEach((item, index) => {
+                if (item.operator) {
+                    // Set the current operator, which will be applied to the next criterion
+                    currentOperator = item.operator.toUpperCase(); // Ensure the operator matches the UI options (AND, OR, NOT)
+                } else if (item.bracket) {
+                    if (item.bracket === "start") {
+                        bracketStack.push(index); // Push the index of the start bracket onto the stack
+                    } else if (item.bracket === "end" && bracketStack.length > 0) {
+                        // When we encounter an end bracket, mark the start and end positions
+                        let startIndex = bracketStack.pop(); // Get the start index from the stack
+                        // Mark the start and end positions for brackets
+                        if (newSearchCriteria[startIndex]) newSearchCriteria[startIndex].leftBracket = true;
+                        // Prepare to mark this position as an end bracket in the next criterion
+                        bracketStack.push("end");
+                    }
+                } else {
+                    // Prepare criterion object
+                    let criterion = {
+                        field: item.field,
+                        expression: currentOperator, // Use the latest operator
+                        value: typeof item.value === 'object' ? item.value.from || '' : item.value,
+                        rangeValue: typeof item.value === 'object' ? item.value.to || '' : '',
+                        leftBracket: false, // To be set based on bracketStack
+                        rightBracket: false, // Adjusted after pushing the criterion
+                    };
+                    currentOperator = ''; // Reset operator after applying it
+
+                    newSearchCriteria.push(criterion);
+
+                    // Handle delayed end bracket marking
+                    if (bracketStack.includes("end")) {
+                        criterion.rightBracket = true; // Mark the end bracket
+                        bracketStack.pop(); // Clear the end marker
+                    }
+                }
+            });
+
+            // Update the application state with the new search criteria
+            setSearchCriteria(newSearchCriteria);
+        } catch (error) {
+            console.error("Error processing JSON data:", error);
+        }
+    };
+
 
 
 
