@@ -160,55 +160,57 @@ function App() {
         try {
             const jsonData = JSON.parse(jsonDataString);
             let newSearchCriteria = [];
+            let currentOperator = '';
+            let brackets = {start: [], end: []}; // Tracks indices for start and end brackets
 
-            let currentOperator = ''; // Keep track of the current operator
-            let bracketStack = []; // A stack to keep track of brackets' depth
-
-            jsonData.forEach((item, index) => {
+            // Iterate over the items in the parsed JSON
+            jsonData.forEach((item) => {
                 if (item.operator) {
                     // Set the current operator, which will be applied to the next criterion
-                    currentOperator = item.operator.toUpperCase(); // Ensure the operator matches the UI options (AND, OR, NOT)
+                    currentOperator = item.operator.toUpperCase(); // Match UI options (AND, OR, NOT)
                 } else if (item.bracket) {
-                    if (item.bracket === "start") {
-                        bracketStack.push(index); // Push the index of the start bracket onto the stack
-                    } else if (item.bracket === "end" && bracketStack.length > 0) {
-                        // When we encounter an end bracket, mark the start and end positions
-                        let startIndex = bracketStack.pop(); // Get the start index from the stack
-                        // Mark the start and end positions for brackets
-                        if (newSearchCriteria[startIndex]) newSearchCriteria[startIndex].leftBracket = true;
-                        // Prepare to mark this position as an end bracket in the next criterion
-                        bracketStack.push("end");
+                    if (item.bracket === 'start') {
+                        // Push the index for a start bracket
+                        brackets.start.push(newSearchCriteria.length);
+                    } else {
+                        // Push the index for an end bracket, which applies to the preceding criterion
+                        brackets.end.push(newSearchCriteria.length - 1);
                     }
                 } else {
-                    // Prepare criterion object
+                    // Construct the criterion object
                     let criterion = {
                         field: item.field,
-                        expression: currentOperator, // Use the latest operator
+                        expression: currentOperator, // The latest operator is used here
                         value: typeof item.value === 'object' ? item.value.from || '' : item.value,
                         rangeValue: typeof item.value === 'object' ? item.value.to || '' : '',
-                        leftBracket: false, // To be set based on bracketStack
-                        rightBracket: false, // Adjusted after pushing the criterion
+                        leftBracket: false, // Initially false, to be determined by start brackets
+                        rightBracket: false, // Initially false, determined after all criteria are added
                     };
-                    currentOperator = ''; // Reset operator after applying it
-
-                    newSearchCriteria.push(criterion);
-
-                    // Handle delayed end bracket marking
-                    if (bracketStack.includes("end")) {
-                        criterion.rightBracket = true; // Mark the end bracket
-                        bracketStack.pop(); // Clear the end marker
-                    }
+                    currentOperator = ''; // Reset the operator for the next iteration
+                    newSearchCriteria.push(criterion); // Add the criterion to the array
                 }
             });
 
-            // Update the application state with the new search criteria
+            // Apply the start brackets to the corresponding criteria
+            brackets.start.forEach(startIndex => {
+                if (newSearchCriteria[startIndex] !== undefined) {
+                    newSearchCriteria[startIndex].leftBracket = true;
+                }
+            });
+
+            // Apply the end brackets to the corresponding criteria
+            brackets.end.forEach(endIndex => {
+                if (newSearchCriteria[endIndex] !== undefined) {
+                    newSearchCriteria[endIndex].rightBracket = true;
+                }
+            });
+
+            // Update the application state with the new array of search criteria
             setSearchCriteria(newSearchCriteria);
         } catch (error) {
             console.error("Error processing JSON data:", error);
         }
     };
-
-
 
 
     const handleLoadJson = () => {

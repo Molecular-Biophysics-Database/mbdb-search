@@ -201,8 +201,12 @@ function SearchCriteria({criteria, fieldsData, onChange, onRemove, showRemoveBut
                 </select>
             )}
             {/*Left bracket button*/}
-            <button name="leftBracket" onClick={toggleLeftBracket} className={leftBracketActive ? 'active' : 'deactive'}>
-                (
+            <button
+              name="leftBracket"
+              onClick={toggleLeftBracket}
+              className={criteria.leftBracket ? 'active' : 'deactive'}
+            >
+              (
             </button>
 
             {/*Field part of the input*/}
@@ -263,8 +267,12 @@ function SearchCriteria({criteria, fieldsData, onChange, onRemove, showRemoveBut
                 </>
             )}
             {/*Right bracket button*/}
-            <button name="rightBracket" onClick={toggleRightBracket} className={rightBracketActive ? 'active' : 'deactive'}>
-                )
+            <button
+              name="rightBracket"
+              onClick={toggleRightBracket}
+              className={criteria.rightBracket ? 'active' : 'deactive'}
+            >
+              )
             </button>
             {/*Field that shows that validation error message*/}
             {/*{validationError && <div className="validation-error">{validationError}</div>}*/}
