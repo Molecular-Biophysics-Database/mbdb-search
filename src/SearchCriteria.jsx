@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect,useState} from 'react';
 
 function SearchCriteria({criteria, fieldsData, onChange, onRemove, showRemoveButton}) {
     // State for validation error
@@ -42,8 +42,14 @@ function SearchCriteria({criteria, fieldsData, onChange, onRemove, showRemoveBut
 
     // RANGE
     // State to manage the second value for range inputs
-    const [rangeValue, setRangeValue] = useState('');
+    const [rangeValue, setRangeValue] = useState(criteria.rangeValue || '');
     const [showRangeInput, setShowRangeInput] = useState(false);
+
+    useEffect(() => {
+        if (criteria.rangeValue) {
+            setShowRangeInput(true); // Automatically display range input if rangeValue exists
+        }
+    }, [criteria.rangeValue]);
 
     // Function to toggle the range input visibility
     const toggleRangeInput = () => {

@@ -182,6 +182,7 @@ function App() {
                         field: item.field,
                         expression: currentOperator, // The latest operator is used here
                         value: typeof item.value === 'object' ? item.value.from || '' : item.value,
+                        showRangeInput: typeof item.value === 'object' && item.value.from && item.value.to, // Automatically display range input if range values exist
                         rangeValue: typeof item.value === 'object' ? item.value.to || '' : '',
                         leftBracket: false, // Initially false, to be determined by start brackets
                         rightBracket: false, // Initially false, determined after all criteria are added
