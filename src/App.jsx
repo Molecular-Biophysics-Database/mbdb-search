@@ -145,13 +145,27 @@ function App() {
         navigator.clipboard.writeText(jsonString).then(() => {
             console.log('JSON copied to clipboard');
 
+            // Ask the user for the file name
+            const fileName = prompt("Enter a file name for the JSON:", "downloaded.json");
+            if (fileName) { // Proceed if the user entered a name
+                // Now save the JSON to a file
+                const blob = new Blob([jsonString], { type: 'application/json' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = fileName; // Use the user-provided file name
+                document.body.appendChild(a); // Append the anchor to the body to make it clickable
+                a.click(); // Simulate a click on the anchor to trigger the download
+                document.body.removeChild(a); // Remove the anchor from the body
+                URL.revokeObjectURL(url); // Clean up by revoking the blob URL
+            }
+
             // Change button color back to original color after 1,5 seconds
             setTimeout(() => {
                 document.getElementById("myButton").style.backgroundColor = "#646cff";
             }, 1500);
         }).catch(err => {
             console.error('Failed to copy JSON to clipboard', err);
-            // Change button color back to original color
             document.getElementById("myButton").style.backgroundColor = "#646cff";
         });
     };
