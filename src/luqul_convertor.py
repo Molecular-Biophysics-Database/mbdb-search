@@ -1,4 +1,4 @@
-from luqum.tree import SearchField, Word, Phrase, Range, AndOperation, OrOperation, Group
+from luqum.tree import SearchField, Word, Phrase, Range, AndOperation, OrOperation, Group, Not
 import json
 
 
@@ -6,6 +6,7 @@ def construct_luqum_tree(json_criteria):
     base = None
     stack = []
     current_op = None
+    pending_not = False  # Flag to indicate the next field should be negated
 
     for item in json_criteria:
         if "field" in item:
@@ -14,13 +15,18 @@ def construct_luqum_tree(json_criteria):
             if isinstance(field_value, dict):
                 # Range value
                 field_obj = SearchField(item["field"],
-                                        Range(Word(field_value.get("from", '')), Word(field_value.get("to", ''))))
+                                        Range(Word(field_value.get("from", '*')), Word(field_value.get("to", '*'))))
             elif isinstance(field_value, str) and ' ' in field_value:
                 # Phrase value
                 field_obj = SearchField(item["field"], Phrase(f'"{field_value}"'))
             else:
                 # Word value
                 field_obj = SearchField(item["field"], Word(str(field_value)))
+
+            if pending_not:
+                # Wrap the field with a Not operation
+                field_obj = Not(field_obj)
+                pending_not = False  # Reset the flag
 
             if current_op:
                 # Apply the current operation with the previous operation/base
@@ -38,8 +44,9 @@ def construct_luqum_tree(json_criteria):
                 current_op = AndOperation
             elif operator == "or":
                 current_op = OrOperation
-            # There is no direct NOT operation in luqum, NOT is typically applied to a field,
-            # which in my JSON structure  can be done by setting "value": "NOT <value>"
+            elif operator == "not":
+                # Set the flag to negate the next field
+                pending_not = True
 
         elif "bracket" in item:
             # Handle bracket operations
@@ -53,10 +60,7 @@ def construct_luqum_tree(json_criteria):
                 if stack:
                     group_base = stack.pop()
                     grouped = Group(base)
-                    if group_base is not None:
-                        base = current_op(group_base, grouped) if current_op else grouped
-                    else:
-                        base = grouped
+                    base = current_op(group_base, grouped) if current_op else grouped
                 current_op = None
 
     return base
@@ -69,25 +73,101 @@ json_input = '''
     "bracket": "start"
   },
   {
-    "field": "title",
-    "value": "other stuff"
-  },
-  {
-    "operator": "and"
-  },
-  {
-    "field": "body",
-    "value": "quick fox"
+    "field": "metadata.general_parameters.latitude",
+    "value": "90"
   },
   {
     "bracket": "end"
   },
   {
+    "operator": "and"
+  },
+  {
+    "field": "metadata.general_parameters.depositors.principal_contact.given_name",
+    "value": "Karel"
+  },
+  {
     "operator": "or"
   },
   {
-    "field": "title",
-    "value": "fox"
+    "bracket": "start"
+  },
+  {
+    "field": "metadata.general_parameters.record_information.deposition_date",
+    "value": "2024-02-15"
+  },
+  {
+    "operator": "not"
+  },
+  {
+    "field": "metadata.general_parameters.latitude",
+    "value": {
+      "from": "1",
+      "to": "10"
+    }
+  },
+  {
+    "bracket": "end"
+  },
+  {
+    "operator": "and"
+  },
+  {
+    "field": "metadata.general_parameters.record_information.deposition_date",
+    "value": {
+      "from": "2024-02-06",
+      "to": "2024-02-23"
+    }
+  },
+  {
+    "operator": "and"
+  },
+  {
+    "bracket": "start"
+  },
+  {
+    "field": "metadata.general_parameters.depositors.depositor.given_name",
+    "value": "Ahoj"
+  },
+  {
+    "operator": "and"
+  },
+  {
+    "bracket": "start"
+  },
+  {
+    "field": "metadata.general_parameters.depositors.principal_contact.given_name",
+    "value": "Pepa"
+  },
+  {
+    "operator": "or"
+  },
+  {
+    "field": "metadata.general_parameters.longitude",
+    "value": "20"
+  },
+  {
+    "operator": "not"
+  },
+  {
+    "field": "metadata.general_parameters.latitude",
+    "value": {
+      "from": "19",
+      "to": "90"
+    }
+  },
+  {
+    "bracket": "end"
+  },
+  {
+    "operator": "and"
+  },
+  {
+    "field": "metadata.general_parameters.longitude",
+    "value": "20"
+  },
+  {
+    "bracket": "end"
   }
 ]
 '''
