@@ -151,3 +151,8 @@ json_input = '''
 parsed_json = json.loads(json_input)
 luqum_tree = construct_luqum_tree(parsed_json)
 print(repr(luqum_tree))
+
+# # Convert the tree to a Lucene query string
+# lucene_query = prettify(luqum_tree)
+#
+# print(lucene_query)
