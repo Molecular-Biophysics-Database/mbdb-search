@@ -1,3 +1,4 @@
+import luqum
 from luqum.tree import SearchField, Word, Phrase, Range, AndOperation, OrOperation, Group, Not
 from luqum.parser import parser
 from luqum.pretty import prettify
@@ -184,7 +185,7 @@ json_input2 = '''[
     "bracket": "end"
   }
 ]'''
-parsed_json = json.loads(json_input2)
+parsed_json = json.loads(json_input)
 luqum_tree = construct_luqum_tree(parsed_json)
 print(repr(luqum_tree))
 
@@ -202,11 +203,25 @@ es_builder = ElasticsearchQueryBuilder(**schema_analyzer.query_builder_options()
 
 # Convert the Luqum tree to a Lucene query string
 lucene_query = prettify(luqum_tree)
+# print(lucene_query)
+# print(str(luqum_tree))
+
+# Manually adjust the lucene_query string to ensure proper spacing
+lucene_query = lucene_query.replace('TO', ' TO ')
+lucene_query = lucene_query.replace('NOT', 'NOT ')
+
+print("After editing luc")
 print(lucene_query)
-print(str(luqum_tree))
+
+# Now attempt parsing the adjusted query string
+try:
+    parsed_tree = parser.parse(lucene_query)
+    # Proceed with the rest of your logic here
+except luqum.exceptions.ParseSyntaxError as e:
+    print("Error parsing the Lucene query string:", e)
 
 # Parse the query string into a Luqum tree
-parsed_tree = parser.parse(lucene_query)
+# parsed_tree = parser.parse(lucene_query)
 
 # Convert the Luqum tree to an Elasticsearch (OpenSearch) query
 es_query = es_builder(parsed_tree)
