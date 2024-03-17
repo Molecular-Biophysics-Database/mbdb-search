@@ -1,3 +1,4 @@
+from luqum.pretty import prettify
 from luqum.tree import SearchField, Word, Phrase, Range, AndOperation, OrOperation, Group, Not
 import json
 
@@ -54,14 +55,13 @@ def construct_luqum_tree(json_criteria):
                 # If we encounter a start bracket, push the current base onto the stack
                 stack.append(base)
                 base = None
+                current_op = None
             elif item["bracket"] == "end":
                 # Once we hit an end bracket, we know that base contains the grouped operation
                 # Pop the last operation from the stack and apply the current base to it
-                if stack:
-                    group_base = stack.pop()
-                    grouped = Group(base)
-                    base = current_op(group_base, grouped) if current_op else grouped
-                current_op = None
+                op, last_base = stack.pop()
+                grouped = Group(base)
+                base = op(last_base, grouped) if last_base else grouped
 
     return base
 
@@ -73,98 +73,75 @@ json_input = '''
     "bracket": "start"
   },
   {
-    "field": "metadata.general_parameters.latitude",
-    "value": "90"
-  },
-  {
-    "bracket": "end"
-  },
-  {
-    "operator": "and"
-  },
-  {
-    "field": "metadata.general_parameters.depositors.principal_contact.given_name",
+    "field": "metadata.general_parameters.depositors.depositor.given_name",
     "value": "Karel"
   },
   {
-    "operator": "or"
+    "operator": "and"
   },
   {
-    "bracket": "start"
-  },
-  {
-    "field": "metadata.general_parameters.record_information.deposition_date",
-    "value": "2024-02-15"
-  },
-  {
-    "operator": "not"
-  },
-  {
-    "field": "metadata.general_parameters.latitude",
-    "value": {
-      "from": "1",
-      "to": "10"
-    }
+    "field": "metadata.general_parameters.depositors.depositor.given_name",
+    "value": "Pepa"
   },
   {
     "bracket": "end"
   },
   {
-    "operator": "and"
-  },
-  {
-    "field": "metadata.general_parameters.record_information.deposition_date",
-    "value": {
-      "from": "2024-02-06",
-      "to": "2024-02-23"
-    }
-  },
-  {
-    "operator": "and"
-  },
-  {
-    "bracket": "start"
-  },
-  {
-    "field": "metadata.general_parameters.depositors.depositor.given_name",
-    "value": "Ahoj"
-  },
-  {
-    "operator": "and"
+    "operator": "or"
   },
   {
     "bracket": "start"
   },
   {
     "field": "metadata.general_parameters.depositors.principal_contact.given_name",
-    "value": "Pepa"
-  },
-  {
-    "operator": "or"
-  },
-  {
-    "field": "metadata.general_parameters.longitude",
-    "value": "20"
-  },
-  {
-    "operator": "not"
-  },
-  {
-    "field": "metadata.general_parameters.latitude",
-    "value": {
-      "from": "19",
-      "to": "90"
-    }
-  },
-  {
-    "bracket": "end"
+    "value": "Tonda"
   },
   {
     "operator": "and"
   },
   {
-    "field": "metadata.general_parameters.longitude",
-    "value": "20"
+    "field": "metadata.general_parameters.depositors.principal_contact.given_name",
+    "value": "Mikulas"
+  },
+  {
+    "operator": "not"
+  },
+  {
+    "field": "metadata.general_parameters.depositors.principal_contact.family_name",
+    "value": "Marek"
+  },
+  {
+    "bracket": "end"
+  },
+  {
+    "operator": "or"
+  },
+  {
+    "bracket": "start"
+  },
+  {
+    "field": "metadata.general_parameters.record_information.title",
+    "value": "Mama"
+  },
+  {
+    "operator": "and"
+  },
+  {
+    "field": "metadata.general_parameters.record_information.deposition_date",
+    "value": {
+      "from": "2024-03-01",
+      "to": "2024-04-30"
+    }
+  },
+  {
+    "operator": "and"
+  },
+  {
+    "field": "metadata.general_parameters.latitude",
+    "value": {
+      "from": "-20",
+      "to": "40"
+    }
   },
   {
     "bracket": "end"
