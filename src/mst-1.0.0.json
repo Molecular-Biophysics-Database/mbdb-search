@@ -1,0 +1,2489 @@
+{
+    "mappings": {
+        "properties": {
+            "$schema": {
+                "type": "keyword",
+                "ignore_above": 1024
+            },
+            "collected_default_search_fields": {
+                "type": "text"
+            },
+            "created": {
+                "type": "date",
+                "format": "strict_date_time||strict_date_time_no_millis||basic_date_time||basic_date_time_no_millis||basic_date||strict_date||strict_date_hour_minute_second||strict_date_hour_minute_second_fraction"
+            },
+            "id": {
+                "copy_to": "collected_default_search_fields",
+                "type": "keyword",
+                "ignore_above": 1024
+            },
+            "metadata": {
+                "type": "object",
+                "properties": {
+                    "general_parameters": {
+                        "type": "object",
+                        "properties": {
+                            "associated_publication": {
+                                "type": "object",
+                                "properties": {
+                                    "journal": {
+                                        "copy_to": "collected_default_search_fields",
+                                        "type": "keyword",
+                                        "ignore_above": 1024
+                                    },
+                                    "pid": {
+                                        "copy_to": "collected_default_search_fields",
+                                        "type": "keyword",
+                                        "ignore_above": 1024
+                                    },
+                                    "title": {
+                                        "copy_to": "collected_default_search_fields",
+                                        "type": "keyword",
+                                        "ignore_above": 1024
+                                    },
+                                    "type": {
+                                        "type": "keyword",
+                                        "ignore_above": 1024
+                                    },
+                                    "publisher": {
+                                        "copy_to": "collected_default_search_fields",
+                                        "type": "keyword",
+                                        "ignore_above": 1024
+                                    },
+                                    "degree_type": {
+                                        "copy_to": "collected_default_search_fields",
+                                        "type": "keyword",
+                                        "ignore_above": 1024
+                                    }
+                                }
+                            },
+                            "chemical_environments": {
+                                "type": "nested",
+                                "properties": {
+                                    "additional_specifications": {
+                                        "type": "keyword",
+                                        "ignore_above": 1024
+                                    },
+                                    "constituents": {
+                                        "type": "nested",
+                                        "properties": {
+                                            "additional_specifications": {
+                                                "type": "keyword",
+                                                "ignore_above": 1024
+                                            },
+                                            "concentration": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "unit": {
+                                                        "type": "keyword",
+                                                        "ignore_above": 1024
+                                                    },
+                                                    "value": {
+                                                        "type": "double"
+                                                    }
+                                                }
+                                            },
+                                            "expression_organism": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "id": {
+                                                        "fields": {
+                                                            "text": {
+                                                                "type": "search_as_you_type"
+                                                            }
+                                                        },
+                                                        "type": "keyword",
+                                                        "ignore_above": 1024
+                                                    },
+                                                    "title": {
+                                                        "dynamic": true,
+                                                        "properties": {
+                                                            "en": {
+                                                                "type": "search_as_you_type",
+                                                                "copy_to": "title_sort"
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    },
+                                                    "rank": {
+                                                        "type": "keyword",
+                                                        "ignore_above": 1024
+                                                    },
+                                                    "@v": {
+                                                        "type": "keyword",
+                                                        "ignore_above": 1024
+                                                    }
+                                                }
+                                            },
+                                            "expression_source_type": {
+                                                "type": "keyword",
+                                                "ignore_above": 1024
+                                            },
+                                            "external_databases": {
+                                                "copy_to": "collected_default_search_fields",
+                                                "type": "keyword",
+                                                "ignore_above": 1024
+                                            },
+                                            "modifications": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "biological_postprocessing": {
+                                                        "type": "nested",
+                                                        "properties": {
+                                                            "position": {
+                                                                "type": "keyword",
+                                                                "ignore_above": 1024
+                                                            },
+                                                            "protocol": {
+                                                                "type": "object",
+                                                                "properties": {
+                                                                    "description": {
+                                                                        "type": "keyword",
+                                                                        "ignore_above": 1024
+                                                                    },
+                                                                    "name": {
+                                                                        "type": "keyword",
+                                                                        "ignore_above": 1024
+                                                                    }
+                                                                }
+                                                            },
+                                                            "type": {
+                                                                "type": "keyword",
+                                                                "ignore_above": 1024
+                                                            }
+                                                        }
+                                                    },
+                                                    "chemical": {
+                                                        "type": "nested",
+                                                        "properties": {
+                                                            "position": {
+                                                                "type": "keyword",
+                                                                "ignore_above": 1024
+                                                            },
+                                                            "protocol": {
+                                                                "type": "object",
+                                                                "properties": {
+                                                                    "description": {
+                                                                        "type": "keyword",
+                                                                        "ignore_above": 1024
+                                                                    },
+                                                                    "name": {
+                                                                        "type": "keyword",
+                                                                        "ignore_above": 1024
+                                                                    }
+                                                                }
+                                                            },
+                                                            "type": {
+                                                                "type": "keyword",
+                                                                "ignore_above": 1024
+                                                            }
+                                                        }
+                                                    },
+                                                    "synthesis": {
+                                                        "type": "nested",
+                                                        "properties": {
+                                                            "position": {
+                                                                "type": "keyword",
+                                                                "ignore_above": 1024
+                                                            },
+                                                            "protocol": {
+                                                                "type": "object",
+                                                                "properties": {
+                                                                    "description": {
+                                                                        "type": "keyword",
+                                                                        "ignore_above": 1024
+                                                                    },
+                                                                    "name": {
+                                                                        "type": "keyword",
+                                                                        "ignore_above": 1024
+                                                                    }
+                                                                }
+                                                            },
+                                                            "type": {
+                                                                "type": "keyword",
+                                                                "ignore_above": 1024
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            },
+                                            "molecular_weight": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "unit": {
+                                                        "type": "keyword",
+                                                        "ignore_above": 1024
+                                                    },
+                                                    "value": {
+                                                        "type": "double"
+                                                    }
+                                                }
+                                            },
+                                            "name": {
+                                                "copy_to": "collected_default_search_fields",
+                                                "type": "keyword",
+                                                "ignore_above": 1024
+                                            },
+                                            "polymer_type": {
+                                                "copy_to": "collected_default_search_fields",
+                                                "type": "keyword",
+                                                "ignore_above": 1024
+                                            },
+                                            "quality_controls": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "homogeneity": {
+                                                        "type": "object",
+                                                        "properties": {
+                                                            "checked": {
+                                                                "type": "keyword",
+                                                                "ignore_above": 1024
+                                                            },
+                                                            "expected_number_of_species": {
+                                                                "type": "integer"
+                                                            },
+                                                            "method": {
+                                                                "type": "keyword",
+                                                                "ignore_above": 1024
+                                                            },
+                                                            "number_of_species_observed": {
+                                                                "type": "integer"
+                                                            }
+                                                        }
+                                                    },
+                                                    "identity": {
+                                                        "type": "object",
+                                                        "properties": {
+                                                            "by_fingerprinting": {
+                                                                "type": "object",
+                                                                "properties": {
+                                                                    "method": {
+                                                                        "type": "keyword",
+                                                                        "ignore_above": 1024
+                                                                    }
+                                                                }
+                                                            },
+                                                            "by_intact_mass": {
+                                                                "type": "object",
+                                                                "properties": {
+                                                                    "deviation_from_expected_mass": {
+                                                                        "type": "object",
+                                                                        "properties": {
+                                                                            "unit": {
+                                                                                "type": "keyword",
+                                                                                "ignore_above": 1024
+                                                                            },
+                                                                            "value": {
+                                                                                "type": "double"
+                                                                            }
+                                                                        }
+                                                                    },
+                                                                    "method": {
+                                                                        "type": "keyword",
+                                                                        "ignore_above": 1024
+                                                                    }
+                                                                }
+                                                            },
+                                                            "by_sequencing": {
+                                                                "type": "object",
+                                                                "properties": {
+                                                                    "coverage": {
+                                                                        "type": "integer"
+                                                                    },
+                                                                    "method": {
+                                                                        "type": "keyword",
+                                                                        "ignore_above": 1024
+                                                                    }
+                                                                }
+                                                            },
+                                                            "checked": {
+                                                                "type": "keyword",
+                                                                "ignore_above": 1024
+                                                            }
+                                                        }
+                                                    },
+                                                    "purity": {
+                                                        "type": "object",
+                                                        "properties": {
+                                                            "checked": {
+                                                                "type": "keyword",
+                                                                "ignore_above": 1024
+                                                            },
+                                                            "method": {
+                                                                "type": "keyword",
+                                                                "ignore_above": 1024
+                                                            },
+                                                            "purity_percentage": {
+                                                                "type": "keyword",
+                                                                "ignore_above": 1024
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            },
+                                            "sequence": {
+                                                "copy_to": "collected_default_search_fields",
+                                                "type": "keyword",
+                                                "ignore_above": 1024
+                                            },
+                                            "source_organism": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "id": {
+                                                        "copy_to": "collected_default_search_fields",
+                                                        "fields": {
+                                                            "text": {
+                                                                "type": "search_as_you_type"
+                                                            }
+                                                        },
+                                                        "type": "keyword",
+                                                        "ignore_above": 1024
+                                                    },
+                                                    "title": {
+                                                        "properties": {
+                                                            "en": {
+                                                                "copy_to": "collected_default_search_fields",
+                                                                "type": "search_as_you_type"
+                                                            }
+                                                        },
+                                                        "dynamic": true,
+                                                        "type": "object"
+                                                    },
+                                                    "rank": {
+                                                        "type": "keyword",
+                                                        "ignore_above": 1024
+                                                    },
+                                                    "@v": {
+                                                        "type": "keyword",
+                                                        "ignore_above": 1024
+                                                    }
+                                                }
+                                            },
+                                            "type": {
+                                                "type": "keyword",
+                                                "ignore_above": 1024
+                                            },
+                                            "variant": {
+                                                "copy_to": "collected_default_search_fields",
+                                                "type": "keyword",
+                                                "ignore_above": 1024
+                                            },
+                                            "additional_identifiers": {
+                                                "type": "keyword",
+                                                "ignore_above": 1024
+                                            },
+                                            "inchikey": {
+                                                "copy_to": "collected_default_search_fields",
+                                                "type": "keyword",
+                                                "ignore_above": 1024
+                                            },
+                                            "isotopic_labeling": {
+                                                "type": "keyword",
+                                                "ignore_above": 1024
+                                            },
+                                            "chemical_modifications": {
+                                                "type": "nested",
+                                                "properties": {
+                                                    "position": {
+                                                        "type": "keyword",
+                                                        "ignore_above": 1024
+                                                    },
+                                                    "protocol": {
+                                                        "type": "object",
+                                                        "properties": {
+                                                            "description": {
+                                                                "type": "keyword",
+                                                                "ignore_above": 1024
+                                                            },
+                                                            "name": {
+                                                                "type": "keyword",
+                                                                "ignore_above": 1024
+                                                            }
+                                                        }
+                                                    },
+                                                    "type": {
+                                                        "type": "keyword",
+                                                        "ignore_above": 1024
+                                                    }
+                                                }
+                                            },
+                                            "components": {
+                                                "type": "nested",
+                                                "properties": {
+                                                    "additional_specifications": {
+                                                        "type": "keyword",
+                                                        "ignore_above": 1024
+                                                    },
+                                                    "copy_number": {
+                                                        "type": "double"
+                                                    },
+                                                    "expression_organism": {
+                                                        "type": "object",
+                                                        "properties": {
+                                                            "id": {
+                                                                "fields": {
+                                                                    "text": {
+                                                                        "type": "search_as_you_type"
+                                                                    }
+                                                                },
+                                                                "type": "keyword",
+                                                                "ignore_above": 1024
+                                                            },
+                                                            "title": {
+                                                                "dynamic": true,
+                                                                "properties": {
+                                                                    "en": {
+                                                                        "type": "search_as_you_type",
+                                                                        "copy_to": "title_sort"
+                                                                    }
+                                                                },
+                                                                "type": "object"
+                                                            },
+                                                            "rank": {
+                                                                "type": "keyword",
+                                                                "ignore_above": 1024
+                                                            },
+                                                            "@v": {
+                                                                "type": "keyword",
+                                                                "ignore_above": 1024
+                                                            }
+                                                        }
+                                                    },
+                                                    "expression_source_type": {
+                                                        "type": "keyword",
+                                                        "ignore_above": 1024
+                                                    },
+                                                    "external_databases": {
+                                                        "copy_to": "collected_default_search_fields",
+                                                        "type": "keyword",
+                                                        "ignore_above": 1024
+                                                    },
+                                                    "modifications": {
+                                                        "type": "object",
+                                                        "properties": {
+                                                            "biological_postprocessing": {
+                                                                "type": "nested",
+                                                                "properties": {
+                                                                    "position": {
+                                                                        "type": "keyword",
+                                                                        "ignore_above": 1024
+                                                                    },
+                                                                    "protocol": {
+                                                                        "type": "object",
+                                                                        "properties": {
+                                                                            "description": {
+                                                                                "type": "keyword",
+                                                                                "ignore_above": 1024
+                                                                            },
+                                                                            "name": {
+                                                                                "type": "keyword",
+                                                                                "ignore_above": 1024
+                                                                            }
+                                                                        }
+                                                                    },
+                                                                    "type": {
+                                                                        "type": "keyword",
+                                                                        "ignore_above": 1024
+                                                                    }
+                                                                }
+                                                            },
+                                                            "chemical": {
+                                                                "type": "nested",
+                                                                "properties": {
+                                                                    "position": {
+                                                                        "type": "keyword",
+                                                                        "ignore_above": 1024
+                                                                    },
+                                                                    "protocol": {
+                                                                        "type": "object",
+                                                                        "properties": {
+                                                                            "description": {
+                                                                                "type": "keyword",
+                                                                                "ignore_above": 1024
+                                                                            },
+                                                                            "name": {
+                                                                                "type": "keyword",
+                                                                                "ignore_above": 1024
+                                                                            }
+                                                                        }
+                                                                    },
+                                                                    "type": {
+                                                                        "type": "keyword",
+                                                                        "ignore_above": 1024
+                                                                    }
+                                                                }
+                                                            },
+                                                            "synthesis": {
+                                                                "type": "nested",
+                                                                "properties": {
+                                                                    "position": {
+                                                                        "type": "keyword",
+                                                                        "ignore_above": 1024
+                                                                    },
+                                                                    "protocol": {
+                                                                        "type": "object",
+                                                                        "properties": {
+                                                                            "description": {
+                                                                                "type": "keyword",
+                                                                                "ignore_above": 1024
+                                                                            },
+                                                                            "name": {
+                                                                                "type": "keyword",
+                                                                                "ignore_above": 1024
+                                                                            }
+                                                                        }
+                                                                    },
+                                                                    "type": {
+                                                                        "type": "keyword",
+                                                                        "ignore_above": 1024
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                    },
+                                                    "molecular_weight": {
+                                                        "type": "object",
+                                                        "properties": {
+                                                            "unit": {
+                                                                "type": "keyword",
+                                                                "ignore_above": 1024
+                                                            },
+                                                            "value": {
+                                                                "type": "double"
+                                                            }
+                                                        }
+                                                    },
+                                                    "name": {
+                                                        "copy_to": "collected_default_search_fields",
+                                                        "type": "keyword",
+                                                        "ignore_above": 1024
+                                                    },
+                                                    "polymer_type": {
+                                                        "copy_to": "collected_default_search_fields",
+                                                        "type": "keyword",
+                                                        "ignore_above": 1024
+                                                    },
+                                                    "quality_controls": {
+                                                        "type": "object",
+                                                        "properties": {
+                                                            "homogeneity": {
+                                                                "type": "object",
+                                                                "properties": {
+                                                                    "checked": {
+                                                                        "type": "keyword",
+                                                                        "ignore_above": 1024
+                                                                    },
+                                                                    "expected_number_of_species": {
+                                                                        "type": "integer"
+                                                                    },
+                                                                    "method": {
+                                                                        "type": "keyword",
+                                                                        "ignore_above": 1024
+                                                                    },
+                                                                    "number_of_species_observed": {
+                                                                        "type": "integer"
+                                                                    }
+                                                                }
+                                                            },
+                                                            "identity": {
+                                                                "type": "object",
+                                                                "properties": {
+                                                                    "by_fingerprinting": {
+                                                                        "type": "object",
+                                                                        "properties": {
+                                                                            "method": {
+                                                                                "type": "keyword",
+                                                                                "ignore_above": 1024
+                                                                            }
+                                                                        }
+                                                                    },
+                                                                    "by_intact_mass": {
+                                                                        "type": "object",
+                                                                        "properties": {
+                                                                            "deviation_from_expected_mass": {
+                                                                                "type": "object",
+                                                                                "properties": {
+                                                                                    "unit": {
+                                                                                        "type": "keyword",
+                                                                                        "ignore_above": 1024
+                                                                                    },
+                                                                                    "value": {
+                                                                                        "type": "double"
+                                                                                    }
+                                                                                }
+                                                                            },
+                                                                            "method": {
+                                                                                "type": "keyword",
+                                                                                "ignore_above": 1024
+                                                                            }
+                                                                        }
+                                                                    },
+                                                                    "by_sequencing": {
+                                                                        "type": "object",
+                                                                        "properties": {
+                                                                            "coverage": {
+                                                                                "type": "integer"
+                                                                            },
+                                                                            "method": {
+                                                                                "type": "keyword",
+                                                                                "ignore_above": 1024
+                                                                            }
+                                                                        }
+                                                                    },
+                                                                    "checked": {
+                                                                        "type": "keyword",
+                                                                        "ignore_above": 1024
+                                                                    }
+                                                                }
+                                                            },
+                                                            "purity": {
+                                                                "type": "object",
+                                                                "properties": {
+                                                                    "checked": {
+                                                                        "type": "keyword",
+                                                                        "ignore_above": 1024
+                                                                    },
+                                                                    "method": {
+                                                                        "type": "keyword",
+                                                                        "ignore_above": 1024
+                                                                    },
+                                                                    "purity_percentage": {
+                                                                        "type": "keyword",
+                                                                        "ignore_above": 1024
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                    },
+                                                    "sequence": {
+                                                        "copy_to": "collected_default_search_fields",
+                                                        "type": "keyword",
+                                                        "ignore_above": 1024
+                                                    },
+                                                    "source_organism": {
+                                                        "type": "object",
+                                                        "properties": {
+                                                            "id": {
+                                                                "copy_to": "collected_default_search_fields",
+                                                                "fields": {
+                                                                    "text": {
+                                                                        "type": "search_as_you_type"
+                                                                    }
+                                                                },
+                                                                "type": "keyword",
+                                                                "ignore_above": 1024
+                                                            },
+                                                            "title": {
+                                                                "properties": {
+                                                                    "en": {
+                                                                        "copy_to": "collected_default_search_fields",
+                                                                        "type": "search_as_you_type"
+                                                                    }
+                                                                },
+                                                                "dynamic": true,
+                                                                "type": "object"
+                                                            },
+                                                            "rank": {
+                                                                "type": "keyword",
+                                                                "ignore_above": 1024
+                                                            },
+                                                            "@v": {
+                                                                "type": "keyword",
+                                                                "ignore_above": 1024
+                                                            }
+                                                        }
+                                                    },
+                                                    "type": {
+                                                        "type": "keyword",
+                                                        "ignore_above": 1024
+                                                    },
+                                                    "variant": {
+                                                        "copy_to": "collected_default_search_fields",
+                                                        "type": "keyword",
+                                                        "ignore_above": 1024
+                                                    },
+                                                    "additional_identifiers": {
+                                                        "type": "keyword",
+                                                        "ignore_above": 1024
+                                                    },
+                                                    "inchikey": {
+                                                        "copy_to": "collected_default_search_fields",
+                                                        "type": "keyword",
+                                                        "ignore_above": 1024
+                                                    },
+                                                    "isotopic_labeling": {
+                                                        "type": "keyword",
+                                                        "ignore_above": 1024
+                                                    }
+                                                }
+                                            },
+                                            "derived_from": {
+                                                "type": "keyword",
+                                                "ignore_above": 1024
+                                            },
+                                            "fluid": {
+                                                "copy_to": "collected_default_search_fields",
+                                                "type": "keyword",
+                                                "ignore_above": 1024
+                                            },
+                                            "health_status": {
+                                                "type": "keyword",
+                                                "ignore_above": 1024
+                                            },
+                                            "preparation_protocol": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "description": {
+                                                        "type": "keyword",
+                                                        "ignore_above": 1024
+                                                    },
+                                                    "name": {
+                                                        "type": "keyword",
+                                                        "ignore_above": 1024
+                                                    }
+                                                }
+                                            },
+                                            "storage": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "duration": {
+                                                        "type": "object",
+                                                        "properties": {
+                                                            "unit": {
+                                                                "type": "keyword",
+                                                                "ignore_above": 1024
+                                                            },
+                                                            "value": {
+                                                                "type": "double"
+                                                            }
+                                                        }
+                                                    },
+                                                    "storage_preparation": {
+                                                        "type": "object",
+                                                        "properties": {
+                                                            "description": {
+                                                                "type": "keyword",
+                                                                "ignore_above": 1024
+                                                            },
+                                                            "name": {
+                                                                "type": "keyword",
+                                                                "ignore_above": 1024
+                                                            }
+                                                        }
+                                                    },
+                                                    "temperature": {
+                                                        "type": "object",
+                                                        "properties": {
+                                                            "unit": {
+                                                                "type": "keyword",
+                                                                "ignore_above": 1024
+                                                            },
+                                                            "value": {
+                                                                "type": "double"
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            },
+                                            "cell_type": {
+                                                "type": "keyword",
+                                                "ignore_above": 1024
+                                            },
+                                            "fraction": {
+                                                "copy_to": "collected_default_search_fields",
+                                                "type": "keyword",
+                                                "ignore_above": 1024
+                                            },
+                                            "organ": {
+                                                "type": "keyword",
+                                                "ignore_above": 1024
+                                            },
+                                            "tissue": {
+                                                "type": "keyword",
+                                                "ignore_above": 1024
+                                            },
+                                            "capsid_type": {
+                                                "type": "keyword",
+                                                "ignore_above": 1024
+                                            },
+                                            "envelope_type": {
+                                                "type": "keyword",
+                                                "ignore_above": 1024
+                                            },
+                                            "genetic_material": {
+                                                "type": "keyword",
+                                                "ignore_above": 1024
+                                            },
+                                            "host_cell_type": {
+                                                "type": "keyword",
+                                                "ignore_above": 1024
+                                            },
+                                            "host_organism": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "id": {
+                                                        "fields": {
+                                                            "text": {
+                                                                "type": "search_as_you_type"
+                                                            }
+                                                        },
+                                                        "type": "keyword",
+                                                        "ignore_above": 1024
+                                                    },
+                                                    "title": {
+                                                        "dynamic": true,
+                                                        "properties": {
+                                                            "en": {
+                                                                "type": "search_as_you_type",
+                                                                "copy_to": "title_sort"
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    },
+                                                    "rank": {
+                                                        "type": "keyword",
+                                                        "ignore_above": 1024
+                                                    },
+                                                    "@v": {
+                                                        "type": "keyword",
+                                                        "ignore_above": 1024
+                                                    }
+                                                }
+                                            },
+                                            "location": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "latitude": {
+                                                        "type": "double"
+                                                    },
+                                                    "longitude": {
+                                                        "type": "double"
+                                                    }
+                                                }
+                                            },
+                                            "source": {
+                                                "copy_to": "collected_default_search_fields",
+                                                "type": "keyword",
+                                                "ignore_above": 1024
+                                            },
+                                            "assembly_type": {
+                                                "type": "keyword",
+                                                "ignore_above": 1024
+                                            },
+                                            "class": {
+                                                "type": "keyword",
+                                                "ignore_above": 1024
+                                            },
+                                            "number_of_mono_layers": {
+                                                "type": "integer"
+                                            },
+                                            "size": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "lower": {
+                                                        "type": "double"
+                                                    },
+                                                    "mean": {
+                                                        "type": "double"
+                                                    },
+                                                    "median": {
+                                                        "type": "double"
+                                                    },
+                                                    "type": {
+                                                        "type": "keyword",
+                                                        "ignore_above": 1024
+                                                    },
+                                                    "unit": {
+                                                        "type": "keyword",
+                                                        "ignore_above": 1024
+                                                    },
+                                                    "upper": {
+                                                        "type": "double"
+                                                    }
+                                                }
+                                            },
+                                            "product": {
+                                                "copy_to": "collected_default_search_fields",
+                                                "type": "keyword",
+                                                "ignore_above": 1024
+                                            }
+                                        }
+                                    },
+                                    "id": {
+                                        "type": "keyword",
+                                        "ignore_above": 1024
+                                    },
+                                    "name": {
+                                        "type": "keyword",
+                                        "ignore_above": 1024
+                                    },
+                                    "ph": {
+                                        "type": "double"
+                                    },
+                                    "solvent": {
+                                        "type": "nested",
+                                        "properties": {
+                                            "additional_identifiers": {
+                                                "type": "keyword",
+                                                "ignore_above": 1024
+                                            },
+                                            "additional_specifications": {
+                                                "type": "keyword",
+                                                "ignore_above": 1024
+                                            },
+                                            "concentration": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "unit": {
+                                                        "type": "keyword",
+                                                        "ignore_above": 1024
+                                                    },
+                                                    "value": {
+                                                        "type": "double"
+                                                    }
+                                                }
+                                            },
+                                            "inchikey": {
+                                                "copy_to": "collected_default_search_fields",
+                                                "type": "keyword",
+                                                "ignore_above": 1024
+                                            },
+                                            "isotopic_labeling": {
+                                                "type": "keyword",
+                                                "ignore_above": 1024
+                                            },
+                                            "molecular_weight": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "unit": {
+                                                        "type": "keyword",
+                                                        "ignore_above": 1024
+                                                    },
+                                                    "value": {
+                                                        "type": "double"
+                                                    }
+                                                }
+                                            },
+                                            "name": {
+                                                "copy_to": "collected_default_search_fields",
+                                                "type": "keyword",
+                                                "ignore_above": 1024
+                                            },
+                                            "type": {
+                                                "type": "keyword",
+                                                "ignore_above": 1024
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            "collection_start_time": {
+                                "type": "date",
+                                "format": "basic_date||strict_date"
+                            },
+                            "depositors": {
+                                "type": "object",
+                                "properties": {
+                                    "contributors": {
+                                        "type": "nested",
+                                        "properties": {
+                                            "affiliations": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "id": {
+                                                        "copy_to": "collected_default_search_fields",
+                                                        "fields": {
+                                                            "text": {
+                                                                "type": "search_as_you_type"
+                                                            }
+                                                        },
+                                                        "type": "keyword",
+                                                        "ignore_above": 1024
+                                                    },
+                                                    "title": {
+                                                        "properties": {
+                                                            "en": {
+                                                                "copy_to": "collected_default_search_fields",
+                                                                "type": "search_as_you_type"
+                                                            }
+                                                        },
+                                                        "dynamic": true,
+                                                        "type": "object"
+                                                    },
+                                                    "city": {
+                                                        "type": "keyword",
+                                                        "ignore_above": 1024
+                                                    },
+                                                    "state": {
+                                                        "type": "keyword",
+                                                        "ignore_above": 1024
+                                                    },
+                                                    "country": {
+                                                        "type": "keyword",
+                                                        "ignore_above": 1024
+                                                    },
+                                                    "@v": {
+                                                        "type": "keyword",
+                                                        "ignore_above": 1024
+                                                    }
+                                                }
+                                            },
+                                            "family_name": {
+                                                "copy_to": "collected_default_search_fields",
+                                                "type": "keyword",
+                                                "ignore_above": 1024
+                                            },
+                                            "given_name": {
+                                                "copy_to": "collected_default_search_fields",
+                                                "type": "keyword",
+                                                "ignore_above": 1024
+                                            },
+                                            "identifiers": {
+                                                "copy_to": "collected_default_search_fields",
+                                                "type": "keyword",
+                                                "ignore_above": 1024
+                                            }
+                                        }
+                                    },
+                                    "depositor": {
+                                        "type": "object",
+                                        "properties": {
+                                            "affiliations": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "id": {
+                                                        "copy_to": "collected_default_search_fields",
+                                                        "fields": {
+                                                            "text": {
+                                                                "type": "search_as_you_type"
+                                                            }
+                                                        },
+                                                        "type": "keyword",
+                                                        "ignore_above": 1024
+                                                    },
+                                                    "title": {
+                                                        "properties": {
+                                                            "en": {
+                                                                "copy_to": "collected_default_search_fields",
+                                                                "type": "search_as_you_type"
+                                                            }
+                                                        },
+                                                        "dynamic": true,
+                                                        "type": "object"
+                                                    },
+                                                    "city": {
+                                                        "type": "keyword",
+                                                        "ignore_above": 1024
+                                                    },
+                                                    "state": {
+                                                        "type": "keyword",
+                                                        "ignore_above": 1024
+                                                    },
+                                                    "country": {
+                                                        "type": "keyword",
+                                                        "ignore_above": 1024
+                                                    },
+                                                    "@v": {
+                                                        "type": "keyword",
+                                                        "ignore_above": 1024
+                                                    }
+                                                }
+                                            },
+                                            "family_name": {
+                                                "copy_to": "collected_default_search_fields",
+                                                "type": "keyword",
+                                                "ignore_above": 1024
+                                            },
+                                            "given_name": {
+                                                "copy_to": "collected_default_search_fields",
+                                                "type": "keyword",
+                                                "ignore_above": 1024
+                                            },
+                                            "identifiers": {
+                                                "copy_to": "collected_default_search_fields",
+                                                "type": "keyword",
+                                                "ignore_above": 1024
+                                            }
+                                        }
+                                    },
+                                    "principal_contact": {
+                                        "type": "object",
+                                        "properties": {
+                                            "affiliations": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "id": {
+                                                        "copy_to": "collected_default_search_fields",
+                                                        "fields": {
+                                                            "text": {
+                                                                "type": "search_as_you_type"
+                                                            }
+                                                        },
+                                                        "type": "keyword",
+                                                        "ignore_above": 1024
+                                                    },
+                                                    "title": {
+                                                        "properties": {
+                                                            "en": {
+                                                                "copy_to": "collected_default_search_fields",
+                                                                "type": "search_as_you_type"
+                                                            }
+                                                        },
+                                                        "dynamic": true,
+                                                        "type": "object"
+                                                    },
+                                                    "city": {
+                                                        "type": "keyword",
+                                                        "ignore_above": 1024
+                                                    },
+                                                    "state": {
+                                                        "type": "keyword",
+                                                        "ignore_above": 1024
+                                                    },
+                                                    "country": {
+                                                        "type": "keyword",
+                                                        "ignore_above": 1024
+                                                    },
+                                                    "@v": {
+                                                        "type": "keyword",
+                                                        "ignore_above": 1024
+                                                    }
+                                                }
+                                            },
+                                            "family_name": {
+                                                "copy_to": "collected_default_search_fields",
+                                                "type": "keyword",
+                                                "ignore_above": 1024
+                                            },
+                                            "given_name": {
+                                                "copy_to": "collected_default_search_fields",
+                                                "type": "keyword",
+                                                "ignore_above": 1024
+                                            },
+                                            "identifiers": {
+                                                "copy_to": "collected_default_search_fields",
+                                                "type": "keyword",
+                                                "ignore_above": 1024
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            "entities_of_interest": {
+                                "type": "nested",
+                                "properties": {
+                                    "additional_specifications": {
+                                        "type": "keyword",
+                                        "ignore_above": 1024
+                                    },
+                                    "expression_organism": {
+                                        "type": "object",
+                                        "properties": {
+                                            "id": {
+                                                "fields": {
+                                                    "text": {
+                                                        "type": "search_as_you_type"
+                                                    }
+                                                },
+                                                "type": "keyword",
+                                                "ignore_above": 1024
+                                            },
+                                            "title": {
+                                                "dynamic": true,
+                                                "properties": {
+                                                    "en": {
+                                                        "type": "search_as_you_type",
+                                                        "copy_to": "title_sort"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            },
+                                            "rank": {
+                                                "type": "keyword",
+                                                "ignore_above": 1024
+                                            },
+                                            "@v": {
+                                                "type": "keyword",
+                                                "ignore_above": 1024
+                                            }
+                                        }
+                                    },
+                                    "expression_source_type": {
+                                        "type": "keyword",
+                                        "ignore_above": 1024
+                                    },
+                                    "external_databases": {
+                                        "copy_to": "collected_default_search_fields",
+                                        "type": "keyword",
+                                        "ignore_above": 1024
+                                    },
+                                    "id": {
+                                        "type": "keyword",
+                                        "ignore_above": 1024
+                                    },
+                                    "modifications": {
+                                        "type": "object",
+                                        "properties": {
+                                            "biological_postprocessing": {
+                                                "type": "nested",
+                                                "properties": {
+                                                    "position": {
+                                                        "type": "keyword",
+                                                        "ignore_above": 1024
+                                                    },
+                                                    "protocol": {
+                                                        "type": "object",
+                                                        "properties": {
+                                                            "description": {
+                                                                "type": "keyword",
+                                                                "ignore_above": 1024
+                                                            },
+                                                            "name": {
+                                                                "type": "keyword",
+                                                                "ignore_above": 1024
+                                                            }
+                                                        }
+                                                    },
+                                                    "type": {
+                                                        "type": "keyword",
+                                                        "ignore_above": 1024
+                                                    }
+                                                }
+                                            },
+                                            "chemical": {
+                                                "type": "nested",
+                                                "properties": {
+                                                    "position": {
+                                                        "type": "keyword",
+                                                        "ignore_above": 1024
+                                                    },
+                                                    "protocol": {
+                                                        "type": "object",
+                                                        "properties": {
+                                                            "description": {
+                                                                "type": "keyword",
+                                                                "ignore_above": 1024
+                                                            },
+                                                            "name": {
+                                                                "type": "keyword",
+                                                                "ignore_above": 1024
+                                                            }
+                                                        }
+                                                    },
+                                                    "type": {
+                                                        "type": "keyword",
+                                                        "ignore_above": 1024
+                                                    }
+                                                }
+                                            },
+                                            "synthesis": {
+                                                "type": "nested",
+                                                "properties": {
+                                                    "position": {
+                                                        "type": "keyword",
+                                                        "ignore_above": 1024
+                                                    },
+                                                    "protocol": {
+                                                        "type": "object",
+                                                        "properties": {
+                                                            "description": {
+                                                                "type": "keyword",
+                                                                "ignore_above": 1024
+                                                            },
+                                                            "name": {
+                                                                "type": "keyword",
+                                                                "ignore_above": 1024
+                                                            }
+                                                        }
+                                                    },
+                                                    "type": {
+                                                        "type": "keyword",
+                                                        "ignore_above": 1024
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    },
+                                    "molecular_weight": {
+                                        "type": "object",
+                                        "properties": {
+                                            "unit": {
+                                                "type": "keyword",
+                                                "ignore_above": 1024
+                                            },
+                                            "value": {
+                                                "type": "double"
+                                            }
+                                        }
+                                    },
+                                    "name": {
+                                        "copy_to": "collected_default_search_fields",
+                                        "type": "keyword",
+                                        "ignore_above": 1024
+                                    },
+                                    "polymer_type": {
+                                        "copy_to": "collected_default_search_fields",
+                                        "type": "keyword",
+                                        "ignore_above": 1024
+                                    },
+                                    "quality_controls": {
+                                        "type": "object",
+                                        "properties": {
+                                            "homogeneity": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "checked": {
+                                                        "type": "keyword",
+                                                        "ignore_above": 1024
+                                                    },
+                                                    "expected_number_of_species": {
+                                                        "type": "integer"
+                                                    },
+                                                    "method": {
+                                                        "type": "keyword",
+                                                        "ignore_above": 1024
+                                                    },
+                                                    "number_of_species_observed": {
+                                                        "type": "integer"
+                                                    }
+                                                }
+                                            },
+                                            "identity": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "by_fingerprinting": {
+                                                        "type": "object",
+                                                        "properties": {
+                                                            "method": {
+                                                                "type": "keyword",
+                                                                "ignore_above": 1024
+                                                            }
+                                                        }
+                                                    },
+                                                    "by_intact_mass": {
+                                                        "type": "object",
+                                                        "properties": {
+                                                            "deviation_from_expected_mass": {
+                                                                "type": "object",
+                                                                "properties": {
+                                                                    "unit": {
+                                                                        "type": "keyword",
+                                                                        "ignore_above": 1024
+                                                                    },
+                                                                    "value": {
+                                                                        "type": "double"
+                                                                    }
+                                                                }
+                                                            },
+                                                            "method": {
+                                                                "type": "keyword",
+                                                                "ignore_above": 1024
+                                                            }
+                                                        }
+                                                    },
+                                                    "by_sequencing": {
+                                                        "type": "object",
+                                                        "properties": {
+                                                            "coverage": {
+                                                                "type": "integer"
+                                                            },
+                                                            "method": {
+                                                                "type": "keyword",
+                                                                "ignore_above": 1024
+                                                            }
+                                                        }
+                                                    },
+                                                    "checked": {
+                                                        "type": "keyword",
+                                                        "ignore_above": 1024
+                                                    }
+                                                }
+                                            },
+                                            "purity": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "checked": {
+                                                        "type": "keyword",
+                                                        "ignore_above": 1024
+                                                    },
+                                                    "method": {
+                                                        "type": "keyword",
+                                                        "ignore_above": 1024
+                                                    },
+                                                    "purity_percentage": {
+                                                        "type": "keyword",
+                                                        "ignore_above": 1024
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    },
+                                    "sequence": {
+                                        "copy_to": "collected_default_search_fields",
+                                        "type": "keyword",
+                                        "ignore_above": 1024
+                                    },
+                                    "source_organism": {
+                                        "type": "object",
+                                        "properties": {
+                                            "id": {
+                                                "copy_to": "collected_default_search_fields",
+                                                "fields": {
+                                                    "text": {
+                                                        "type": "search_as_you_type"
+                                                    }
+                                                },
+                                                "type": "keyword",
+                                                "ignore_above": 1024
+                                            },
+                                            "title": {
+                                                "properties": {
+                                                    "en": {
+                                                        "copy_to": "collected_default_search_fields",
+                                                        "type": "search_as_you_type"
+                                                    }
+                                                },
+                                                "dynamic": true,
+                                                "type": "object"
+                                            },
+                                            "rank": {
+                                                "type": "keyword",
+                                                "ignore_above": 1024
+                                            },
+                                            "@v": {
+                                                "type": "keyword",
+                                                "ignore_above": 1024
+                                            }
+                                        }
+                                    },
+                                    "type": {
+                                        "copy_to": "collected_default_search_fields",
+                                        "type": "keyword",
+                                        "ignore_above": 1024
+                                    },
+                                    "variant": {
+                                        "copy_to": "collected_default_search_fields",
+                                        "type": "keyword",
+                                        "ignore_above": 1024
+                                    },
+                                    "additional_identifiers": {
+                                        "type": "keyword",
+                                        "ignore_above": 1024
+                                    },
+                                    "inchikey": {
+                                        "copy_to": "collected_default_search_fields",
+                                        "type": "keyword",
+                                        "ignore_above": 1024
+                                    },
+                                    "isotopic_labeling": {
+                                        "type": "keyword",
+                                        "ignore_above": 1024
+                                    },
+                                    "chemical_modifications": {
+                                        "type": "nested",
+                                        "properties": {
+                                            "position": {
+                                                "type": "keyword",
+                                                "ignore_above": 1024
+                                            },
+                                            "protocol": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "description": {
+                                                        "type": "keyword",
+                                                        "ignore_above": 1024
+                                                    },
+                                                    "name": {
+                                                        "type": "keyword",
+                                                        "ignore_above": 1024
+                                                    }
+                                                }
+                                            },
+                                            "type": {
+                                                "type": "keyword",
+                                                "ignore_above": 1024
+                                            }
+                                        }
+                                    },
+                                    "components": {
+                                        "type": "nested",
+                                        "properties": {
+                                            "additional_specifications": {
+                                                "type": "keyword",
+                                                "ignore_above": 1024
+                                            },
+                                            "copy_number": {
+                                                "type": "double"
+                                            },
+                                            "expression_organism": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "id": {
+                                                        "fields": {
+                                                            "text": {
+                                                                "type": "search_as_you_type"
+                                                            }
+                                                        },
+                                                        "type": "keyword",
+                                                        "ignore_above": 1024
+                                                    },
+                                                    "title": {
+                                                        "dynamic": true,
+                                                        "properties": {
+                                                            "en": {
+                                                                "type": "search_as_you_type",
+                                                                "copy_to": "title_sort"
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    },
+                                                    "rank": {
+                                                        "type": "keyword",
+                                                        "ignore_above": 1024
+                                                    },
+                                                    "@v": {
+                                                        "type": "keyword",
+                                                        "ignore_above": 1024
+                                                    }
+                                                }
+                                            },
+                                            "expression_source_type": {
+                                                "type": "keyword",
+                                                "ignore_above": 1024
+                                            },
+                                            "external_databases": {
+                                                "copy_to": "collected_default_search_fields",
+                                                "type": "keyword",
+                                                "ignore_above": 1024
+                                            },
+                                            "modifications": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "biological_postprocessing": {
+                                                        "type": "nested",
+                                                        "properties": {
+                                                            "position": {
+                                                                "type": "keyword",
+                                                                "ignore_above": 1024
+                                                            },
+                                                            "protocol": {
+                                                                "type": "object",
+                                                                "properties": {
+                                                                    "description": {
+                                                                        "type": "keyword",
+                                                                        "ignore_above": 1024
+                                                                    },
+                                                                    "name": {
+                                                                        "type": "keyword",
+                                                                        "ignore_above": 1024
+                                                                    }
+                                                                }
+                                                            },
+                                                            "type": {
+                                                                "type": "keyword",
+                                                                "ignore_above": 1024
+                                                            }
+                                                        }
+                                                    },
+                                                    "chemical": {
+                                                        "type": "nested",
+                                                        "properties": {
+                                                            "position": {
+                                                                "type": "keyword",
+                                                                "ignore_above": 1024
+                                                            },
+                                                            "protocol": {
+                                                                "type": "object",
+                                                                "properties": {
+                                                                    "description": {
+                                                                        "type": "keyword",
+                                                                        "ignore_above": 1024
+                                                                    },
+                                                                    "name": {
+                                                                        "type": "keyword",
+                                                                        "ignore_above": 1024
+                                                                    }
+                                                                }
+                                                            },
+                                                            "type": {
+                                                                "type": "keyword",
+                                                                "ignore_above": 1024
+                                                            }
+                                                        }
+                                                    },
+                                                    "synthesis": {
+                                                        "type": "nested",
+                                                        "properties": {
+                                                            "position": {
+                                                                "type": "keyword",
+                                                                "ignore_above": 1024
+                                                            },
+                                                            "protocol": {
+                                                                "type": "object",
+                                                                "properties": {
+                                                                    "description": {
+                                                                        "type": "keyword",
+                                                                        "ignore_above": 1024
+                                                                    },
+                                                                    "name": {
+                                                                        "type": "keyword",
+                                                                        "ignore_above": 1024
+                                                                    }
+                                                                }
+                                                            },
+                                                            "type": {
+                                                                "type": "keyword",
+                                                                "ignore_above": 1024
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            },
+                                            "molecular_weight": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "unit": {
+                                                        "type": "keyword",
+                                                        "ignore_above": 1024
+                                                    },
+                                                    "value": {
+                                                        "type": "double"
+                                                    }
+                                                }
+                                            },
+                                            "name": {
+                                                "copy_to": "collected_default_search_fields",
+                                                "type": "keyword",
+                                                "ignore_above": 1024
+                                            },
+                                            "polymer_type": {
+                                                "copy_to": "collected_default_search_fields",
+                                                "type": "keyword",
+                                                "ignore_above": 1024
+                                            },
+                                            "quality_controls": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "homogeneity": {
+                                                        "type": "object",
+                                                        "properties": {
+                                                            "checked": {
+                                                                "type": "keyword",
+                                                                "ignore_above": 1024
+                                                            },
+                                                            "expected_number_of_species": {
+                                                                "type": "integer"
+                                                            },
+                                                            "method": {
+                                                                "type": "keyword",
+                                                                "ignore_above": 1024
+                                                            },
+                                                            "number_of_species_observed": {
+                                                                "type": "integer"
+                                                            }
+                                                        }
+                                                    },
+                                                    "identity": {
+                                                        "type": "object",
+                                                        "properties": {
+                                                            "by_fingerprinting": {
+                                                                "type": "object",
+                                                                "properties": {
+                                                                    "method": {
+                                                                        "type": "keyword",
+                                                                        "ignore_above": 1024
+                                                                    }
+                                                                }
+                                                            },
+                                                            "by_intact_mass": {
+                                                                "type": "object",
+                                                                "properties": {
+                                                                    "deviation_from_expected_mass": {
+                                                                        "type": "object",
+                                                                        "properties": {
+                                                                            "unit": {
+                                                                                "type": "keyword",
+                                                                                "ignore_above": 1024
+                                                                            },
+                                                                            "value": {
+                                                                                "type": "double"
+                                                                            }
+                                                                        }
+                                                                    },
+                                                                    "method": {
+                                                                        "type": "keyword",
+                                                                        "ignore_above": 1024
+                                                                    }
+                                                                }
+                                                            },
+                                                            "by_sequencing": {
+                                                                "type": "object",
+                                                                "properties": {
+                                                                    "coverage": {
+                                                                        "type": "integer"
+                                                                    },
+                                                                    "method": {
+                                                                        "type": "keyword",
+                                                                        "ignore_above": 1024
+                                                                    }
+                                                                }
+                                                            },
+                                                            "checked": {
+                                                                "type": "keyword",
+                                                                "ignore_above": 1024
+                                                            }
+                                                        }
+                                                    },
+                                                    "purity": {
+                                                        "type": "object",
+                                                        "properties": {
+                                                            "checked": {
+                                                                "type": "keyword",
+                                                                "ignore_above": 1024
+                                                            },
+                                                            "method": {
+                                                                "type": "keyword",
+                                                                "ignore_above": 1024
+                                                            },
+                                                            "purity_percentage": {
+                                                                "type": "keyword",
+                                                                "ignore_above": 1024
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            },
+                                            "sequence": {
+                                                "copy_to": "collected_default_search_fields",
+                                                "type": "keyword",
+                                                "ignore_above": 1024
+                                            },
+                                            "source_organism": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "id": {
+                                                        "copy_to": "collected_default_search_fields",
+                                                        "fields": {
+                                                            "text": {
+                                                                "type": "search_as_you_type"
+                                                            }
+                                                        },
+                                                        "type": "keyword",
+                                                        "ignore_above": 1024
+                                                    },
+                                                    "title": {
+                                                        "properties": {
+                                                            "en": {
+                                                                "copy_to": "collected_default_search_fields",
+                                                                "type": "search_as_you_type"
+                                                            }
+                                                        },
+                                                        "dynamic": true,
+                                                        "type": "object"
+                                                    },
+                                                    "rank": {
+                                                        "type": "keyword",
+                                                        "ignore_above": 1024
+                                                    },
+                                                    "@v": {
+                                                        "type": "keyword",
+                                                        "ignore_above": 1024
+                                                    }
+                                                }
+                                            },
+                                            "type": {
+                                                "type": "keyword",
+                                                "ignore_above": 1024
+                                            },
+                                            "variant": {
+                                                "copy_to": "collected_default_search_fields",
+                                                "type": "keyword",
+                                                "ignore_above": 1024
+                                            },
+                                            "additional_identifiers": {
+                                                "type": "keyword",
+                                                "ignore_above": 1024
+                                            },
+                                            "inchikey": {
+                                                "copy_to": "collected_default_search_fields",
+                                                "type": "keyword",
+                                                "ignore_above": 1024
+                                            },
+                                            "isotopic_labeling": {
+                                                "type": "keyword",
+                                                "ignore_above": 1024
+                                            }
+                                        }
+                                    },
+                                    "derived_from": {
+                                        "type": "keyword",
+                                        "ignore_above": 1024
+                                    },
+                                    "fluid": {
+                                        "copy_to": "collected_default_search_fields",
+                                        "type": "keyword",
+                                        "ignore_above": 1024
+                                    },
+                                    "health_status": {
+                                        "type": "keyword",
+                                        "ignore_above": 1024
+                                    },
+                                    "preparation_protocol": {
+                                        "type": "object",
+                                        "properties": {
+                                            "description": {
+                                                "type": "keyword",
+                                                "ignore_above": 1024
+                                            },
+                                            "name": {
+                                                "type": "keyword",
+                                                "ignore_above": 1024
+                                            }
+                                        }
+                                    },
+                                    "storage": {
+                                        "type": "object",
+                                        "properties": {
+                                            "duration": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "unit": {
+                                                        "type": "keyword",
+                                                        "ignore_above": 1024
+                                                    },
+                                                    "value": {
+                                                        "type": "double"
+                                                    }
+                                                }
+                                            },
+                                            "storage_preparation": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "description": {
+                                                        "type": "keyword",
+                                                        "ignore_above": 1024
+                                                    },
+                                                    "name": {
+                                                        "type": "keyword",
+                                                        "ignore_above": 1024
+                                                    }
+                                                }
+                                            },
+                                            "temperature": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "unit": {
+                                                        "type": "keyword",
+                                                        "ignore_above": 1024
+                                                    },
+                                                    "value": {
+                                                        "type": "double"
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    },
+                                    "cell_type": {
+                                        "type": "keyword",
+                                        "ignore_above": 1024
+                                    },
+                                    "fraction": {
+                                        "copy_to": "collected_default_search_fields",
+                                        "type": "keyword",
+                                        "ignore_above": 1024
+                                    },
+                                    "organ": {
+                                        "type": "keyword",
+                                        "ignore_above": 1024
+                                    },
+                                    "tissue": {
+                                        "type": "keyword",
+                                        "ignore_above": 1024
+                                    },
+                                    "capsid_type": {
+                                        "type": "keyword",
+                                        "ignore_above": 1024
+                                    },
+                                    "envelope_type": {
+                                        "type": "keyword",
+                                        "ignore_above": 1024
+                                    },
+                                    "genetic_material": {
+                                        "type": "keyword",
+                                        "ignore_above": 1024
+                                    },
+                                    "host_cell_type": {
+                                        "type": "keyword",
+                                        "ignore_above": 1024
+                                    },
+                                    "host_organism": {
+                                        "type": "object",
+                                        "properties": {
+                                            "id": {
+                                                "fields": {
+                                                    "text": {
+                                                        "type": "search_as_you_type"
+                                                    }
+                                                },
+                                                "type": "keyword",
+                                                "ignore_above": 1024
+                                            },
+                                            "title": {
+                                                "dynamic": true,
+                                                "properties": {
+                                                    "en": {
+                                                        "type": "search_as_you_type",
+                                                        "copy_to": "title_sort"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            },
+                                            "rank": {
+                                                "type": "keyword",
+                                                "ignore_above": 1024
+                                            },
+                                            "@v": {
+                                                "type": "keyword",
+                                                "ignore_above": 1024
+                                            }
+                                        }
+                                    },
+                                    "location": {
+                                        "type": "object",
+                                        "properties": {
+                                            "latitude": {
+                                                "type": "double"
+                                            },
+                                            "longitude": {
+                                                "type": "double"
+                                            }
+                                        }
+                                    },
+                                    "source": {
+                                        "copy_to": "collected_default_search_fields",
+                                        "type": "keyword",
+                                        "ignore_above": 1024
+                                    },
+                                    "assembly_type": {
+                                        "type": "keyword",
+                                        "ignore_above": 1024
+                                    },
+                                    "class": {
+                                        "type": "keyword",
+                                        "ignore_above": 1024
+                                    },
+                                    "number_of_mono_layers": {
+                                        "type": "integer"
+                                    },
+                                    "size": {
+                                        "type": "object",
+                                        "properties": {
+                                            "lower": {
+                                                "type": "double"
+                                            },
+                                            "mean": {
+                                                "type": "double"
+                                            },
+                                            "median": {
+                                                "type": "double"
+                                            },
+                                            "type": {
+                                                "type": "keyword",
+                                                "ignore_above": 1024
+                                            },
+                                            "unit": {
+                                                "type": "keyword",
+                                                "ignore_above": 1024
+                                            },
+                                            "upper": {
+                                                "type": "double"
+                                            }
+                                        }
+                                    },
+                                    "product": {
+                                        "copy_to": "collected_default_search_fields",
+                                        "type": "keyword",
+                                        "ignore_above": 1024
+                                    }
+                                }
+                            },
+                            "funding_references": {
+                                "type": "object",
+                                "properties": {
+                                    "id": {
+                                        "copy_to": "collected_default_search_fields",
+                                        "fields": {
+                                            "text": {
+                                                "type": "search_as_you_type"
+                                            }
+                                        },
+                                        "type": "keyword",
+                                        "ignore_above": 1024
+                                    },
+                                    "title": {
+                                        "properties": {
+                                            "en": {
+                                                "copy_to": "collected_default_search_fields",
+                                                "type": "search_as_you_type"
+                                            }
+                                        },
+                                        "dynamic": true,
+                                        "type": "object"
+                                    },
+                                    "funder_name": {
+                                        "type": "keyword",
+                                        "ignore_above": 1024
+                                    },
+                                    "@v": {
+                                        "type": "keyword",
+                                        "ignore_above": 1024
+                                    }
+                                }
+                            },
+                            "instrument": {
+                                "type": "object",
+                                "properties": {
+                                    "id": {
+                                        "fields": {
+                                            "text": {
+                                                "type": "search_as_you_type"
+                                            }
+                                        },
+                                        "type": "keyword",
+                                        "ignore_above": 1024
+                                    },
+                                    "title": {
+                                        "dynamic": true,
+                                        "properties": {
+                                            "en": {
+                                                "type": "search_as_you_type",
+                                                "copy_to": "title_sort"
+                                            }
+                                        },
+                                        "type": "object"
+                                    },
+                                    "manufacturer": {
+                                        "type": "keyword",
+                                        "ignore_above": 1024
+                                    },
+                                    "@v": {
+                                        "type": "keyword",
+                                        "ignore_above": 1024
+                                    }
+                                }
+                            },
+                            "raw_measurement_files": {
+                                "type": "keyword",
+                                "ignore_above": 1024
+                            },
+                            "record_information": {
+                                "type": "object",
+                                "properties": {
+                                    "access_rights": {
+                                        "type": "keyword",
+                                        "ignore_above": 1024
+                                    },
+                                    "date_available": {
+                                        "type": "date",
+                                        "format": "basic_date||strict_date"
+                                    },
+                                    "deposition_date": {
+                                        "type": "date",
+                                        "format": "basic_date||strict_date"
+                                    },
+                                    "external_identifier": {
+                                        "type": "keyword",
+                                        "ignore_above": 1024
+                                    },
+                                    "metadata_access_rights": {
+                                        "type": "keyword",
+                                        "ignore_above": 1024
+                                    },
+                                    "publisher": {
+                                        "type": "keyword",
+                                        "ignore_above": 1024
+                                    },
+                                    "resource_type": {
+                                        "type": "keyword",
+                                        "ignore_above": 1024
+                                    },
+                                    "resource_type_general": {
+                                        "type": "keyword",
+                                        "ignore_above": 1024
+                                    },
+                                    "subject_category": {
+                                        "type": "keyword",
+                                        "ignore_above": 1024
+                                    },
+                                    "title": {
+                                        "copy_to": "collected_default_search_fields",
+                                        "type": "keyword",
+                                        "ignore_above": 1024
+                                    }
+                                }
+                            },
+                            "results": {
+                                "type": "nested",
+                                "properties": {
+                                    "entities_involved": {
+                                        "type": "nested",
+                                        "properties": {
+                                            "copy_number": {
+                                                "type": "double"
+                                            },
+                                            "entity": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "keyword",
+                                                        "ignore_above": 1024
+                                                    },
+                                                    "name": {
+                                                        "copy_to": "collected_default_search_fields",
+                                                        "type": "keyword",
+                                                        "ignore_above": 1024
+                                                    },
+                                                    "@v": {
+                                                        "type": "keyword",
+                                                        "ignore_above": 1024
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    },
+                                    "id": {
+                                        "type": "keyword",
+                                        "ignore_above": 1024
+                                    },
+                                    "name": {
+                                        "copy_to": "collected_default_search_fields",
+                                        "type": "keyword",
+                                        "ignore_above": 1024
+                                    },
+                                    "type": {
+                                        "copy_to": "collected_default_search_fields",
+                                        "type": "keyword",
+                                        "ignore_above": 1024
+                                    },
+                                    "unit": {
+                                        "type": "keyword",
+                                        "ignore_above": 1024
+                                    },
+                                    "value": {
+                                        "type": "double"
+                                    },
+                                    "value_error": {
+                                        "type": "object",
+                                        "properties": {
+                                            "is_relative": {
+                                                "type": "boolean"
+                                            },
+                                            "lower": {
+                                                "type": "double"
+                                            },
+                                            "upper": {
+                                                "type": "double"
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            "schema_version": {
+                                "type": "keyword",
+                                "ignore_above": 1024
+                            },
+                            "technique": {
+                                "type": "keyword",
+                                "ignore_above": 1024
+                            }
+                        }
+                    },
+                    "method_specific_parameters": {
+                        "type": "object",
+                        "properties": {
+                            "data_analysis": {
+                                "type": "object",
+                                "properties": {
+                                    "data_fitting": {
+                                        "type": "object",
+                                        "properties": {
+                                            "model": {
+                                                "type": "keyword",
+                                                "ignore_above": 1024
+                                            },
+                                            "quality": {
+                                                "type": "double"
+                                            },
+                                            "quality_type": {
+                                                "type": "keyword",
+                                                "ignore_above": 1024
+                                            },
+                                            "software_name": {
+                                                "type": "keyword",
+                                                "ignore_above": 1024
+                                            },
+                                            "software_version": {
+                                                "type": "keyword",
+                                                "ignore_above": 1024
+                                            }
+                                        }
+                                    },
+                                    "data_processing_steps": {
+                                        "type": "object",
+                                        "properties": {
+                                            "description": {
+                                                "type": "keyword",
+                                                "ignore_above": 1024
+                                            },
+                                            "link_to_source_code": {
+                                                "type": "keyword",
+                                                "ignore_above": 1024
+                                            },
+                                            "name": {
+                                                "type": "keyword",
+                                                "ignore_above": 1024
+                                            },
+                                            "software_name": {
+                                                "type": "keyword",
+                                                "ignore_above": 1024
+                                            },
+                                            "software_version": {
+                                                "type": "keyword",
+                                                "ignore_above": 1024
+                                            }
+                                        }
+                                    },
+                                    "f_cold_and_hot": {
+                                        "type": "object",
+                                        "properties": {
+                                            "f_cold_end": {
+                                                "type": "double"
+                                            },
+                                            "f_cold_start": {
+                                                "type": "double"
+                                            },
+                                            "f_hot_end": {
+                                                "type": "double"
+                                            },
+                                            "f_hot_start": {
+                                                "type": "double"
+                                            },
+                                            "time_unit": {
+                                                "type": "keyword",
+                                                "ignore_above": 1024
+                                            }
+                                        }
+                                    },
+                                    "measurements": {
+                                        "type": "object",
+                                        "properties": {
+                                            "id": {
+                                                "type": "keyword",
+                                                "ignore_above": 1024
+                                            },
+                                            "name": {
+                                                "type": "keyword",
+                                                "ignore_above": 1024
+                                            },
+                                            "@v": {
+                                                "type": "keyword",
+                                                "ignore_above": 1024
+                                            }
+                                        }
+                                    },
+                                    "result": {
+                                        "type": "object",
+                                        "properties": {
+                                            "id": {
+                                                "type": "keyword",
+                                                "ignore_above": 1024
+                                            },
+                                            "name": {
+                                                "copy_to": "collected_default_search_fields",
+                                                "type": "keyword",
+                                                "ignore_above": 1024
+                                            },
+                                            "@v": {
+                                                "type": "keyword",
+                                                "ignore_above": 1024
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            "excitation_led_color": {
+                                "type": "keyword",
+                                "ignore_above": 1024
+                            },
+                            "excitation_led_power": {
+                                "type": "double"
+                            },
+                            "experiment_type": {
+                                "type": "keyword",
+                                "ignore_above": 1024
+                            },
+                            "ir_mst_laser_power": {
+                                "type": "double"
+                            },
+                            "measurements": {
+                                "type": "object",
+                                "properties": {
+                                    "id": {
+                                        "type": "keyword",
+                                        "ignore_above": 1024
+                                    },
+                                    "name": {
+                                        "type": "keyword",
+                                        "ignore_above": 1024
+                                    },
+                                    "position": {
+                                        "type": "keyword",
+                                        "ignore_above": 1024
+                                    },
+                                    "sample": {
+                                        "type": "object",
+                                        "properties": {
+                                            "chemical_environment": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "keyword",
+                                                        "ignore_above": 1024
+                                                    },
+                                                    "name": {
+                                                        "type": "keyword",
+                                                        "ignore_above": 1024
+                                                    },
+                                                    "@v": {
+                                                        "type": "keyword",
+                                                        "ignore_above": 1024
+                                                    }
+                                                }
+                                            },
+                                            "ligands": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "concentration": {
+                                                        "type": "object",
+                                                        "properties": {
+                                                            "unit": {
+                                                                "type": "keyword",
+                                                                "ignore_above": 1024
+                                                            },
+                                                            "value": {
+                                                                "type": "double"
+                                                            }
+                                                        }
+                                                    },
+                                                    "entity": {
+                                                        "type": "object",
+                                                        "properties": {
+                                                            "id": {
+                                                                "type": "keyword",
+                                                                "ignore_above": 1024
+                                                            },
+                                                            "name": {
+                                                                "copy_to": "collected_default_search_fields",
+                                                                "type": "keyword",
+                                                                "ignore_above": 1024
+                                                            },
+                                                            "@v": {
+                                                                "type": "keyword",
+                                                                "ignore_above": 1024
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            },
+                                            "measurement_container": {
+                                                "type": "keyword",
+                                                "ignore_above": 1024
+                                            },
+                                            "preparation_protocol": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "description": {
+                                                        "type": "keyword",
+                                                        "ignore_above": 1024
+                                                    },
+                                                    "name": {
+                                                        "type": "keyword",
+                                                        "ignore_above": 1024
+                                                    }
+                                                }
+                                            },
+                                            "targets": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "concentration": {
+                                                        "type": "object",
+                                                        "properties": {
+                                                            "unit": {
+                                                                "type": "keyword",
+                                                                "ignore_above": 1024
+                                                            },
+                                                            "value": {
+                                                                "type": "double"
+                                                            }
+                                                        }
+                                                    },
+                                                    "entity": {
+                                                        "type": "object",
+                                                        "properties": {
+                                                            "id": {
+                                                                "type": "keyword",
+                                                                "ignore_above": 1024
+                                                            },
+                                                            "name": {
+                                                                "copy_to": "collected_default_search_fields",
+                                                                "type": "keyword",
+                                                                "ignore_above": 1024
+                                                            },
+                                                            "@v": {
+                                                                "type": "keyword",
+                                                                "ignore_above": 1024
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            "schema_version": {
+                                "type": "keyword",
+                                "ignore_above": 1024
+                            },
+                            "signal_type": {
+                                "type": "keyword",
+                                "ignore_above": 1024
+                            },
+                            "temperature": {
+                                "type": "object",
+                                "properties": {
+                                    "unit": {
+                                        "type": "keyword",
+                                        "ignore_above": 1024
+                                    },
+                                    "value": {
+                                        "type": "double"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "updated": {
+                "type": "date",
+                "format": "strict_date_time||strict_date_time_no_millis||basic_date_time||basic_date_time_no_millis||basic_date||strict_date||strict_date_hour_minute_second||strict_date_hour_minute_second_fraction"
+            }
+        }
+    },
+    "settings": {
+        "index.mapping.total_fields.limit": 3000,
+        "index.mapping.nested_fields.limit": 200,
+        "index.query.default_field": "collected_default_search_fields"
+    }
+}
