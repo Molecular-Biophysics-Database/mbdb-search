@@ -1,5 +1,7 @@
-from luqum.pretty import prettify
 from luqum.tree import SearchField, Word, Phrase, Range, AndOperation, OrOperation, Group, Not
+from luqum.parser import parser
+from luqum.pretty import prettify
+from luqum.elasticsearch import ElasticsearchQueryBuilder, SchemaAnalyzer
 import json
 
 
@@ -148,11 +150,68 @@ json_input = '''
   }
 ]
 '''
-parsed_json = json.loads(json_input)
+
+json_input2 = '''[
+  {
+    "field": "metadata.general_parameters.record_information.deposition_date",
+    "value": "2024-03-22"
+  },
+  {
+    "operator": "or"
+  },
+  {
+    "field": "metadata.general_parameters.depositors.depositor.given_name",
+    "value": "Karel"
+  },
+  {
+    "operator": "or"
+  },
+  {
+    "bracket": "start"
+  },
+  {
+    "field": "metadata.general_parameters.latitude",
+    "value": "20"
+  },
+  {
+    "operator": "and"
+  },
+  {
+    "field": "metadata.general_parameters.longitude",
+    "value": "30"
+  },
+  {
+    "bracket": "end"
+  }
+]'''
+parsed_json = json.loads(json_input2)
 luqum_tree = construct_luqum_tree(parsed_json)
 print(repr(luqum_tree))
 
-# # Convert the tree to a Lucene query string
-# lucene_query = prettify(luqum_tree)
-#
-# print(lucene_query)
+# Load your schema
+with open('mst-1.0.0.json', 'r') as file:
+    mst_schema = json.load(file)
+
+# Folowing steps form https://luqum.readthedocs.io/en/latest/quick_start.html
+
+# Analyze the schema
+schema_analyzer = SchemaAnalyzer(mst_schema)
+
+# Create an Elasticsearch query builder with the analyzed schema options
+es_builder = ElasticsearchQueryBuilder(**schema_analyzer.query_builder_options())
+
+# Convert the Luqum tree to a Lucene query string
+lucene_query = prettify(luqum_tree)
+print(lucene_query)
+print(str(luqum_tree))
+
+# Parse the query string into a Luqum tree
+parsed_tree = parser.parse(lucene_query)
+
+# Convert the Luqum tree to an Elasticsearch (OpenSearch) query
+es_query = es_builder(parsed_tree)
+
+# The es_query is now a dictionary that represents your query in a format compatible with OpenSearch
+print(json.dumps(es_query, indent=2))
+
+# It works, but for some reason it doesn't work with Range values
