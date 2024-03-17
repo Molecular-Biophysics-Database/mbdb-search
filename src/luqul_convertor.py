@@ -53,7 +53,7 @@ def construct_luqum_tree(json_criteria):
             # Handle bracket operations
             if item["bracket"] == "start":
                 # If we encounter a start bracket, push the current base onto the stack
-                stack.append(base)
+                stack.append((current_op, base))
                 base = None
                 current_op = None
             elif item["bracket"] == "end":
