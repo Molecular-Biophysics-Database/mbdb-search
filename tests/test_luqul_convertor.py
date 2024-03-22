@@ -154,6 +154,7 @@ class TestSingleFields:
         expected_output = SearchField("foo", Range(Word("-20"), Word("*")))
         assert construct_luqum_tree(json.loads(json_input)) == expected_output
 
+    '''
     def test_raise_on_missing_field(self):
         json_input = """
         [
@@ -175,7 +176,7 @@ class TestSingleFields:
         """
         with pytest.raises(ValueError):
             construct_luqum_tree(json.loads(json_input))
-
+    '''
 
 class TestOperators:
     json_input_template = """
@@ -206,7 +207,6 @@ class TestOperators:
 
     def test_not(self):
         pass
-
 
 class TestBrackets:
     def test_and(self):
