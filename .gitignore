@@ -29,3 +29,6 @@ dist-ssr
 
 # npm lock file
 package-lock.json
+
+# python
+__pycache__
