@@ -149,7 +149,7 @@ function App() {
             const fileName = prompt("Enter a file name for the JSON:", "downloaded.json");
             if (fileName) { // Proceed if the user entered a name
                 // Now save the JSON to a file
-                const blob = new Blob([jsonString], { type: 'application/json' });
+                const blob = new Blob([jsonString], {type: 'application/json'});
                 const url = URL.createObjectURL(blob);
                 const a = document.createElement('a');
                 a.href = url;
@@ -176,9 +176,12 @@ function App() {
             let newSearchCriteria = [];
             let currentOperator = '';
             let brackets = {start: [], end: []}; // Tracks indices for start and end brackets
+            let alerts = [];
 
             // Iterate over the items in the parsed JSON
-            jsonData.forEach((item) => {
+            jsonData.forEach((item, index) => {
+                console.log(`Processing item at index ${index}:`, item); // Debugging log
+
                 if (item.operator) {
                     // Set the current operator, which will be applied to the next criterion
                     currentOperator = item.operator.toUpperCase(); // Match UI options (AND, OR, NOT)
@@ -191,22 +194,77 @@ function App() {
                         brackets.end.push(newSearchCriteria.length - 1);
                     }
                 } else {
+                    let fieldDetails = fieldsData.find(field => field.field_path === item.field);
+
+                    if (!fieldDetails) {
+                        console.error(`Field not found in fieldsData: ${item.field}`);
+                        alerts.push(`Field not found: ${item.field}`);
+                    }
+
                     // Construct the criterion object
                     let criterion = {
-                        field: item.field,
+                        field: item.field || '',
                         expression: currentOperator, // The latest operator is used here
-                        value: typeof item.value === 'object' ? item.value.from || '' : item.value,
-                        showRangeInput: typeof item.value === 'object' && item.value.from && item.value.to, // Automatically display range input if range values exist
-                        rangeValue: typeof item.value === 'object' ? item.value.to || '' : '',
+                        value: '',
+                        showRangeInput: false,
+                        rangeValue: '',
                         leftBracket: false, // Initially false, to be determined by start brackets
                         rightBracket: false, // Initially false, determined after all criteria are added
                     };
+
+                    // Validate and correct the value and rangeValue if they exist
+                    if (typeof item.value === 'object' && item.value !== null) {
+                        criterion.showRangeInput = true;
+                        criterion.value = item.value.from || '';
+                        criterion.rangeValue = item.value.to || '';
+
+                        // Swap values if necessary
+                        if (parseFloat(criterion.value) > parseFloat(criterion.rangeValue)) {
+                            console.log(`Swapping range values for field: ${item.field}`);
+                            [criterion.value, criterion.rangeValue] = [criterion.rangeValue, criterion.value];
+                            alerts.push(`Swapped range values for field "${item.field}" because "${criterion.rangeValue}" was greater than "${criterion.value}".`);
+                        }
+                    } else if (item.value !== undefined) {
+                        criterion.value = item.value.toString();
+                    } else {
+                        console.error(`Value is missing for field: ${item.field}`);
+                        alerts.push(`Value is missing for field: ${item.field}`);
+                    }
+
+                    // Correct the values if they're out of bounds
+                    if (fieldDetails) {
+                        const min = parseFloat(fieldDetails.minimum);
+                        const max = parseFloat(fieldDetails.maximum);
+
+                        // Correct the single value
+                        let value = parseFloat(criterion.value);
+                        if (!isNaN(value)) {
+                            if (value < min || value > max) {
+                                console.log(`Adjusting value for field: ${item.field}`);
+                                criterion.value = value < min ? min.toString() : max.toString();
+                                alerts.push(`Adjusted value for field "${item.field}" to be within the allowed range.`);
+                            }
+                        }
+
+                        // Correct the range values
+                        let fromValue = parseFloat(criterion.value);
+                        let toValue = parseFloat(criterion.rangeValue);
+                        if (!isNaN(fromValue) && fromValue < min) {
+                            criterion.value = min.toString();
+                            alerts.push(`Adjusted "from" value for field "${item.field}" to the minimum allowed value.`);
+                        }
+                        if (!isNaN(toValue) && toValue > max) {
+                            criterion.rangeValue = max.toString();
+                            alerts.push(`Adjusted "to" value for field "${item.field}" to the maximum allowed value.`);
+                        }
+                    }
+
                     currentOperator = ''; // Reset the operator for the next iteration
                     newSearchCriteria.push(criterion); // Add the criterion to the array
                 }
             });
 
-            // Apply the start brackets to the corresponding criteria
+            // Apply the start and end brackets to the corresponding criteria
             brackets.start.forEach(startIndex => {
                 if (newSearchCriteria[startIndex] !== undefined) {
                     newSearchCriteria[startIndex].leftBracket = true;
@@ -219,6 +277,12 @@ function App() {
                     newSearchCriteria[endIndex].rightBracket = true;
                 }
             });
+
+            // If there are any alerts, log them or display them to the user
+            if (alerts.length > 0) {
+                console.warn('Alerts during JSON data processing:', alerts);
+                alert(alerts.join('\n')); // Display all alerts to the user
+            }
 
             // Update the application state with the new array of search criteria
             setSearchCriteria(newSearchCriteria);
@@ -281,14 +345,17 @@ function App() {
                     ))}
                     <div className="search-buttons">
                         <button className="add-field" onClick={addSearchCriteria}>Add Field</button>
-                        <button className="search" onClick={handleSearch} disabled={hasValidationErrors}>Search</button>
+                        <button className="search" onClick={handleSearch}
+                                disabled={hasValidationErrors}>Search
+                        </button>
 
                         <button id="myButton" className="copy-load" onClick={handleCopyJson}
-                                disabled={hasValidationErrors}><img src="src/assets/clipboard.png" alt="C" style={{
-                            width: '40%',
-                            height: 'auto',
-                            filter: 'invert(80%)'
-                        }}/></button>
+                                disabled={hasValidationErrors}><img src="src/assets/clipboard.png" alt="C"
+                                                                    style={{
+                                                                        width: '40%',
+                                                                        height: 'auto',
+                                                                        filter: 'invert(80%)'
+                                                                    }}/></button>
                         <button className="copy-load" onClick={handleLoadJson}>L</button>
                     </div>
                 </div>
