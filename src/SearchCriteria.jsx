@@ -48,6 +48,7 @@ function SearchCriteria({criteria, fieldsData, onChange, onRemove, showRemoveBut
     useEffect(() => {
         if (criteria.rangeValue) {
             setShowRangeInput(true); // Automatically display range input if rangeValue exists
+            setRangeValue(criteria.rangeValue); // Set the initial range value
         }
     }, [criteria.rangeValue]);
 
