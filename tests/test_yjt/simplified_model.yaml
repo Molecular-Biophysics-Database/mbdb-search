@@ -1,0 +1,89 @@
+record:
+  properties:
+    metadata:
+      properties:
+        general_parameters:
+          use: '#/$defs/General_parameters'
+          required: true
+          help.en: The general parameter of the experiment
+    collected_default_search_fields:
+      type: fulltext
+      marshmallow:
+        read: false
+        write: false
+
+$defs:
+  General_parameters:
+    properties:
+      record_information:
+        use: '#/$defs/Record_information'
+        required: true
+        help.en: Information about the record itself, including whether this particular
+          record is associated with other records
+      depositors:
+        use: '#/$defs/Depositors'
+        required: true
+        help.en: Information about the depositors (authors) of this record
+      latitude:
+        type: double
+        minimum: -90.0
+        maximum: 90.0
+        help.en: The latitude, from south to north, in degrees (decimal notation)
+        required: true
+        mapping:
+          copy_to: collected_default_search_fields
+      longitude:
+        type: double
+        minimum: -180.0
+        maximum: 180.0
+        help.en: The longitude, from west to east, in degrees (decimal notation)
+        required: true
+
+
+  Record_information:
+    properties:
+      title:
+        type: keyword
+        help.en: Short descriptive title of the record
+        required: true
+        mapping:
+          copy_to: collected_default_search_fields
+      keywords[]:
+        ^minItems: 1
+        ^help.en: User chosen keywords describing the record content (e.g. antibody,
+          epitope, ligand optimization, SARS-CoV-2, agonist, antagonist, HIV, etc.)
+        ^required: true
+        type: keyword
+        mapping:
+          copy_to: collected_default_search_fields
+      deposition_date:
+        type: date
+        help.en: The date when the data was deposited; automatically generated
+        required: true
+
+  Depositors:
+    properties:
+      depositor:
+        use: '#/$defs/Person'
+        required: true
+        help.en: The person who made the deposition to MBDB
+      principal_contact:
+        use: '#/$defs/Person'
+        required: true
+        help.en: The person responsible for the record and the one to contact for
+          inquiries, would typically be the principle investigator group leader, or
+          laboratory head
+  Person:
+    properties:
+      given_name:
+        type: keyword
+        help.en: The given name(s), including middlename(s), of the person
+        required: true
+        mapping:
+          copy_to: collected_default_search_fields
+      family_name:
+        type: keyword
+        help.en: The family name(s) the person
+        required: true
+        mapping:
+          copy_to: collected_default_search_fields

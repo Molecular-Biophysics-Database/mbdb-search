@@ -69,164 +69,166 @@ def construct_luqum_tree(json_criteria):
     return base
 
 
-# Example:
-json_input = '''
-[
-  {
-    "bracket": "start"
-  },
-  {
-    "field": "metadata.general_parameters.depositors.depositor.given_name",
-    "value": "Karel"
-  },
-  {
-    "operator": "and"
-  },
-  {
-    "field": "metadata.general_parameters.depositors.depositor.given_name",
-    "value": "Pepa"
-  },
-  {
-    "bracket": "end"
-  },
-  {
-    "operator": "or"
-  },
-  {
-    "bracket": "start"
-  },
-  {
-    "field": "metadata.general_parameters.depositors.principal_contact.given_name",
-    "value": "Tonda"
-  },
-  {
-    "operator": "and"
-  },
-  {
-    "field": "metadata.general_parameters.depositors.principal_contact.given_name",
-    "value": "Mikulas"
-  },
-  {
-    "operator": "not"
-  },
-  {
-    "field": "metadata.general_parameters.depositors.principal_contact.family_name",
-    "value": "Marek"
-  },
-  {
-    "bracket": "end"
-  },
-  {
-    "operator": "or"
-  },
-  {
-    "bracket": "start"
-  },
-  {
-    "field": "metadata.general_parameters.record_information.title",
-    "value": "Mama"
-  },
-  {
-    "operator": "and"
-  },
-  {
-    "field": "metadata.general_parameters.record_information.deposition_date",
-    "value": {
-      "from": "2024-03-01",
-      "to": "2024-04-30"
-    }
-  },
-  {
-    "operator": "and"
-  },
-  {
-    "field": "metadata.general_parameters.latitude",
-    "value": {
-      "from": "-20",
-      "to": "40"
-    }
-  },
-  {
-    "bracket": "end"
-  }
-]
-'''
+if __name__ == "__main__":
+    # Example:
+    json_input = '''
+    [
+      {
+        "bracket": "start"
+      },
+      {
+        "field": "metadata.general_parameters.depositors.depositor.given_name",
+        "value": "Karel"
+      },
+      {
+        "operator": "and"
+      },
+      {
+        "field": "metadata.general_parameters.depositors.depositor.given_name",
+        "value": "Pepa"
+      },
+      {
+        "bracket": "end"
+      },
+      {
+        "operator": "or"
+      },
+      {
+        "bracket": "start"
+      },
+      {
+        "field": "metadata.general_parameters.depositors.principal_contact.given_name",
+        "value": "Tonda"
+      },
+      {
+        "operator": "and"
+      },
+      {
+        "field": "metadata.general_parameters.depositors.principal_contact.given_name",
+        "value": "Mikulas"
+      },
+      {
+        "operator": "not"
+      },
+      {
+        "field": "metadata.general_parameters.depositors.principal_contact.family_name",
+        "value": "Marek"
+      },
+      {
+        "bracket": "end"
+      },
+      {
+        "operator": "or"
+      },
+      {
+        "bracket": "start"
+      },
+      {
+        "field": "metadata.general_parameters.record_information.title",
+        "value": "Mama and daddy"
+      },
+      {
+        "operator": "and"
+      },
+      {
+        "field": "metadata.general_parameters.record_information.deposition_date",
+        "value": {
+          "from": "2024-03-01",
+          "to": "2024-04-30"
+        }
+      },
+      {
+        "operator": "and"
+      },
+      {
+        "field": "metadata.general_parameters.latitude",
+        "value": {
+          "from": "-20",
+          "to": "40"
+        }
+      },
+      {
+        "bracket": "end"
+      }
+    ]
+    '''
 
-json_input2 = '''[
-  {
-    "field": "metadata.general_parameters.record_information.deposition_date",
-    "value": "2024-03-22"
-  },
-  {
-    "operator": "or"
-  },
-  {
-    "field": "metadata.general_parameters.depositors.depositor.given_name",
-    "value": "Karel"
-  },
-  {
-    "operator": "or"
-  },
-  {
-    "bracket": "start"
-  },
-  {
-    "field": "metadata.general_parameters.latitude",
-    "value": "20"
-  },
-  {
-    "operator": "and"
-  },
-  {
-    "field": "metadata.general_parameters.longitude",
-    "value": "30"
-  },
-  {
-    "bracket": "end"
-  }
-]'''
-parsed_json = json.loads(json_input)
-luqum_tree = construct_luqum_tree(parsed_json)
-print(repr(luqum_tree))
+    json_input2 = '''[
+      {
+        "field": "metadata.general_parameters.record_information.deposition_date",
+        "value": "2024-03-22"
+      },
+      {
+        "operator": "or"
+      },
+      {
+        "field": "metadata.general_parameters.depositors.depositor.given_name",
+        "value": "Karel"
+      },
+      {
+        "operator": "or"
+      },
+      {
+        "bracket": "start"
+      },
+      {
+        "field": "metadata.general_parameters.latitude",
+        "value": "20"
+      },
+      {
+        "operator": "and"
+      },
+      {
+        "field": "metadata.general_parameters.longitude",
+        "value": "30"
+      },
+      {
+        "bracket": "end"
+      }
+    ]'''
 
-# Load your schema
-with open('mst-1.0.0.json', 'r') as file:
-    mst_schema = json.load(file)
+    parsed_json = json.loads(json_input)
+    luqum_tree = construct_luqum_tree(parsed_json)
+    print(repr(luqum_tree))
 
-# Folowing steps form https://luqum.readthedocs.io/en/latest/quick_start.html
+    # Load your schema
+    with open('mst-1.0.0.json', 'r') as file:
+        mst_schema = json.load(file)
 
-# Analyze the schema
-schema_analyzer = SchemaAnalyzer(mst_schema)
+    # Following steps form https://luqum.readthedocs.io/en/latest/quick_start.html
 
-# Create an Elasticsearch query builder with the analyzed schema options
-es_builder = ElasticsearchQueryBuilder(**schema_analyzer.query_builder_options())
+    # Analyze the schema
+    schema_analyzer = SchemaAnalyzer(mst_schema)
 
-# Convert the Luqum tree to a Lucene query string
-lucene_query = prettify(luqum_tree)
-# print(lucene_query)
-# print(str(luqum_tree))
+    # Create an Elasticsearch query builder with the analyzed schema options
+    es_builder = ElasticsearchQueryBuilder(**schema_analyzer.query_builder_options())
 
-# Manually adjust the lucene_query string to ensure proper spacing
-lucene_query = lucene_query.replace('TO', ' TO ')
-lucene_query = lucene_query.replace('NOT', 'NOT ')
+    # Convert the Luqum tree to a Lucene query string
+    lucene_query = prettify(luqum_tree)
+    # print(lucene_query)
+    # print(str(luqum_tree))
 
-print("After editing luc")
-print(lucene_query)
+    # Manually adjust the lucene_query string to ensure proper spacing
+    lucene_query = lucene_query.replace('TO', ' TO ')
+    lucene_query = lucene_query.replace('NOT', 'NOT ')
 
-# Now attempt parsing the adjusted query string
-try:
-    parsed_tree = parser.parse(lucene_query)
-    # Proceed with the rest of your logic here
-except luqum.exceptions.ParseSyntaxError as e:
-    print("Error parsing the Lucene query string:", e)
+    print("After editing luc")
+    print(lucene_query)
 
-# Parse the query string into a Luqum tree
-# parsed_tree = parser.parse(lucene_query)
+    # Now attempt parsing the adjusted query string
+    try:
+        parsed_tree = parser.parse(lucene_query)
+        # Proceed with the rest of your logic here
+    except luqum.exceptions.ParseSyntaxError as e:
+        print("Error parsing the Lucene query string:", e)
 
-# Convert the Luqum tree to an Elasticsearch (OpenSearch) query
-es_query = es_builder(parsed_tree)
+    # Parse the query string into a Luqum tree
+    # parsed_tree = parser.parse(lucene_query)
 
-# The es_query is now a dictionary that represents your query in a format compatible with OpenSearch
-print(json.dumps(es_query, indent=2))
+    # Convert the Luqum tree to an Elasticsearch (OpenSearch) query
+    #es_query = es_builder(parsed_tree)
+    es_query = es_builder(luqum_tree)
+    # The es_query is now a dictionary that represents your query in a format compatible with OpenSearch
+    print(json.dumps(es_query, indent=2))
 
-# It works, but for some reason it doesn't work with Range values
+    # It works, but for some reason it doesn't work with Range values
