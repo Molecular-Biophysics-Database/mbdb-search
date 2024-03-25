@@ -287,8 +287,13 @@ function App() {
             // Update the application state with the new array of search criteria
             setSearchCriteria(newSearchCriteria);
         } catch (error) {
-            console.error("Error processing JSON data:", error);
+        if (error instanceof SyntaxError) {
+            console.error("Malformed JSON data:", error); // TODO can be removed so the console is empty
+            alert("The provided JSON is malformed. Please check its syntax.");
+        } else {
+            console.error("Error processing JSON data:", error); // TODO can be removed so the console is empty
         }
+    }
     };
 
 
