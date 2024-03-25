@@ -8,12 +8,20 @@ function App() {
     const [showAdvancedSearch, setShowAdvancedSearch] = useState(false);
     // Update initial state to include validationError
     const [searchCriteria, setSearchCriteria] = useState([
-        {field: '', expression: '', value: '', validationError: '', rangeValue: ''}
+        {field: '', expression: '', value: '', validationError: '', rangeValue: '', showRangeInput: false}
     ]);
 
     // Update handleCriteriaChange to handle validation errors
     const handleCriteriaChange = (index, field, value, validationError = '') => {
         const newCriteria = [...searchCriteria];
+        // If the field or expression is changing, reset range input
+        if (field === 'field' || field === 'expression') {
+            newCriteria[index].showRangeInput = false;
+            newCriteria[index].rangeValue = '';
+        }
+        if (field === 'showRangeInput') {
+            newCriteria[index].showRangeInput = value; // Assuming value is a boolean here
+        }
         if (field === 'rangeValue') {
             // Update the range value directly
             newCriteria[index][field] = value;
@@ -28,8 +36,20 @@ function App() {
         setSearchCriteria(newCriteria);
     };
 
-    // Function to check if there are validation errors
-    const hasValidationErrors = searchCriteria.some(criteria => criteria.validationError);
+    // Function to check if there are validation errors or required fields are empty
+    const hasValidationErrors = () => {
+        return searchCriteria.some((criteria, index) => {
+            // Skip the operator check on the first criteria
+            const isOperatorEmpty = index !== 0 && criteria.expression === '';
+            const isFieldSelectorEmpty = criteria.field === '';
+            const isValueEmpty = criteria.value === '';
+            const isRangeInputEnabledAndEmpty = criteria.showRangeInput && criteria.rangeValue === '';
+
+            return isOperatorEmpty || isFieldSelectorEmpty || isValueEmpty || isRangeInputEnabledAndEmpty;
+        });
+    };
+
+
 
     // Initialize your search criteria with brackets
     const addSearchCriteria = () => {
@@ -341,17 +361,16 @@ function App() {
                     ))}
                     <div className="search-buttons">
                         <button className="add-field" onClick={addSearchCriteria}>Add Field</button>
-                        <button className="search" onClick={handleSearch}
-                                disabled={hasValidationErrors}>Search
+                        <button className="search" onClick={handleSearch} disabled={hasValidationErrors()}>Search
                         </button>
 
                         <button id="myButton" className="copy-load" onClick={handleCopyJson}
-                                disabled={hasValidationErrors}><img src="src/assets/clipboard.png" alt="C"
-                                                                    style={{
-                                                                        width: '40%',
-                                                                        height: 'auto',
-                                                                        filter: 'invert(80%)'
-                                                                    }}/></button>
+                                disabled={hasValidationErrors()}><img src="src/assets/clipboard.png" alt="C"
+                                                                      style={{
+                                                                          width: '40%',
+                                                                          height: 'auto',
+                                                                          filter: 'invert(80%)'
+                                                                      }}/></button>
                         <button className="copy-load" onClick={handleLoadJson}>L</button>
                     </div>
                 </div>

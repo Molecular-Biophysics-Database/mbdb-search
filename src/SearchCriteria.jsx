@@ -55,7 +55,10 @@ function SearchCriteria({criteria, fieldsData, onChange, onRemove, showRemoveBut
     // Function to toggle the range input visibility
     const toggleRangeInput = () => {
         setShowRangeInput(!showRangeInput);
+        // Call the onChange provided by the parent to update the state there too
+        onChange({ target: { value: !showRangeInput } }, 'showRangeInput');
     };
+
 
     const updateValues = (newValue, newRangeValue) => {
         // Update local component state
