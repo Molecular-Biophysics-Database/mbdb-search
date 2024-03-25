@@ -1,5 +1,3 @@
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
 import SearchCriteria from './SearchCriteria';
 import {useState, useEffect} from 'react';
@@ -143,7 +141,7 @@ function App() {
         // Copy the JSON to the clipboard
         const jsonString = JSON.stringify(jsonOutput, null, 2);
         navigator.clipboard.writeText(jsonString).then(() => {
-            console.log('JSON copied to clipboard');
+            console.log('JSON copied to clipboard'); // TODO can be removed so the console is empty
 
             // Ask the user for the file name
             const fileName = prompt("Enter a file name for the JSON:", "downloaded.json");
@@ -165,7 +163,8 @@ function App() {
                 document.getElementById("myButton").style.backgroundColor = "#646cff";
             }, 1500);
         }).catch(err => {
-            console.error('Failed to copy JSON to clipboard', err);
+            console.error('Failed to copy JSON to clipboard', err); // TODO can be removed so the console is empty
+            alert('Failed to copy JSON to clipboard. Error: ' + err);
             document.getElementById("myButton").style.backgroundColor = "#646cff";
         });
     };
@@ -180,7 +179,7 @@ function App() {
 
             // Iterate over the items in the parsed JSON
             jsonData.forEach((item, index) => {
-                console.log(`Processing item at index ${index}:`, item); // Debugging log
+                console.log(`Processing item at index ${index}:`, item); // Debugging log // TODO can be removed so the console is empty
 
                 if (item.operator) {
                     // Set the current operator, which will be applied to the next criterion
@@ -197,7 +196,7 @@ function App() {
                     let fieldDetails = fieldsData.find(field => field.field_path === item.field);
 
                     if (!fieldDetails) {
-                        console.error(`Field not found in fieldsData: ${item.field}`);
+                        console.error(`Field not found in fieldsData: ${item.field}`); // TODO can be removed so the console is empty
                         alerts.push(`Field not found: ${item.field}`);
                     }
 
@@ -220,14 +219,14 @@ function App() {
 
                         // Swap values if necessary
                         if (parseFloat(criterion.value) > parseFloat(criterion.rangeValue)) {
-                            console.log(`Swapping range values for field: ${item.field}`);
+                            console.log(`Swapping range values for field: ${item.field}`); // TODO can be removed so the console is empty
                             [criterion.value, criterion.rangeValue] = [criterion.rangeValue, criterion.value];
                             alerts.push(`Swapped range values for field "${item.field}" because "${criterion.rangeValue}" was greater than "${criterion.value}".`);
                         }
                     } else if (item.value !== undefined) {
                         criterion.value = item.value.toString();
                     } else {
-                        console.error(`Value is missing for field: ${item.field}`);
+                        console.error(`Value is missing for field: ${item.field}`); // TODO can be removed so the console is empty
                         alerts.push(`Value is missing for field: ${item.field}`);
                     }
 
@@ -280,7 +279,7 @@ function App() {
 
             // If there are any alerts, log them or display them to the user
             if (alerts.length > 0) {
-                console.warn('Alerts during JSON data processing:', alerts);
+                console.warn('Alerts during JSON data processing:', alerts); // TODO can be removed so the console is empty
                 alert(alerts.join('\n')); // Display all alerts to the user
             }
 
