@@ -49,6 +49,36 @@ function App() {
         });
     };
 
+    // Function to generate an error message (if any)
+    const getValidationErrorMessage = () => {
+        if (hasValidationErrors()) {
+            return 'Please fill in all required fields before searching.';
+        }
+        return '';
+    };
+
+    const handleSearchClick = () => {
+        // console.log('Has Validation Errors:', hasValidationErrors());
+        if (hasValidationErrors()) {
+            const error = getValidationErrorMessage();
+            if (error) {
+                alert(error);
+            }
+        } else {
+            handleSearch();
+        }
+    };
+    const handleCopyClick = () => {
+        // console.log('Has Validation Errors:', hasValidationErrors());
+        if (hasValidationErrors()) {
+            const error = getValidationErrorMessage();
+            if (error) {
+                alert(error);
+            }
+        } else {
+            handleCopyJson();
+        }
+    };
 
 
     // Initialize your search criteria with brackets
@@ -361,11 +391,11 @@ function App() {
                     ))}
                     <div className="search-buttons">
                         <button className="add-field" onClick={addSearchCriteria}>Add Field</button>
-                        <button className="search" onClick={handleSearch} disabled={hasValidationErrors()}>Search
+                        <button className="search" onClick={handleSearchClick} >Search
                         </button>
 
-                        <button id="myButton" className="copy-load" onClick={handleCopyJson}
-                                disabled={hasValidationErrors()}><img src="src/assets/clipboard.png" alt="C"
+                        <button id="myButton" className="copy-load" onClick={handleCopyClick}
+                                ><img src="src/assets/clipboard.png" alt="C"
                                                                       style={{
                                                                           width: '40%',
                                                                           height: 'auto',
