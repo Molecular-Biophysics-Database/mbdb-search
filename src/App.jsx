@@ -4,6 +4,7 @@ import {useState, useEffect} from 'react';
 import jsonData from '/src/output.json';
 
 function App() {
+    const DEBUG = false;
     // Start with one search criteria
     const [showAdvancedSearch, setShowAdvancedSearch] = useState(false);
     // Update initial state to include validationError
@@ -58,7 +59,7 @@ function App() {
     };
 
     const handleSearchClick = () => {
-        // console.log('Has Validation Errors:', hasValidationErrors());
+        if(DEBUG) console.log('Has Validation Errors:', hasValidationErrors());
         if (hasValidationErrors()) {
             const error = getValidationErrorMessage();
             if (error) {
@@ -69,7 +70,7 @@ function App() {
         }
     };
     const handleCopyClick = () => {
-        // console.log('Has Validation Errors:', hasValidationErrors());
+        if(DEBUG) console.log('Has Validation Errors:', hasValidationErrors());
         if (hasValidationErrors()) {
             const error = getValidationErrorMessage();
             if (error) {
@@ -191,7 +192,7 @@ function App() {
         // Copy the JSON to the clipboard
         const jsonString = JSON.stringify(jsonOutput, null, 2);
         navigator.clipboard.writeText(jsonString).then(() => {
-            console.log('JSON copied to clipboard'); // TODO can be removed so the console is empty
+            if(DEBUG) console.log('JSON copied to clipboard');  
 
             // Ask the user for the file name
             const fileName = prompt("Enter a file name for the JSON:", "downloaded.json");
@@ -213,7 +214,7 @@ function App() {
                 document.getElementById("myButton").style.backgroundColor = "#646cff";
             }, 1500);
         }).catch(err => {
-            console.error('Failed to copy JSON to clipboard', err); // TODO can be removed so the console is empty
+            if(DEBUG) console.error('Failed to copy JSON to clipboard', err);
             alert('Failed to copy JSON to clipboard. Error: ' + err);
             document.getElementById("myButton").style.backgroundColor = "#646cff";
         });
@@ -229,7 +230,7 @@ function App() {
 
             // Iterate over the items in the parsed JSON
             jsonData.forEach((item, index) => {
-                console.log(`Processing item at index ${index}:`, item); // Debugging log // TODO can be removed so the console is empty
+                if(DEBUG) console.log(`Processing item at index ${index}:`, item); // Debugging log
 
                 if (item.operator) {
                     // Set the current operator, which will be applied to the next criterion
@@ -246,7 +247,7 @@ function App() {
                     let fieldDetails = fieldsData.find(field => field.field_path === item.field);
 
                     if (!fieldDetails) {
-                        console.error(`Field not found in fieldsData: ${item.field}`); // TODO can be removed so the console is empty
+                        if(DEBUG) console.error(`Field not found in fieldsData: ${item.field}`);
                         alerts.push(`Field not found: ${item.field}`);
                     }
 
@@ -269,14 +270,14 @@ function App() {
 
                         // Swap values if necessary
                         if (parseFloat(criterion.value) > parseFloat(criterion.rangeValue)) {
-                            console.log(`Swapping range values for field: ${item.field}`); // TODO can be removed so the console is empty
+                            if(DEBUG) console.log(`Swapping range values for field: ${item.field}`);
                             [criterion.value, criterion.rangeValue] = [criterion.rangeValue, criterion.value];
                             alerts.push(`Swapped range values for field "${item.field}" because "${criterion.rangeValue}" was greater than "${criterion.value}".`);
                         }
                     } else if (item.value !== undefined) {
                         criterion.value = item.value.toString();
                     } else {
-                        console.error(`Value is missing for field: ${item.field}`); // TODO can be removed so the console is empty
+                        if(DEBUG) console.error(`Value is missing for field: ${item.field}`);
                         alerts.push(`Value is missing for field: ${item.field}`);
                     }
 
@@ -329,7 +330,7 @@ function App() {
 
             // If there are any alerts, log them or display them to the user
             if (alerts.length > 0) {
-                console.warn('Alerts during JSON data processing:', alerts); // TODO can be removed so the console is empty
+                if(DEBUG) console.warn('Alerts during JSON data processing:', alerts);
                 alert(alerts.join('\n')); // Display all alerts to the user
             }
 
@@ -337,10 +338,10 @@ function App() {
             setSearchCriteria(newSearchCriteria);
         } catch (error) {
         if (error instanceof SyntaxError) {
-            console.error("Malformed JSON data:", error); // TODO can be removed so the console is empty
+            if(DEBUG) console.error("Malformed JSON data:", error);
             alert("The provided JSON is malformed. Please check its syntax.");
         } else {
-            console.error("Error processing JSON data:", error); // TODO can be removed so the console is empty
+            if(DEBUG) console.error("Error processing JSON data:", error);
         }
     }
     };
