@@ -4,7 +4,7 @@ import {useState, useEffect} from 'react';
 import jsonData from '/src/output.json';
 
 function App() {
-    const DEBUG = false;
+    const DEBUG = true;
     // Start with one search criteria
     const [showAdvancedSearch, setShowAdvancedSearch] = useState(false);
     // Update initial state to include validationError
@@ -192,7 +192,7 @@ function App() {
         // Copy the JSON to the clipboard
         const jsonString = JSON.stringify(jsonOutput, null, 2);
         navigator.clipboard.writeText(jsonString).then(() => {
-            if(DEBUG) console.log('JSON copied to clipboard');  
+            if(DEBUG) console.log('JSON copied to clipboard');
 
             // Ask the user for the file name
             const fileName = prompt("Enter a file name for the JSON:", "downloaded.json");

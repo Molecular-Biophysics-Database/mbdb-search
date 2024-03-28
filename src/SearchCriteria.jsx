@@ -2,6 +2,25 @@ import React, {useEffect,useState} from 'react';
 
 function SearchCriteria({criteria, fieldsData, onChange, onRemove, showRemoveButton}) {
     // State for validation error
+
+    // Utility function to get the modifier class
+    const getModifierClass = (value) => value ? 'not_empty_modifier' : 'empty_modifier';
+    const [inputModifiers, setInputModifiers] = useState({
+        expression: getModifierClass(criteria.expression),
+        field: getModifierClass(criteria.field),
+        value: getModifierClass(criteria.value),
+        rangeValue: getModifierClass(criteria.rangeValue)
+    });
+
+    // Update modifiers whenever criteria changes
+    useEffect(() => {
+        setInputModifiers({
+            expression: getModifierClass(criteria.expression),
+            field: getModifierClass(criteria.field),
+            value: getModifierClass(criteria.value),
+            rangeValue: getModifierClass(criteria.rangeValue)
+        });
+    }, [criteria.expression, criteria.field, criteria.value, criteria.rangeValue]);
     const [validationError, setValidationError] = useState('');
     const [rangeValidationError, setRangeValidationError] = useState('');
     // Helper function to determine the input type
@@ -203,7 +222,7 @@ function SearchCriteria({criteria, fieldsData, onChange, onRemove, showRemoveBut
         <div className="search-criteria">
             {/*Expression part on the input*/}
             {showRemoveButton && (
-                <select name="operationSelector" value={criteria.expression} onChange={e => onChange(e, 'expression')}>
+                <select name="operationSelector" className={inputModifiers.expression} value={criteria.expression} onChange={e => onChange(e, 'expression')}>
                     <option name="empty" value="" disabled>Exp</option>
                     <option name="and" value="AND">AND</option>
                     <option name="or" value="OR">OR</option>
@@ -236,7 +255,7 @@ function SearchCriteria({criteria, fieldsData, onChange, onRemove, showRemoveBut
             )}
 
             {/* Dropdown list showing filtered options */}
-            <select name="fieldSelector" value={criteria.field} onChange={handleFieldSelectorChange}>
+            <select name="fieldSelector" className={inputModifiers.field} value={criteria.field} onChange={handleFieldSelectorChange}>
                 <option name="fieldOption" value="" disabled>Select Field</option>
                 {filteredFields.map((field, index) => (
                     <option name="fieldOption" key={index} value={field.field_path}>{field.pretty_name}</option>
@@ -245,6 +264,7 @@ function SearchCriteria({criteria, fieldsData, onChange, onRemove, showRemoveBut
 
             {/*Value part of the input*/}
             <input name="inputValue"
+                className={inputModifiers.value}
                 type={getInputType(fieldDetails.type)}
                 value={criteria.value} // This should be the state value that is updated on change
                 placeholder="Value"
@@ -265,6 +285,7 @@ function SearchCriteria({criteria, fieldsData, onChange, onRemove, showRemoveBut
             {showRangeInput && (
                 <>
                     <input name="rangeInputValue"
+                        className={inputModifiers.rangeValue}
                         type={getInputType(fieldDetails.type)}
                         value={rangeValue}
                         placeholder="To Value"

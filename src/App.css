@@ -131,12 +131,15 @@ button:focus {
 }
 /*bracket color*/
 button.deactive {
-    background-color: red !important;
+    background-color: rgba(83, 171, 0, 0.14) !important;
 }
 
 button.active {
-    background-color: green !important;
+    background-color: #108d10 !important;
 }
 .myButton{
     transition: background-color 0.3s ease;
+}
+.empty_modifier {
+  border: 1px solid red !important;
 }
