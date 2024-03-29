@@ -57,9 +57,34 @@ function App() {
         }
         return '';
     };
+    // Function to validate brackets
+    const validateBrackets = () => {
+        let leftBracketCount = 0;
+        let rightBracketCount = 0;
+
+        searchCriteria.forEach(criteria => {
+            if (criteria.leftBracket) {
+                leftBracketCount++;
+            }
+            if (criteria.rightBracket) {
+                rightBracketCount++;
+            }
+        });
+
+        if (leftBracketCount !== rightBracketCount) {
+            return `Number of left and right brackets must be equal. Currently, there are ${leftBracketCount} left brackets and ${rightBracketCount} right brackets.`;
+        }
+
+        return '';
+    };
 
     const handleSearchClick = () => {
         if(DEBUG) console.log('Has Validation Errors:', hasValidationErrors());
+        const bracketError = validateBrackets();
+        if (bracketError) {
+            alert(bracketError);
+            return; // Stop the search if there's a bracket error
+        }
         if (hasValidationErrors()) {
             const error = getValidationErrorMessage();
             if (error) {
@@ -71,6 +96,11 @@ function App() {
     };
     const handleCopyClick = () => {
         if(DEBUG) console.log('Has Validation Errors:', hasValidationErrors());
+        const bracketError = validateBrackets();
+        if (bracketError) {
+            alert(bracketError);
+            return; // Stop the search if there's a bracket error
+        }
         if (hasValidationErrors()) {
             const error = getValidationErrorMessage();
             if (error) {
