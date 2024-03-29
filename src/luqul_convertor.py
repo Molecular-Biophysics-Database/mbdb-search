@@ -225,7 +225,7 @@ if __name__ == "__main__":
     # # parsed_tree = parser.parse(lucene_query)
     #
     # # Convert the Luqum tree to an Elasticsearch (OpenSearch) query
-    #es_query = es_builder(parsed_tree)
+    # es_query = es_builder(parsed_tree)
     es_query = es_builder(luqum_tree)
     # The es_query is now a dictionary that represents your query in a format compatible with OpenSearch
     print(json.dumps(es_query, indent=2))

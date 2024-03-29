@@ -9,7 +9,14 @@ function App() {
     const [showAdvancedSearch, setShowAdvancedSearch] = useState(false);
     // Update initial state to include validationError
     const [searchCriteria, setSearchCriteria] = useState([
-        {field: '', expression: '', value: '', validationError: '', rangeValue: '', showRangeInput: false}
+        {
+            field: '',
+            expression: '',
+            value: '',
+            validationError: '',
+            rangeValue: '',
+            showRangeInput: false
+        }
     ]);
 
     // Update handleCriteriaChange to handle validation errors
@@ -79,7 +86,7 @@ function App() {
     };
 
     const handleSearchClick = () => {
-        if(DEBUG) console.log('Has Validation Errors:', hasValidationErrors());
+        if (DEBUG) console.log('Has Validation Errors:', hasValidationErrors());
         const bracketError = validateBrackets();
         if (bracketError) {
             alert(bracketError);
@@ -95,7 +102,7 @@ function App() {
         }
     };
     const handleCopyClick = () => {
-        if(DEBUG) console.log('Has Validation Errors:', hasValidationErrors());
+        if (DEBUG) console.log('Has Validation Errors:', hasValidationErrors());
         const bracketError = validateBrackets();
         if (bracketError) {
             alert(bracketError);
@@ -222,7 +229,7 @@ function App() {
         // Copy the JSON to the clipboard
         const jsonString = JSON.stringify(jsonOutput, null, 2);
         navigator.clipboard.writeText(jsonString).then(() => {
-            if(DEBUG) console.log('JSON copied to clipboard');
+            if (DEBUG) console.log('JSON copied to clipboard');
 
             // Ask the user for the file name
             const fileName = prompt("Enter a file name for the JSON:", "downloaded.json");
@@ -244,7 +251,7 @@ function App() {
                 document.getElementById("myButton").style.backgroundColor = "#646cff";
             }, 1500);
         }).catch(err => {
-            if(DEBUG) console.error('Failed to copy JSON to clipboard', err);
+            if (DEBUG) console.error('Failed to copy JSON to clipboard', err);
             alert('Failed to copy JSON to clipboard. Error: ' + err);
             document.getElementById("myButton").style.backgroundColor = "#646cff";
         });
@@ -260,7 +267,7 @@ function App() {
 
             // Iterate over the items in the parsed JSON
             jsonData.forEach((item, index) => {
-                if(DEBUG) console.log(`Processing item at index ${index}:`, item); // Debugging log
+                if (DEBUG) console.log(`Processing item at index ${index}:`, item); // Debugging log
 
                 if (item.operator) {
                     // Set the current operator, which will be applied to the next criterion
@@ -277,7 +284,7 @@ function App() {
                     let fieldDetails = fieldsData.find(field => field.field_path === item.field);
 
                     if (!fieldDetails) {
-                        if(DEBUG) console.error(`Field not found in fieldsData: ${item.field}`);
+                        if (DEBUG) console.error(`Field not found in fieldsData: ${item.field}`);
                         alerts.push(`Field not found: ${item.field}`);
                     }
 
@@ -300,14 +307,14 @@ function App() {
 
                         // Swap values if necessary
                         if (parseFloat(criterion.value) > parseFloat(criterion.rangeValue)) {
-                            if(DEBUG) console.log(`Swapping range values for field: ${item.field}`);
+                            if (DEBUG) console.log(`Swapping range values for field: ${item.field}`);
                             [criterion.value, criterion.rangeValue] = [criterion.rangeValue, criterion.value];
                             alerts.push(`Swapped range values for field "${item.field}" because "${criterion.rangeValue}" was greater than "${criterion.value}".`);
                         }
                     } else if (item.value !== undefined) {
                         criterion.value = item.value.toString();
                     } else {
-                        if(DEBUG) console.error(`Value is missing for field: ${item.field}`);
+                        if (DEBUG) console.error(`Value is missing for field: ${item.field}`);
                         alerts.push(`Value is missing for field: ${item.field}`);
                     }
 
@@ -360,20 +367,20 @@ function App() {
 
             // If there are any alerts, log them or display them to the user
             if (alerts.length > 0) {
-                if(DEBUG) console.warn('Alerts during JSON data processing:', alerts);
+                if (DEBUG) console.warn('Alerts during JSON data processing:', alerts);
                 alert(alerts.join('\n')); // Display all alerts to the user
             }
 
             // Update the application state with the new array of search criteria
             setSearchCriteria(newSearchCriteria);
         } catch (error) {
-        if (error instanceof SyntaxError) {
-            if(DEBUG) console.error("Malformed JSON data:", error);
-            alert("The provided JSON is malformed. Please check its syntax.");
-        } else {
-            if(DEBUG) console.error("Error processing JSON data:", error);
+            if (error instanceof SyntaxError) {
+                if (DEBUG) console.error("Malformed JSON data:", error);
+                alert("The provided JSON is malformed. Please check its syntax.");
+            } else {
+                if (DEBUG) console.error("Error processing JSON data:", error);
+            }
         }
-    }
     };
 
 
@@ -422,16 +429,16 @@ function App() {
                     ))}
                     <div className="search-buttons">
                         <button className="add-field" onClick={addSearchCriteria}>Add Field</button>
-                        <button className="search" onClick={handleSearchClick} >Search
+                        <button className="search" onClick={handleSearchClick}>Search
                         </button>
 
                         <button id="myButton" className="copy-load" onClick={handleCopyClick}
-                                ><img src="src/assets/clipboard.png" alt="C"
-                                                                      style={{
-                                                                          width: '40%',
-                                                                          height: 'auto',
-                                                                          filter: 'invert(80%)'
-                                                                      }}/></button>
+                        ><img src="src/assets/clipboard.png" alt="C"
+                              style={{
+                                  width: '40%',
+                                  height: 'auto',
+                                  filter: 'invert(80%)'
+                              }}/></button>
                         <button className="copy-load" onClick={handleLoadJson}>L</button>
                     </div>
                 </div>

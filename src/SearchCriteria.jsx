@@ -1,4 +1,4 @@
-import React, {useEffect,useState} from 'react';
+import React, {useEffect, useState} from 'react';
 
 function SearchCriteria({criteria, fieldsData, onChange, onRemove, showRemoveButton}) {
     // State for validation error
@@ -75,7 +75,7 @@ function SearchCriteria({criteria, fieldsData, onChange, onRemove, showRemoveBut
     const toggleRangeInput = () => {
         setShowRangeInput(!showRangeInput);
         // Call the onChange provided by the parent to update the state there too
-        onChange({ target: { value: !showRangeInput } }, 'showRangeInput');
+        onChange({target: {value: !showRangeInput}}, 'showRangeInput');
     };
 
 
@@ -222,7 +222,8 @@ function SearchCriteria({criteria, fieldsData, onChange, onRemove, showRemoveBut
         <div className="search-criteria">
             {/*Expression part on the input*/}
             {showRemoveButton && (
-                <select name="operationSelector" className={inputModifiers.expression} value={criteria.expression} onChange={e => onChange(e, 'expression')}>
+                <select name="operationSelector" className={inputModifiers.expression} value={criteria.expression}
+                        onChange={e => onChange(e, 'expression')}>
                     <option name="empty" value="" disabled>Exp</option>
                     <option name="and" value="AND">AND</option>
                     <option name="or" value="OR">OR</option>
@@ -231,11 +232,11 @@ function SearchCriteria({criteria, fieldsData, onChange, onRemove, showRemoveBut
             )}
             {/*Left bracket button*/}
             <button
-              name="leftBracket"
-              onClick={toggleLeftBracket}
-              className={criteria.leftBracket ? 'active' : 'deactive'}
+                name="leftBracket"
+                onClick={toggleLeftBracket}
+                className={criteria.leftBracket ? 'active' : 'deactive'}
             >
-              (
+                (
             </button>
 
             {/*Field part of the input*/}
@@ -246,32 +247,40 @@ function SearchCriteria({criteria, fieldsData, onChange, onRemove, showRemoveBut
             {/* Conditional rendering of the input field based on showFilterInput */}
             {showFilterInput && (
                 <input name="selectorFilter"
-                    type="text"
-                    value={filterText}
-                    onChange={handleFilterChange}
-                    placeholder="Type to filter..."
-                    autoFocus
+                       type="text"
+                       value={filterText}
+                       onChange={handleFilterChange}
+                       placeholder="Type to filter..."
+                       autoFocus
                 />
             )}
 
             {/* Dropdown list showing filtered options */}
-            <select name="fieldSelector" className={inputModifiers.field} value={criteria.field} onChange={handleFieldSelectorChange}>
+            <select
+                name="fieldSelector"
+                className={inputModifiers.field}
+                value={criteria.field}
+                onChange={handleFieldSelectorChange}>
                 <option name="fieldOption" value="" disabled>Select Field</option>
                 {filteredFields.map((field, index) => (
-                    <option name="fieldOption" key={index} value={field.field_path}>{field.pretty_name}</option>
+                    <option
+                        name="fieldOption"
+                        key={index}
+                        value={field.field_path}>
+                        {field.pretty_name}</option>
                 ))}
             </select>
 
             {/*Value part of the input*/}
             <input name="inputValue"
-                className={inputModifiers.value}
-                type={getInputType(fieldDetails.type)}
-                value={criteria.value} // This should be the state value that is updated on change
-                placeholder="Value"
-                min={fieldDetails.minimum}
-                max={fieldDetails.maximum}
-                onChange={handleValueChange}
-                onBlur={handleValueBlur}
+                   className={inputModifiers.value}
+                   type={getInputType(fieldDetails.type)}
+                   value={criteria.value} // This should be the state value that is updated on change
+                   placeholder="Value"
+                   min={fieldDetails.minimum}
+                   max={fieldDetails.maximum}
+                   onChange={handleValueChange}
+                   onBlur={handleValueBlur}
             />
             {/* Display validation error if any */}
             {validationError && <div className="validation-error">{validationError}</div>}
@@ -285,25 +294,25 @@ function SearchCriteria({criteria, fieldsData, onChange, onRemove, showRemoveBut
             {showRangeInput && (
                 <>
                     <input name="rangeInputValue"
-                        className={inputModifiers.rangeValue}
-                        type={getInputType(fieldDetails.type)}
-                        value={rangeValue}
-                        placeholder="To Value"
-                        min={fieldDetails.minimum}
-                        max={fieldDetails.maximum}
-                        onChange={handleRangeValueChange}
-                        onBlur={handleRangeValueBlur}
+                           className={inputModifiers.rangeValue}
+                           type={getInputType(fieldDetails.type)}
+                           value={rangeValue}
+                           placeholder="To Value"
+                           min={fieldDetails.minimum}
+                           max={fieldDetails.maximum}
+                           onChange={handleRangeValueChange}
+                           onBlur={handleRangeValueBlur}
                     />
                     {rangeValidationError && <div className="validation-error">{rangeValidationError}</div>}
                 </>
             )}
             {/*Right bracket button*/}
             <button
-              name="rightBracket"
-              onClick={toggleRightBracket}
-              className={criteria.rightBracket ? 'active' : 'deactive'}
+                name="rightBracket"
+                onClick={toggleRightBracket}
+                className={criteria.rightBracket ? 'active' : 'deactive'}
             >
-              )
+                )
             </button>
             {/*Field that shows that validation error message*/}
             {/*{validationError && <div className="validation-error">{validationError}</div>}*/}

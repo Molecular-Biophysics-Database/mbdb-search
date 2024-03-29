@@ -116,7 +116,7 @@ button.search {
     margin-right: 10px;
 }
 
-button.copy-load{
+button.copy-load {
     width: calc(7% - 0.5rem);
     margin-left: 5px;
     margin-right: 5px;
@@ -129,6 +129,7 @@ button:focus {
     outline: none;
     border-color: #646cff;
 }
+
 /*bracket color*/
 button.deactive {
     background-color: rgba(83, 171, 0, 0.14) !important;
@@ -137,9 +138,11 @@ button.deactive {
 button.active {
     background-color: #108d10 !important;
 }
-.myButton{
+
+.myButton {
     transition: background-color 0.3s ease;
 }
+
 .empty_modifier {
-  border: 1px solid red !important;
+    border: 1px solid red !important;
 }
