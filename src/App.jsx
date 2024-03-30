@@ -84,12 +84,34 @@ function App() {
 
         return '';
     };
+    // Function to validate proper nesting of brackets
+    const validateBracketNesting = () => {
+        const stack = [];
+
+        for (const criteria of searchCriteria) {
+            if (criteria.leftBracket) {
+                stack.push('(');
+            }
+            if (criteria.rightBracket) {
+                if (stack.length === 0 || stack.pop() !== '(') {
+                    return `Mismatched brackets detected. Please ensure brackets are properly nested.`;
+                }
+            }
+        }
+
+        if (stack.length !== 0) {
+            return `Mismatched brackets detected. Please ensure brackets are properly nested.`;
+        }
+
+        return '';
+    };
 
     const handleSearchClick = () => {
         if (DEBUG) console.log('Has Validation Errors:', hasValidationErrors());
         const bracketError = validateBrackets();
-        if (bracketError) {
-            alert(bracketError);
+        const nestingError = validateBracketNesting();
+        if (bracketError || nestingError) {
+            alert(bracketError || nestingError);
             return; // Stop the search if there's a bracket error
         }
         if (hasValidationErrors()) {
