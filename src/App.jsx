@@ -188,16 +188,15 @@ function App() {
     }
 
     const handleSearchClick = () => {
-        if (DEBUG) console.log('Has Validation Errors:', hasValidationErrors());
         const structureString = generateQueryStructureString();
+        const bracketError = validateBrackets();
+        const nestingError = validateBracketNesting();
         if (DEBUG) console.log('Query Structure:', structureString);
-
+        if (DEBUG) console.log('Has Validation Errors:', hasValidationErrors());
         if (!isValidExpression(structureString)) {
             alert('Invalid query structure: incompatible operators.');
             return;
         }
-        const bracketError = validateBrackets();
-        const nestingError = validateBracketNesting();
         if (bracketError || nestingError) {
             alert(bracketError || nestingError);
             return; // Stop the search if there's a bracket error
@@ -212,10 +211,17 @@ function App() {
         }
     };
     const handleCopyClick = () => {
-        if (DEBUG) console.log('Has Validation Errors:', hasValidationErrors());
+        const structureString = generateQueryStructureString();
         const bracketError = validateBrackets();
-        if (bracketError) {
-            alert(bracketError);
+        const nestingError = validateBracketNesting();
+        if (DEBUG) console.log('Query Structure:', structureString);
+        if (DEBUG) console.log('Has Validation Errors:', hasValidationErrors());
+        if (!isValidExpression(structureString)) {
+            alert('Invalid query structure: incompatible operators.');
+            return;
+        }
+        if (bracketError || nestingError) {
+            alert(bracketError || nestingError);
             return; // Stop the search if there's a bracket error
         }
         if (hasValidationErrors()) {
