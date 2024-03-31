@@ -120,41 +120,41 @@ function App() {
 
 
     function isValidExpression(expression, placeholder = 'Y') {
-    expression = expression.replace(/\s+/g, ''); // Clean up the expression
-    console.log(`Starting analysis of expression: ${expression}`);
+        expression = expression.replace(/\s+/g, ''); // Clean up the expression
+        console.log(`Starting analysis of expression: ${expression}`);
 
-    // Helper to substitute nested expressions with a placeholder and store them for evaluation
-    function substituteAndStoreNestedExpressions(exp) {
-        let depth = 0;
-        let buffer = '';
-        let simplifiedExpression = '';
-        let nestedExpressions = [];
+        // Helper to substitute nested expressions with a placeholder and store them for evaluation
+        function substituteAndStoreNestedExpressions(exp) {
+            let depth = 0;
+            let buffer = '';
+            let simplifiedExpression = '';
+            let nestedExpressions = [];
 
-        for (let char of exp) {
-            if (char === '(') {
-                depth++;
-                if (depth === 1) {
-                    if (buffer) {
-                        simplifiedExpression += buffer;
-                        buffer = '';
+            for (let char of exp) {
+                if (char === '(') {
+                    depth++;
+                    if (depth === 1) {
+                        if (buffer) {
+                            simplifiedExpression += buffer;
+                            buffer = '';
+                        }
+                        continue; // Skip adding '(' to buffer when at the first depth
                     }
-                    continue; // Skip adding '(' to buffer when at the first depth
+                } else if (char === ')') {
+                    depth--;
+                    if (depth === 0) {
+                        nestedExpressions.push(buffer);
+                        simplifiedExpression += placeholder; // Substitute nested expression with placeholder
+                        buffer = '';
+                        continue;
+                    }
                 }
-            } else if (char === ')') {
-                depth--;
-                if (depth === 0) {
-                    nestedExpressions.push(buffer);
-                    simplifiedExpression += placeholder; // Substitute nested expression with placeholder
-                    buffer = '';
-                    continue;
-                }
+                if (depth > 0) buffer += char; // Collect characters for nested expression
+                else simplifiedExpression += char;
             }
-            if (depth > 0) buffer += char; // Collect characters for nested expression
-            else simplifiedExpression += char;
+            if (buffer) simplifiedExpression += buffer; // Append any remaining characters
+            return {simplifiedExpression, nestedExpressions};
         }
-        if (buffer) simplifiedExpression += buffer; // Append any remaining characters
-        return {simplifiedExpression, nestedExpressions};
-    }
 
         // Evaluate if an expression segment is valid based on operator rules
         function isSegmentValid(segment) {
