@@ -105,9 +105,97 @@ function App() {
 
         return '';
     };
+    const generateQueryStructureString = () => {
+        let structureString = '';
+        searchCriteria.forEach((criteria, i) => {
+            if (criteria.leftBracket) structureString += " ( ";
+            structureString += "X"; // Placeholder for field with value
+            if (criteria.rightBracket) structureString += " ) ";
+            if (i !== searchCriteria.length - 1 && searchCriteria[i + 1].expression) {
+                structureString += " " + searchCriteria[i + 1].expression.toLowerCase() + " ";
+            }
+        });
+        return structureString.trim(); // Remove leading and trailing spaces
+    };
+
+
+    function isValidExpression(expression, placeholder = 'Y') {
+    expression = expression.replace(/\s+/g, ''); // Clean up the expression
+    console.log(`Starting analysis of expression: ${expression}`);
+
+    // Helper to substitute nested expressions with a placeholder and store them for evaluation
+    function substituteAndStoreNestedExpressions(exp) {
+        let depth = 0;
+        let buffer = '';
+        let simplifiedExpression = '';
+        let nestedExpressions = [];
+
+        for (let char of exp) {
+            if (char === '(') {
+                depth++;
+                if (depth === 1) {
+                    if (buffer) {
+                        simplifiedExpression += buffer;
+                        buffer = '';
+                    }
+                    continue; // Skip adding '(' to buffer when at the first depth
+                }
+            } else if (char === ')') {
+                depth--;
+                if (depth === 0) {
+                    nestedExpressions.push(buffer);
+                    simplifiedExpression += placeholder; // Substitute nested expression with placeholder
+                    buffer = '';
+                    continue;
+                }
+            }
+            if (depth > 0) buffer += char; // Collect characters for nested expression
+            else simplifiedExpression += char;
+        }
+        if (buffer) simplifiedExpression += buffer; // Append any remaining characters
+        return {simplifiedExpression, nestedExpressions};
+    }
+
+        // Evaluate if an expression segment is valid based on operator rules
+        function isSegmentValid(segment) {
+            const hasAnd = segment.includes('and');
+            const hasOr = segment.includes('or');
+            const hasNot = segment.includes('not');
+            const isValid = !(hasOr && (hasAnd || hasNot)); // Invalid if 'or' coexists with 'and'/'not'
+            console.log(`Evaluating segment: "${segment}" -> Valid: ${isValid}`);
+            return isValid;
+        }
+
+        // Recursively evaluate the expression and its nested parts
+        function evaluate(exp) {
+            const {simplifiedExpression, nestedExpressions} = substituteAndStoreNestedExpressions(exp);
+            console.log(`Simplified expression: "${simplifiedExpression}", Nested expressions: ${nestedExpressions}`);
+
+            // Evaluate the simplified expression first
+            if (!isSegmentValid(simplifiedExpression)) return false;
+
+            // Then recursively evaluate each nested expression
+            for (let nestedExp of nestedExpressions) {
+                if (!evaluate(nestedExp)) return false;
+            }
+
+            return true;
+        }
+
+        const isValid = evaluate(expression);
+        console.log(`The expression "${expression}" is ${isValid ? 'valid' : 'invalid'}.`);
+        return isValid;
+    }
 
     const handleSearchClick = () => {
         if (DEBUG) console.log('Has Validation Errors:', hasValidationErrors());
+        const structureString = generateQueryStructureString();
+        if (DEBUG) console.log('Query Structure:', structureString);
+
+        if (!isValidExpression(structureString)) {
+            alert('Invalid query structure: incompatible operators.');
+            return;
+        }
         const bracketError = validateBrackets();
         const nestingError = validateBracketNesting();
         if (bracketError || nestingError) {
