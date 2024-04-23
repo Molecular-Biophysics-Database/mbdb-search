@@ -1,60 +1,781 @@
 [
   {
-    "pretty_name": "Title",
+    "pretty_name": "schema_version",
+    "field_path": "metadata.general_parameters.schema_version",
+    "type": "string",
+    "description": "The schema version used to annotate the general parameters"
+  },
+  {
+    "pretty_name": "title",
     "field_path": "metadata.general_parameters.record_information.title",
     "type": "string",
     "description": "Short descriptive title of the record"
   },
   {
-    "pretty_name": "Keywords[]",
+    "pretty_name": "keywords[]",
     "field_path": "metadata.general_parameters.record_information.keywords[]",
     "type": "string",
     "description": ""
   },
   {
-    "pretty_name": "Deposition date",
+    "pretty_name": "measurement_group_id",
+    "field_path": "metadata.general_parameters.record_information.measurement_group_id",
+    "type": "string",
+    "description": "Unique and persistent identifier which can be generated upon deposition of the first if a group of data is deposited at the same time. These can be used to specified records are closely connected e.g. one sample measured with multiple techniques. For more loosely connected results the project field should be used as sole link"
+  },
+  {
+    "pretty_name": "title",
+    "field_path": "metadata.general_parameters.record_information.project.title",
+    "type": "string",
+    "description": "Short title of the project"
+  },
+  {
+    "pretty_name": "description",
+    "field_path": "metadata.general_parameters.record_information.project.description",
+    "type": "string",
+    "description": "Short description of what the project is about"
+  },
+  {
+    "pretty_name": "given_name",
+    "field_path": "metadata.general_parameters.record_information.project.owner.given_name",
+    "type": "string",
+    "description": "The given name(s), including middlename(s), of the person"
+  },
+  {
+    "pretty_name": "family_name",
+    "field_path": "metadata.general_parameters.record_information.project.owner.family_name",
+    "type": "string",
+    "description": "The family name(s) the person"
+  },
+  {
+    "pretty_name": "identifiers[]",
+    "field_path": "metadata.general_parameters.record_information.project.owner.identifiers[]",
+    "type": "string",
+    "description": ""
+  },
+  {
+    "pretty_name": "affiliations[]",
+    "field_path": "metadata.general_parameters.record_information.project.owner.affiliations[]",
+    "type": "vocabulary",
+    "description": ""
+  },
+  {
+    "pretty_name": "access_rights",
+    "field_path": "metadata.general_parameters.record_information.access_rights",
+    "type": "string",
+    "description": "The access rights to the uploaded files. There are three options, 1) \"open access\" where the files are accessible immediately when the deposition is published, 2) \"embargoed access\" where the files will only become available after a specified date, 3) \"restricted access\" where depositors are of the record are the only ones who has access"
+  },
+  {
+    "pretty_name": "metadata_access_rights",
+    "field_path": "metadata.general_parameters.record_information.metadata_access_rights",
+    "type": "string",
+    "description": "The access rights to the metadata. Minimal metadata that includes title and depositors is accessible regardless of which type is chosen as it is required to obtain a DOI. There are three options, 1) \"open access\" where the complete metadata are accessible immediately when the deposition is published, 2) \"embargoed access\" where the files will only become available after a specified date, 3) \"restricted access\" where depositors are of the record are the only ones who has access"
+  },
+  {
+    "pretty_name": "publisher",
+    "field_path": "metadata.general_parameters.record_information.publisher",
+    "type": "string",
+    "description": "When made available MBDB is to be considered the publisher, however, the depositors are still the owners"
+  },
+  {
+    "pretty_name": "resource_type_general",
+    "field_path": "metadata.general_parameters.record_information.resource_type_general",
+    "type": "string",
+    "description": "All records are considered to be datasets"
+  },
+  {
+    "pretty_name": "resource_type",
+    "field_path": "metadata.general_parameters.record_information.resource_type",
+    "type": "string",
+    "description": "DataCite item which shows type of dataset the record is and corresponds directly to which kind of technique was used (MST/BLI/SPR)"
+  },
+  {
+    "pretty_name": "internal_id",
+    "field_path": "metadata.general_parameters.record_information.internal_id",
+    "type": "string",
+    "description": "Unique and persistent internal identifier the record. This will automatically be generated upon deposition"
+  },
+  {
+    "pretty_name": "identifier",
+    "field_path": "metadata.general_parameters.record_information.identifier",
+    "type": "string",
+    "description": "The (external) identifier of the record which is a DOI generated by Datacite. This will automatically be generated when the record is published"
+  },
+  {
+    "pretty_name": "subject_category",
+    "field_path": "metadata.general_parameters.record_information.subject_category",
+    "type": "string",
+    "description": "DataCite subject category the record data belongs to default is Biophysics"
+  },
+  {
+    "pretty_name": "deposition_date",
     "field_path": "metadata.general_parameters.record_information.deposition_date",
     "type": "date",
     "description": "The date when the data was deposited; automatically generated"
   },
   {
-    "pretty_name": "Given name (Depositor)",
+    "pretty_name": "date_available",
+    "field_path": "metadata.general_parameters.record_information.date_available",
+    "type": "date",
+    "description": "The date when the data was/will be made publicly available. Will be automatically generated"
+  },
+  {
+    "pretty_name": "given_name",
     "field_path": "metadata.general_parameters.depositors.depositor.given_name",
     "type": "string",
     "description": "The given name(s), including middlename(s), of the person"
   },
   {
-    "pretty_name": "Family name (Depositor)",
+    "pretty_name": "family_name",
     "field_path": "metadata.general_parameters.depositors.depositor.family_name",
     "type": "string",
     "description": "The family name(s) the person"
   },
   {
-    "pretty_name": "Given name (Principal contact)",
+    "pretty_name": "identifiers[]",
+    "field_path": "metadata.general_parameters.depositors.depositor.identifiers[]",
+    "type": "string",
+    "description": ""
+  },
+  {
+    "pretty_name": "affiliations[]",
+    "field_path": "metadata.general_parameters.depositors.depositor.affiliations[]",
+    "type": "vocabulary",
+    "description": ""
+  },
+  {
+    "pretty_name": "given_name",
     "field_path": "metadata.general_parameters.depositors.principal_contact.given_name",
     "type": "string",
     "description": "The given name(s), including middlename(s), of the person"
   },
   {
-    "pretty_name": "Family name (Principal contact)",
+    "pretty_name": "family_name",
     "field_path": "metadata.general_parameters.depositors.principal_contact.family_name",
     "type": "string",
     "description": "The family name(s) the person"
   },
   {
-    "pretty_name": "Latitude",
-    "field_path": "metadata.general_parameters.latitude",
-    "type": "double",
-    "description": "The latitude, from south to north, in degrees (decimal notation)",
-    "minimum": -90.0,
-    "maximum": 90.0
+    "pretty_name": "identifiers[]",
+    "field_path": "metadata.general_parameters.depositors.principal_contact.identifiers[]",
+    "type": "string",
+    "description": ""
   },
   {
-    "pretty_name": "Longitude",
-    "field_path": "metadata.general_parameters.longitude",
+    "pretty_name": "affiliations[]",
+    "field_path": "metadata.general_parameters.depositors.principal_contact.affiliations[]",
+    "type": "vocabulary",
+    "description": ""
+  },
+  {
+    "pretty_name": "given_name",
+    "field_path": "metadata.general_parameters.depositors.contributors[].given_name",
+    "type": "string",
+    "description": "The given name(s), including middlename(s), of the person"
+  },
+  {
+    "pretty_name": "family_name",
+    "field_path": "metadata.general_parameters.depositors.contributors[].family_name",
+    "type": "string",
+    "description": "The family name(s) the person"
+  },
+  {
+    "pretty_name": "identifiers[]",
+    "field_path": "metadata.general_parameters.depositors.contributors[].identifiers[]",
+    "type": "string",
+    "description": ""
+  },
+  {
+    "pretty_name": "affiliations[]",
+    "field_path": "metadata.general_parameters.depositors.contributors[].affiliations[]",
+    "type": "vocabulary",
+    "description": ""
+  },
+  {
+    "pretty_name": "pid",
+    "field_path": "metadata.general_parameters.associated_publications.main.pid",
+    "type": "string",
+    "description": "Persistent identifier associated with the publication (e.g. DOI, ISBN)"
+  },
+  {
+    "pretty_name": "title",
+    "field_path": "metadata.general_parameters.associated_publications.main.title",
+    "type": "string",
+    "description": "The title of the publication"
+  },
+  {
+    "pretty_name": "publication_year",
+    "field_path": "metadata.general_parameters.associated_publications.main.publication_year",
+    "type": "integer",
+    "description": "The publication year",
+    "minimum": 1900
+  },
+  {
+    "pretty_name": "given_name",
+    "field_path": "metadata.general_parameters.associated_publications.main.authors[].given_name",
+    "type": "string",
+    "description": "The given name(s), including middlename(s), of the person"
+  },
+  {
+    "pretty_name": "family_name",
+    "field_path": "metadata.general_parameters.associated_publications.main.authors[].family_name",
+    "type": "string",
+    "description": "The family name(s) the person"
+  },
+  {
+    "pretty_name": "identifiers[]",
+    "field_path": "metadata.general_parameters.associated_publications.main.authors[].identifiers[]",
+    "type": "string",
+    "description": ""
+  },
+  {
+    "pretty_name": "affiliations[]",
+    "field_path": "metadata.general_parameters.associated_publications.main.authors[].affiliations[]",
+    "type": "vocabulary",
+    "description": ""
+  },
+  {
+    "pretty_name": "resource_type",
+    "field_path": "metadata.general_parameters.associated_publications.main.resource_type",
+    "type": "string",
+    "description": "The type of publication"
+  },
+  {
+    "pretty_name": "publisher",
+    "field_path": "metadata.general_parameters.associated_publications.main.publisher",
+    "type": "string",
+    "description": "The name of the publisher or journal name in case of article"
+  },
+  {
+    "pretty_name": "pid",
+    "field_path": "metadata.general_parameters.associated_publications.additional[].pid",
+    "type": "string",
+    "description": "Persistent identifier associated with the publication (e.g. DOI, ISBN)"
+  },
+  {
+    "pretty_name": "title",
+    "field_path": "metadata.general_parameters.associated_publications.additional[].title",
+    "type": "string",
+    "description": "The title of the publication"
+  },
+  {
+    "pretty_name": "publication_year",
+    "field_path": "metadata.general_parameters.associated_publications.additional[].publication_year",
+    "type": "integer",
+    "description": "The publication year",
+    "minimum": 1900
+  },
+  {
+    "pretty_name": "given_name",
+    "field_path": "metadata.general_parameters.associated_publications.additional[].authors[].given_name",
+    "type": "string",
+    "description": "The given name(s), including middlename(s), of the person"
+  },
+  {
+    "pretty_name": "family_name",
+    "field_path": "metadata.general_parameters.associated_publications.additional[].authors[].family_name",
+    "type": "string",
+    "description": "The family name(s) the person"
+  },
+  {
+    "pretty_name": "identifiers[]",
+    "field_path": "metadata.general_parameters.associated_publications.additional[].authors[].identifiers[]",
+    "type": "string",
+    "description": ""
+  },
+  {
+    "pretty_name": "affiliations[]",
+    "field_path": "metadata.general_parameters.associated_publications.additional[].authors[].affiliations[]",
+    "type": "vocabulary",
+    "description": ""
+  },
+  {
+    "pretty_name": "resource_type",
+    "field_path": "metadata.general_parameters.associated_publications.additional[].resource_type",
+    "type": "string",
+    "description": "The type of publication"
+  },
+  {
+    "pretty_name": "publisher",
+    "field_path": "metadata.general_parameters.associated_publications.additional[].publisher",
+    "type": "string",
+    "description": "The name of the publisher or journal name in case of article"
+  },
+  {
+    "pretty_name": "funding_reference[]",
+    "field_path": "metadata.general_parameters.funding_reference[]",
+    "type": "vocabulary",
+    "description": ""
+  },
+  {
+    "pretty_name": "collection_start_time",
+    "field_path": "metadata.general_parameters.collection_start_time",
+    "type": "date",
+    "description": "The date when collection of the raw data began"
+  },
+  {
+    "pretty_name": "name",
+    "field_path": "metadata.general_parameters.instrument.name",
+    "type": "string",
+    "description": "The name of the instrument as provided by the manufacturer"
+  },
+  {
+    "pretty_name": "model",
+    "field_path": "metadata.general_parameters.instrument.model",
+    "type": "string",
+    "description": "Model number and/or setup details of instrument used for raw data collection; include special instrument features (e.g. 10.1,RED/BLUE LASER, backreflection optics)"
+  },
+  {
+    "pretty_name": "pid",
+    "field_path": "metadata.general_parameters.instrument.performance_test.published_test_protocol.pid",
+    "type": "string",
+    "description": "Persistent identifier associated with the publication (e.g. DOI, ISBN)"
+  },
+  {
+    "pretty_name": "title",
+    "field_path": "metadata.general_parameters.instrument.performance_test.published_test_protocol.title",
+    "type": "string",
+    "description": "The title of the publication"
+  },
+  {
+    "pretty_name": "publication_year",
+    "field_path": "metadata.general_parameters.instrument.performance_test.published_test_protocol.publication_year",
+    "type": "integer",
+    "description": "The publication year",
+    "minimum": 1900
+  },
+  {
+    "pretty_name": "given_name",
+    "field_path": "metadata.general_parameters.instrument.performance_test.published_test_protocol.authors[].given_name",
+    "type": "string",
+    "description": "The given name(s), including middlename(s), of the person"
+  },
+  {
+    "pretty_name": "family_name",
+    "field_path": "metadata.general_parameters.instrument.performance_test.published_test_protocol.authors[].family_name",
+    "type": "string",
+    "description": "The family name(s) the person"
+  },
+  {
+    "pretty_name": "identifiers[]",
+    "field_path": "metadata.general_parameters.instrument.performance_test.published_test_protocol.authors[].identifiers[]",
+    "type": "string",
+    "description": ""
+  },
+  {
+    "pretty_name": "affiliations[]",
+    "field_path": "metadata.general_parameters.instrument.performance_test.published_test_protocol.authors[].affiliations[]",
+    "type": "vocabulary",
+    "description": ""
+  },
+  {
+    "pretty_name": "resource_type",
+    "field_path": "metadata.general_parameters.instrument.performance_test.published_test_protocol.resource_type",
+    "type": "string",
+    "description": "The type of publication"
+  },
+  {
+    "pretty_name": "publisher",
+    "field_path": "metadata.general_parameters.instrument.performance_test.published_test_protocol.publisher",
+    "type": "string",
+    "description": "The name of the publisher or journal name in case of article"
+  },
+  {
+    "pretty_name": "report",
+    "field_path": "metadata.general_parameters.instrument.performance_test.report",
+    "type": "url",
+    "description": "The file containing the report of the performance test, preferably in pdf"
+  },
+  {
+    "pretty_name": "additional_information",
+    "field_path": "metadata.general_parameters.instrument.performance_test.additional_information",
+    "type": "string",
+    "description": "Additional information about the performance test can be specified here"
+  },
+  {
+    "pretty_name": "value",
+    "field_path": "metadata.general_parameters.physical_conditions_at_sample_handling.temperature.value",
     "type": "double",
-    "description": "The longitude, from west to east, in degrees (decimal notation)",
-    "minimum": -180.0,
-    "maximum": 180.0
+    "description": "The numeric value of the temperature",
+    "poly_type": "Name"
+  },
+  {
+    "pretty_name": "operational_value",
+    "field_path": "metadata.general_parameters.physical_conditions_at_sample_handling.temperature.operational_value",
+    "type": "string",
+    "description": "If the temperature was defined by the procedure rather than the numerical value the value can be specified here (e.g. Room temperature, on ice, etc.)"
+  },
+  {
+    "pretty_name": "controlled",
+    "field_path": "metadata.general_parameters.physical_conditions_at_sample_handling.temperature.controlled",
+    "type": "boolean",
+    "description": "Whether the temperature was actively controlled"
+  },
+  {
+    "pretty_name": "value",
+    "field_path": "metadata.general_parameters.physical_conditions_at_sample_handling.pressure.value",
+    "type": "double",
+    "description": "The numeric value of the pressure"
+  },
+  {
+    "pretty_name": "controlled",
+    "field_path": "metadata.general_parameters.physical_conditions_at_sample_handling.pressure.controlled",
+    "type": "boolean",
+    "description": "Whether the pressure was actively controlled"
+  },
+  {
+    "pretty_name": "value",
+    "field_path": "metadata.general_parameters.physical_conditions_at_sample_handling.humidity.value",
+    "type": "double",
+    "description": "The numeric value of the humidity"
+  },
+  {
+    "pretty_name": "controlled",
+    "field_path": "metadata.general_parameters.physical_conditions_at_sample_handling.humidity.controlled",
+    "type": "boolean",
+    "description": "Whether the humidity was actively controlled"
+  },
+  {
+    "pretty_name": "name",
+    "field_path": "metadata.general_parameters.chemical_information.chemical_environments[].name",
+    "type": "string",
+    "description": "Name of the chemical environment (e.g. Measurement Buffer). The name must be unique within a record as it will be referred to the in method specific section in when describing the composition of the individual samples or measurement steps"
+  },
+  {
+    "pretty_name": "value",
+    "field_path": "metadata.general_parameters.chemical_information.chemical_environments[].ph.value",
+    "type": "double",
+    "description": "The pH value of the solution"
+  },
+  {
+    "pretty_name": "value",
+    "field_path": "metadata.general_parameters.chemical_information.chemical_environments[].ionic_strength.value",
+    "type": "double",
+    "description": "The numerical value of the ionic strength (https://en.wikipedia.org/wiki/Ionic_strength)",
+    "minimum": 0.0
+  },
+  {
+    "pretty_name": "value",
+    "field_path": "metadata.general_parameters.chemical_information.chemical_environments[].dynamic_viscosity.value",
+    "type": "double",
+    "description": "Numerical value of the dynamic viscosity",
+    "minimum": 0.0
+  },
+  {
+    "pretty_name": "degassing_method",
+    "field_path": "metadata.general_parameters.chemical_information.chemical_environments[].degassing_method",
+    "type": "string",
+    "description": "If chemical environments was degassed, the method can be specified here"
+  },
+  {
+    "pretty_name": "pore_size",
+    "field_path": "metadata.general_parameters.chemical_information.chemical_environments[].ultrafiltration_method.pore_size",
+    "type": "string",
+    "description": "The pore size of the filter"
+  },
+  {
+    "pretty_name": "filter_material",
+    "field_path": "metadata.general_parameters.chemical_information.chemical_environments[].ultrafiltration_method.filter_material",
+    "type": "string",
+    "description": "The material the filter was composed of"
+  },
+  {
+    "pretty_name": "additional_specifications[]",
+    "field_path": "metadata.general_parameters.chemical_information.chemical_environments[].additional_specifications[]",
+    "type": "string",
+    "description": ""
+  },
+  {
+    "pretty_name": "name",
+    "field_path": "metadata.general_parameters.derived_parameters[].name",
+    "type": "string",
+    "description": "Descriptive name (id) of the derived parameter (e.g. Kd of Lysozyme and VHH2). Must be unique within a record"
+  },
+  {
+    "pretty_name": "type",
+    "field_path": "metadata.general_parameters.derived_parameters[].type",
+    "type": "string",
+    "description": "The type of physical parameter the derived parameter represents"
+  },
+  {
+    "pretty_name": "entity",
+    "field_path": "metadata.general_parameters.derived_parameters[].entities_involved[].entity",
+    "type": "relation",
+    "description": ""
+  },
+  {
+    "pretty_name": "copy_number",
+    "field_path": "metadata.general_parameters.derived_parameters[].entities_involved[].copy_number",
+    "type": "double",
+    "description": "Number of copies of the entity that contribute to the derived parameter, -1 if unknown (e.g. if two individual copies of a polymer binds to another, the copy number would be 2)",
+    "minimum": -1.0
+  },
+  {
+    "pretty_name": "value",
+    "field_path": "metadata.general_parameters.derived_parameters[].value",
+    "type": "double",
+    "description": "Numerical value of the derived parameter"
+  },
+  {
+    "pretty_name": "raw_measurements[]",
+    "field_path": "metadata.general_parameters.raw_measurements[]",
+    "type": "url",
+    "description": ""
+  },
+  {
+    "pretty_name": "schema_version",
+    "field_path": "metadata.method_specific_parameters.schema_version",
+    "type": "string",
+    "description": "The schema version used to annotate the MST method specific parameters"
+  },
+  {
+    "pretty_name": "experiment_type",
+    "field_path": "metadata.method_specific_parameters.experiment_type",
+    "type": "string",
+    "description": "The type of physical parameter that was sought"
+  },
+  {
+    "pretty_name": "signal_type",
+    "field_path": "metadata.method_specific_parameters.signal_type",
+    "type": "string",
+    "description": "The type of signal that was being measured"
+  },
+  {
+    "pretty_name": "excitation_led_color",
+    "field_path": "metadata.method_specific_parameters.excitation_led_color",
+    "type": "string",
+    "description": "The color of the excitation LED used for the experiment. NOTE that colors are specific to the combination in which it occurs, e.g. the GREEN in a BLUE/GREEN instrument, is not the same as the GREEN in a GREEN/RED instrument"
+  },
+  {
+    "pretty_name": "excitation_led_power",
+    "field_path": "metadata.method_specific_parameters.excitation_led_power",
+    "type": "double",
+    "description": "The power, in percentage, of the excitation LED used in experiment",
+    "minimum": 0.0,
+    "maximum": 100.0
+  },
+  {
+    "pretty_name": "ir_mst_laser_power",
+    "field_path": "metadata.method_specific_parameters.ir_mst_laser_power",
+    "type": "double",
+    "description": "The power of the infrared LASER used in the experiment in percentages. Even though a change in nomenclature occurred in Nanotemper's control software, the underlying data is still stored in percentages. Use the following conversion; Low = 20, Medium = 40, High = 60",
+    "minimum": 0.0,
+    "maximum": 100.0
+  },
+  {
+    "pretty_name": "name",
+    "field_path": "metadata.method_specific_parameters.measurements[].name",
+    "type": "string",
+    "description": "Name (id) of the measurement which must be unique within a record (i.e. triplicates must be named individually in the raw data file). The name must allow location of the measurement data within the raw data file as well as processed data files if these are present"
+  },
+  {
+    "pretty_name": "position",
+    "field_path": "metadata.method_specific_parameters.measurements[].position",
+    "type": "string",
+    "description": "Position of the measured sample within the instrument"
+  },
+  {
+    "pretty_name": "entity",
+    "field_path": "metadata.method_specific_parameters.measurements[].sample.targets[].entity",
+    "type": "relation",
+    "description": ""
+  },
+  {
+    "pretty_name": "value",
+    "field_path": "metadata.method_specific_parameters.measurements[].sample.targets[].concentration.value",
+    "type": "double",
+    "description": "The numerical value of the concentration, -1 if unknown",
+    "minimum": -1.0
+  },
+  {
+    "pretty_name": "name",
+    "field_path": "metadata.method_specific_parameters.measurements[].sample.targets[].concentration.obtained_protocol[].name",
+    "type": "string",
+    "description": "Descriptive name of the step"
+  },
+  {
+    "pretty_name": "description",
+    "field_path": "metadata.method_specific_parameters.measurements[].sample.targets[].concentration.obtained_protocol[].description",
+    "type": "string",
+    "description": "Short description of the step"
+  },
+  {
+    "pretty_name": "entity",
+    "field_path": "metadata.method_specific_parameters.measurements[].sample.ligands[].entity",
+    "type": "relation",
+    "description": ""
+  },
+  {
+    "pretty_name": "value",
+    "field_path": "metadata.method_specific_parameters.measurements[].sample.ligands[].concentration.value",
+    "type": "double",
+    "description": "The numerical value of the concentration, -1 if unknown",
+    "minimum": -1.0
+  },
+  {
+    "pretty_name": "name",
+    "field_path": "metadata.method_specific_parameters.measurements[].sample.ligands[].concentration.obtained_protocol[].name",
+    "type": "string",
+    "description": "Descriptive name of the step"
+  },
+  {
+    "pretty_name": "description",
+    "field_path": "metadata.method_specific_parameters.measurements[].sample.ligands[].concentration.obtained_protocol[].description",
+    "type": "string",
+    "description": "Short description of the step"
+  },
+  {
+    "pretty_name": "chemical_environment",
+    "field_path": "metadata.method_specific_parameters.measurements[].sample.chemical_environment",
+    "type": "relation",
+    "description": ""
+  },
+  {
+    "pretty_name": "container",
+    "field_path": "metadata.method_specific_parameters.measurements[].sample.container",
+    "type": "string",
+    "description": "The container the sample was in"
+  },
+  {
+    "pretty_name": "name",
+    "field_path": "metadata.method_specific_parameters.measurements[].sample.preparation[].name",
+    "type": "string",
+    "description": "Descriptive name of the step"
+  },
+  {
+    "pretty_name": "description",
+    "field_path": "metadata.method_specific_parameters.measurements[].sample.preparation[].description",
+    "type": "string",
+    "description": "Short description of the step"
+  },
+  {
+    "pretty_name": "name",
+    "field_path": "metadata.method_specific_parameters.measurements[].measured_data.x_data.name",
+    "type": "string",
+    "description": "Short descriptive name of the data series"
+  },
+  {
+    "pretty_name": "values[]",
+    "field_path": "metadata.method_specific_parameters.measurements[].measured_data.x_data.values[]",
+    "type": "double",
+    "description": ""
+  },
+  {
+    "pretty_name": "name",
+    "field_path": "metadata.method_specific_parameters.measurements[].measured_data.y_data.name",
+    "type": "string",
+    "description": "Short descriptive name of the data series"
+  },
+  {
+    "pretty_name": "values[]",
+    "field_path": "metadata.method_specific_parameters.measurements[].measured_data.y_data.values[]",
+    "type": "double",
+    "description": ""
+  },
+  {
+    "pretty_name": "derived_parameter",
+    "field_path": "metadata.method_specific_parameters.data_analysis[].derived_parameter",
+    "type": "relation",
+    "description": ""
+  },
+  {
+    "pretty_name": "measurements[]",
+    "field_path": "metadata.method_specific_parameters.data_analysis[].measurements[]",
+    "type": "relation",
+    "description": ""
+  },
+  {
+    "pretty_name": "f_cold_start",
+    "field_path": "metadata.method_specific_parameters.data_analysis[].f_cold_and_hot.f_cold_start",
+    "type": "double",
+    "description": "Numerical value of the start-point of time interval used to establish the initial fluorescence, F_cold",
+    "minimum": -100.0
+  },
+  {
+    "pretty_name": "f_cold_end",
+    "field_path": "metadata.method_specific_parameters.data_analysis[].f_cold_and_hot.f_cold_end",
+    "type": "double",
+    "description": "Numerical value of the end-point of time interval used to establish the initial fluorescence, F_cold",
+    "minimum": -100.0
+  },
+  {
+    "pretty_name": "f_hot_start",
+    "field_path": "metadata.method_specific_parameters.data_analysis[].f_cold_and_hot.f_hot_start",
+    "type": "double",
+    "description": "Numerical value of the start-point of time interval used to establish the fluorescence temperature induced change in fluorescence, F_hot",
+    "minimum": 0.0
+  },
+  {
+    "pretty_name": "f_hot_end",
+    "field_path": "metadata.method_specific_parameters.data_analysis[].f_cold_and_hot.f_hot_end",
+    "type": "double",
+    "description": "Numerical value of the end-point of time interval used to establish the fluorescence temperature induced change in fluorescence, F_hot",
+    "minimum": 0.0
+  },
+  {
+    "pretty_name": "name",
+    "field_path": "metadata.method_specific_parameters.data_analysis[].data_processing_steps[].name",
+    "type": "string",
+    "description": "Short descriptive name of the processing step"
+  },
+  {
+    "pretty_name": "description",
+    "field_path": "metadata.method_specific_parameters.data_analysis[].data_processing_steps[].description",
+    "type": "string",
+    "description": "Description of what the processing step was"
+  },
+  {
+    "pretty_name": "software_name",
+    "field_path": "metadata.method_specific_parameters.data_analysis[].data_processing_steps[].software_name",
+    "type": "string",
+    "description": "The name of the software that was used for the step (e.g. Excel)"
+  },
+  {
+    "pretty_name": "software_version",
+    "field_path": "metadata.method_specific_parameters.data_analysis[].data_processing_steps[].software_version",
+    "type": "string",
+    "description": "The version of the software that was used for the step"
+  },
+  {
+    "pretty_name": "software_tool",
+    "field_path": "metadata.method_specific_parameters.data_analysis[].data_processing_steps[].software_tool",
+    "type": "string",
+    "description": "The name of the tool within the specified software, i.e. a particular method called or \"button pressed\" (e.g. equation solver, buffer subtraction)"
+  },
+  {
+    "pretty_name": "link_to_source_code",
+    "field_path": "metadata.method_specific_parameters.data_analysis[].data_processing_steps[].link_to_source_code",
+    "type": "url",
+    "description": "If processing was performed with software where the source code is legally available a link can be specified here (e.g. self-written python script in a GitHub repository"
+  },
+  {
+    "pretty_name": "model",
+    "field_path": "metadata.method_specific_parameters.data_analysis[].data_fitting.model",
+    "type": "string",
+    "description": "Description of the model (e.g. 1:1 binding)"
+  },
+  {
+    "pretty_name": "software_name",
+    "field_path": "metadata.method_specific_parameters.data_analysis[].data_fitting.software_name",
+    "type": "string",
+    "description": "The name of the software that was used for doing the data fitting (e.g. Excel)"
+  },
+  {
+    "pretty_name": "software_version",
+    "field_path": "metadata.method_specific_parameters.data_analysis[].data_fitting.software_version",
+    "type": "string",
+    "description": "The version of the software that was used for the step"
+  },
+  {
+    "pretty_name": "quality",
+    "field_path": "metadata.method_specific_parameters.data_analysis[].data_fitting.quality",
+    "type": "double",
+    "description": "Numerical value representing the quality estimate of the derived parameter"
+  },
+  {
+    "pretty_name": "quality_type",
+    "field_path": "metadata.method_specific_parameters.data_analysis[].data_fitting.quality_type",
+    "type": "string",
+    "description": "Type of the quality estimate"
   }
 ]

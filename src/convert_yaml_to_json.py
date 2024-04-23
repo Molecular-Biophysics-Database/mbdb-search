@@ -73,8 +73,8 @@ def build_json_output(schema, base_path, defs, json_output):
 
 
 def main():
-    yaml_name = "simplified_model.yaml"
-    # yaml_name = "MST.yaml"
+    # yaml_name = "simplified_model.yaml"
+    yaml_name = "MST.yaml"
     json_name = "output.json"
 
     # Read YAML content from a file
