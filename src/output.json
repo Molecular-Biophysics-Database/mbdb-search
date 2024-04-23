@@ -396,8 +396,7 @@
     "pretty_name": "value",
     "field_path": "metadata.general_parameters.physical_conditions_at_sample_handling.temperature.value",
     "type": "double",
-    "description": "The numeric value of the temperature",
-    "poly_type": "Name"
+    "description": "The numeric value of the temperature"
   },
   {
     "pretty_name": "operational_value",
