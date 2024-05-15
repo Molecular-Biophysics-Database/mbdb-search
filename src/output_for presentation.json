@@ -1,0 +1,35 @@
+[
+  {
+    "pretty_name": "deposition_date",
+    "field_path": "metadata.general_parameters.record_information.deposition_date",
+    "type": "date",
+    "description": "The date when the data was deposited; automatically generated"
+  },
+  {
+    "pretty_name": "latitude",
+    "field_path": "metadata.general_parameters.latitude",
+    "type": "double",
+    "description": "",
+    "minimum": -90.0,
+    "maximum": 90.0
+  }
+]
+
+
+metadata:
+  properties:
+    general_parameters:
+      use: '#/$defs/General_parameters'
+$defs:
+  General_parameters:
+    properties:
+      record_information:
+        use: '#/$defs/Record_information'
+      latitude:
+        type: double
+        minimum: -90.0
+        maximum: 90.0
+  Record_information:
+    properties:
+      deposition_date:
+        type: date

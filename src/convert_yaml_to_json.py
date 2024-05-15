@@ -22,7 +22,7 @@ def resolve_ref(ref, defs):
 
 
 # Create and return a field item dictionary.
-def create_field_item(key, value, current_path):
+def create_field_item(key, value, current_path, polytype=None):
     field_item = {
         "pretty_name": key,
         "field_path": current_path,
@@ -34,6 +34,9 @@ def create_field_item(key, value, current_path):
         field_item['minimum'] = value['minimum']
     if 'maximum' in value:
         field_item['maximum'] = value['maximum']
+    if polytype:
+        # Only add 'poly_type' if it is not None
+        field_item['poly_type'] = polytype.strip().strip(',')
     return field_item
 
 
@@ -41,35 +44,34 @@ def create_field_item(key, value, current_path):
 # General_parameters
 
 
-def build_json_output(schema, base_path, defs, json_output):
+def build_json_output(schema, base_path, defs, json_output, polytype=None):
     ignore_keys = ['value_error', 'unit', 'id', 'collected_default_search_fields']  # List of keys to ignore
 
-    if 'properties' in schema:
-        for key, value in schema['properties'].items():
-            # TODO: Currently ignoring 'value_error', 'unit', and 'id'. Revisit if needed.
-            if key in ignore_keys:
-                continue  # Skip the current key
-
-            # TODO I had a problem with appending root, the collected_default_search_fields shouldn't be there
-            # new_base_path = f"metadata.{key}" if not base_path else f"{base_path}.{key}"
-
-            if 'use' in value:
-                # Resolve the '$ref' and pass down the current path
-                ref_data = resolve_ref(value['use'], defs)
-                build_json_output(ref_data, f"{base_path}.{key}" if base_path else key, defs, json_output)
-            else:
+    if 'type' in schema and schema['type'] == 'polymorphic':
+        if 'schemas' in schema:
+            for subtype, details in schema['schemas'].items():
+                if details.get('required', False):  # Make sure the schema is required to proceed
+                    new_polytype = f"{polytype}, {subtype}" if polytype else subtype
+                    ref_data = resolve_ref(details['use'], defs)
+                    # Continue using the existing base path, do not append subtype
+                    build_json_output(ref_data, base_path, defs, json_output, new_polytype)
+    else:
+        if 'properties' in schema:
+            for key, value in schema['properties'].items():
+                # TODO: Currently ignoring 'value_error', 'unit', and 'id'. Revisit if needed.
+                if key in ignore_keys:
+                    continue  # Skip processing for ignored keys
                 current_path = f"{base_path}.{key}" if base_path else key
-                if 'properties' in value:
-                    # Recursively build the output for nested properties
-                    build_json_output(value, current_path, defs, json_output)
+                if 'use' in value:
+                    ref_data = resolve_ref(value['use'], defs)
+                    build_json_output(ref_data, current_path, defs, json_output, polytype)
                 elif 'type' in value:
                     # We have a field definition; add it to the output
-                    field_item = create_field_item(key, value, current_path)
+                    field_item = create_field_item(key, value, current_path,
+                                                   polytype)  # Pass polytype to field item creation
                     json_output.append(field_item)
                 else:
-                    # If there is no 'use' or 'type', it might be a nested object without its own type
-                    # Continue without appending to the path
-                    build_json_output(value, base_path, defs, json_output)
+                    build_json_output(value, current_path, defs, json_output, polytype)
 
 
 def main():
