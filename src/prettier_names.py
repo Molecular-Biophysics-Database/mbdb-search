@@ -13,17 +13,20 @@ def write_to_file(file_name, data):
         json.dump(data, file, indent=2)
 
 
+def format_name(name):
+    return name.replace('_', ' ').capitalize()
+
+
 def update_pretty_name(item, pretty_names_to_update):
     # Create a dictionary to store pretty names and their counts
     pretty_name = item["pretty_name"]
     field_path = item["field_path"]
 
     # Check if the pretty_name is in the set of names to update
+    new_pretty_name = format_name(pretty_name)
     if pretty_name in pretty_names_to_update:
         parent_name = field_path.split('.')[-2]
-        new_pretty_name = f"{pretty_name.replace('_', ' ').capitalize()} ({parent_name.replace('_', ' ').capitalize()})"
-    else:
-        new_pretty_name = f"{pretty_name.replace('_', ' ').capitalize()}"
+        new_pretty_name = f"{new_pretty_name} ({format_name(parent_name)})"
 
     item["pretty_name"] = new_pretty_name
 
