@@ -42,6 +42,7 @@ def update_duplicate_pretty_names(data):
         # Check if the pretty_name is already in the counts dictionary
         if pretty_name in pretty_name_counts:
             pretty_names_to_update.add(pretty_name)
+            pretty_name_counts[pretty_name] += 1
         else:
             pretty_name_counts[pretty_name] = 1
 
