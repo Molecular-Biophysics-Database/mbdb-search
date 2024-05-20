@@ -1,7 +1,7 @@
-import './App.css'
+import './assets/App.css'
 import SearchCriteria from './SearchCriteria';
 import {useState, useEffect} from 'react';
-import jsonData from '/src/output.json';
+import jsonData from '/src/data/output.json';
 
 function App() {
     const DEBUG = true;
