@@ -1,4 +1,4 @@
-from src.luqul_convertor import construct_luqum_tree
+from src.data.luqul_convertor import construct_luqum_tree
 from luqum.tree import Word, SearchField, Range, Phrase, OrOperation, AndOperation
 import json
 import pytest
@@ -89,7 +89,9 @@ class TestSingleFields:
             }
         ]
         """
-        expected_output = SearchField("foo", Range(Word("2024-03-01"), Word("2024-04-30")))
+        expected_output = SearchField(
+            "foo", Range(Word("2024-03-01"), Word("2024-04-30"))
+        )
         assert construct_luqum_tree(json.loads(json_input)) == expected_output
 
     def test_negative_values_range(self):
@@ -178,6 +180,7 @@ class TestSingleFields:
             construct_luqum_tree(json.loads(json_input))
     '''
 
+
 class TestOperators:
     json_input_template = """
         [
@@ -197,16 +200,21 @@ class TestOperators:
 
     def test_or(self):
         json_input = self.json_input_template.replace("%", "or")
-        expected_output = OrOperation(SearchField("foo", Word("bar")), SearchField("bas", Word("qux")))
+        expected_output = OrOperation(
+            SearchField("foo", Word("bar")), SearchField("bas", Word("qux"))
+        )
         assert construct_luqum_tree(json.loads(json_input)) == expected_output
 
     def test_and(self):
         json_input = self.json_input_template.replace("%", "and")
-        expected_output = AndOperation(SearchField("foo", Word("bar")), SearchField("bas", Word("qux")))
+        expected_output = AndOperation(
+            SearchField("foo", Word("bar")), SearchField("bas", Word("qux"))
+        )
         assert construct_luqum_tree(json.loads(json_input)) == expected_output
 
     def test_not(self):
         pass
+
 
 class TestBrackets:
     def test_and(self):
