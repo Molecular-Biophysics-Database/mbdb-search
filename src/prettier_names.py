@@ -1,6 +1,8 @@
 import json
 from typing import List, Dict
 
+import click
+
 
 # Read from a file
 def read_from_file(file_name):
@@ -14,6 +16,7 @@ def write_to_file(file_name, data):
         json.dump(data, file, indent=2)
 
 
+# standard format of file names
 def format_name(name):
     if isinstance(name, list):
         name = ", ".join(name)
@@ -53,63 +56,50 @@ def find_duplicate_names(data) -> Dict[str, List[str]]:
     return {k: v for k, v in duplicate_names.items() if len(v) > 1}
 
 
-def remove_if_equal(field_paths):
+def remove_if_equal(field_paths) -> Dict[str, str]:
+    # aligns the paths and remove all the elements
+    # they have in common e.g. (a.b.foo, a.b.bar) becomes (foo, bar)
     split_paths = [field_path.split('.') for field_path in field_paths]
     while True:
         try:
             unique_elements = {path[0] for path in split_paths}
         except IndexError:
+            # we ran out of elements without finding a difference
             raise ValueError("duplicate field paths found, they should be unique")
 
+        # more than one element so the paths must differ at this point
         if len(unique_elements) != 1:
             break
 
+        # all elements are the same, so they can be removed
         for path in split_paths:
             path.pop(0)
 
     return {field_path: ".".join(split_path) for field_path, split_path in zip(field_paths, split_paths)}
 
 
-def make_minimal_duplicate_names(duplicate_names):
+def make_minimal_names(duplicate_names):
     return {pretty_name: remove_if_equal(field_paths) for pretty_name, field_paths in duplicate_names.items()}
 
 
-def update_duplicate_pretty_names_new(data):
-
+def update_duplicate_pretty_names(data):
     duplicate_names = find_duplicate_names(data)
-    pretty_names_to_update = make_minimal_duplicate_names(duplicate_names)
+    pretty_names_to_update = make_minimal_names(duplicate_names)
 
     # Iterate through the data to update the pretty names
     for item in data:
         update_pretty_name(item, pretty_names_to_update)
 
-def update_duplicate_pretty_names(data):
-    seen_pretty_names = set()
-    pretty_names_to_update = set()
 
-    # Scan through the data to identify duplicate pretty names
-    for item in data:
-        pretty_name = item["pretty_name"]
-
-        # Check if the pretty_name has already been seen
-        if pretty_name in seen_pretty_names:
-            pretty_names_to_update.add(pretty_name)
-
-        seen_pretty_names.add(pretty_name)
-
-    # Iterate through the data again to update the pretty names
-    for item in data:
-        update_pretty_name(item, pretty_names_to_update)
-
-
-def main():
-    input_file = "output.json"
+@click.command()
+@click.argument("input_file", type=click.Path(), default="output.json")
+def main(input_file):
 
     # Read the JSON data from the input file
     data = read_from_file(input_file)
 
     # Update duplicate pretty names
-    update_duplicate_pretty_names_new(data)
+    update_duplicate_pretty_names(data)
 
     # Write the updated data back to the file
     write_to_file(input_file, data)
